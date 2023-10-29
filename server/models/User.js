@@ -49,6 +49,10 @@ const User = sequelize.define('User', {
         type: DataTypes.ENUM,
         values: ['client', 'driver', 'maintenance_person', 'fuelling_person'],
         allowNull: false
+    },
+    driver_license_code: {
+        type: DataTypes.STRING(255),
+        allowNull: true
     }
 }, {
     tableName: 'users',
