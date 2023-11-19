@@ -47,11 +47,10 @@
   
   .user-name-container {
     position: absolute;
-    bottom: 50%; /* Center vertically */
+    bottom: 48%; /* Center vertically */
     left: 50%;
     transform: translate(-50%, 2%); /* Center horizontally and adjust vertically */
     max-width: 300px;
-    padding: 30px;
     border-radius: 8px;
     text-align: center;
     width: 100%;
