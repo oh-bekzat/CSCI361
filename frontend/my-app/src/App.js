@@ -9,18 +9,24 @@ import Profile from './components/pages/Profile';
 import Services from './components/pages/Services';
 import VehicleInfo from './components/pages/VehicleInfo';
 import LoginPage from './components/pages/Login';
+import MainNavbar from './components/MainNavbar';
+import AboutUs from './components/pages/AboutUs';
+import Auction from './components/pages/Auction';
 
 function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<><Navbar /><DriverHomePage /></>} />
-        <Route path="/history" element={<><Navbar /><History /></>} />
-        <Route path="/profile" element={<><Navbar /><Profile /></>} />
-        <Route path="/vehicle-info" element={<><Navbar /><VehicleInfo /></>} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/driver/" element={<><Navbar /><DriverHomePage /></>} />
+        <Route path="/driver/history" element={<><Navbar /><History /></>} />
+        <Route path="/driver/profile" element={<><Navbar /><Profile /></>} />
+        <Route path="/driver/vehicle-info" element={<><Navbar /><VehicleInfo /></>} />
+        <Route path="/login" element={<><MainNavbar /><LoginPage /></>} />
         {/* Add a default route to redirect to home if none of the above routes match */}
         <Route path="*" element={<Navigate to="/" />} />
+        <Route path="/" element={<><MainNavbar /><Home /></>} />
+        <Route path="/about-us" element={<><MainNavbar /><AboutUs /></>} />
+        <Route path="/auction" element={<><MainNavbar /><Auction /></>} />
       </Routes>
     </Router>
   );
