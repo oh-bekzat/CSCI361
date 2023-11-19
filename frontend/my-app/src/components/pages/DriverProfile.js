@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './Profile.css'; // Include your styles
+import './DriverProfile.css'; // Include your styles
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
