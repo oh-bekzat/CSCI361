@@ -1,0 +1,46 @@
+/* DriverHomePage.css */
+
+.driver-home-page {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .task-list {
+    width: 20%;
+  }
+  
+  .task-list h2 {
+    color: #333;
+  }
+  
+  .task-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .task-list li {
+    cursor: pointer;
+    margin-bottom: 8px;
+    padding: 8px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+  }
+  
+  .task-details {
+    width: 75%;
+  }
+  
+  .task-details h2 {
+    color: #333;
+  }
+  
+  .task-details h3 {
+    margin-top: 0;
+    color: #007bff;
+  }
+  
+  .task-details p {
+    color: #555;
+  }
+  

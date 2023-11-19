@@ -5,14 +5,13 @@ header {
     align-items: center;
     padding: 10px 32px;
     margin-left: -16px;
-    margin-bottom: 2.5rem;
     box-shadow: 0 0 10px 0 rgba(154, 138, 138, 0.3);
     height: 50pt;
 }
 .navbar{
     display: flex;
     justify-content: space-between;
-    gap: 150px;
+    gap: 100px;
     align-items: center;
     color: white;
     font-size: 20px;

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/Navbar';
 import Home from './components/pages/Home';
+import DriverHomePage from './components/pages/DriverHome';
 import History from './components/pages/History';
 import Profile from './components/pages/Profile';
 import Services from './components/pages/Services';
@@ -14,10 +15,8 @@ function App() {
       <div className="App">
         {/* Your Navbar or any other components that are not part of the routes */}
         <Navbar /> 
-
-        
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<DriverHomePage />} />
           <Route path="/history" element={<History />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/services" element={<Services />} />
