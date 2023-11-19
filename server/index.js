@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors');
 const app = express()
 const sequelize = require('./database')
 
@@ -7,6 +8,16 @@ const vehiclesRouter = require('./controllers/vehicles')
 const routesRouter = require('./controllers/routes')
 const tasksRouter = require('./controllers/tasks')
 const auctionRouter = require('./controllers/auction')
+
+const corsOptions = {
+    origin: 'http://localhost:3000', // Update with your frontend's origin
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204,
+  };
+  
+// app.use(cors(corsOptions));
+app.use(cors({ origin: '*' }));
 
 app.use(express.json())
 
