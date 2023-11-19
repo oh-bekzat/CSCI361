@@ -15,10 +15,9 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<><Navbar /><DriverHomePage /></>} />
-        <Route path="/history" element={<History />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/vehicle-info" element={<VehicleInfo />} />
+        <Route path="/history" element={<><Navbar /><History /></>} />
+        <Route path="/profile" element={<><Navbar /><Profile /></>} />
+        <Route path="/vehicle-info" element={<><Navbar /><VehicleInfo /></>} />
         <Route path="/login" element={<LoginPage />} />
         {/* Add a default route to redirect to home if none of the above routes match */}
         <Route path="*" element={<Navigate to="/" />} />
