@@ -5,12 +5,14 @@ const sequelize = require('./database')
 const usersRouter = require('./controllers/users')
 const vehiclesRouter = require('./controllers/vehicles')
 const routesRouter = require('./controllers/routes')
+const tasksRouter = require('./controllers/tasks')
 
 app.use(express.json())
 
 app.use('/users', usersRouter)
 app.use('/vehicles', vehiclesRouter)
 app.use('/routes', routesRouter)
+app.use('/tasks', tasksRouter)
 
 const PORT = 3001
 app.listen(PORT, () => {

@@ -27,6 +27,7 @@ CREATE TABLE administrators (
 
 CREATE TABLE vehicles (
   	license_plate varchar(255) PRIMARY KEY,
+	vehicle_image bytea NOT NULL,
   	make varchar(255) NOT NULL,
   	model varchar(255) NOT NULL, 
   	manufacture_year int CHECK (manufacture_year >= date_part('year', CURRENT_DATE) - 30 AND
@@ -62,7 +63,8 @@ CREATE TABLE tasks (
   	task_type task_type NOT NULL,
   	assignee_id int REFERENCES users(user_id) NOT NULL, -- task_type specifies whether task is maintaining/fuelling
   	date timestamp NOT NULL,
-  	status task_status_type NOT NULL
+  	status task_status_type NOT NULL,
+	vehicle_id varchar(255) REFERENCES vehicles(license_plate)
 )
 
 CREATE TABLE routes (
@@ -78,11 +80,11 @@ CREATE TABLE routes (
 	status route_status_type DEFAULT 'awaiting'
 )
 
-
 CREATE TABLE fuelling_details (
+	fuelling_id serial PRIMARY KEY,
   	vehicle_id varchar(255) REFERENCES vehicles(license_plate) NOT NULL,
   	task_id int REFERENCES tasks(task_id) NOT NULL, -- i.e. finished task at this point
-  	fuelling_person_id int REFERENCES fuelling_persons(user_id) NOT NULL,
+  	user_id int REFERENCES users(user_id) NOT NULL,
   	fuelling_date timestamp Not NULL,
   	fuel_amount real NOT NULL,
   	fuel_cost int NOT NULL,
@@ -92,7 +94,7 @@ CREATE TABLE fuelling_details (
 CREATE TABLE maintenance_details (
   	maintenance_id serial PRIMARY KEY,
   	task_id int REFERENCES tasks(task_id) NOT NULL,
-  	maintenance_person_id int REFERENCES maintenance_persons(user_id) NOT NULL,
+  	user_id int REFERENCES users(user_id) NOT NULL,
   	vehicle_id varchar(255) REFERENCES vehicles(license_plate) NOT NULL,
   	description text Not NULL,
   	maintenance_date timestamp NOT NULL,
@@ -108,7 +110,8 @@ CREATE TABLE auctioned_vehicles (
 
 CREATE TABLE photos (
     photo_id serial PRIMARY KEY,
-    photo_data bytea NOT NULL
+    photo_data bytea NOT NULL,
+	task_id INT REFERENCES tasks(task_id)
 )
 
 CREATE TABLE auctioned_vehicles_photos (
@@ -201,7 +204,6 @@ SELECT * FROM photos
 SELECT * FROM auctioned_vehicles_photos
 
 SELECT * FROM reports
-
 
 -- Fetch all tasks assigned to a specific user (e.g., 'Elon Musk'):
 SELECT tasks.* FROM tasks JOIN users ON tasks.assignee_id = users.user_id 
