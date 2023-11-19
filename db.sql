@@ -68,14 +68,16 @@ CREATE TABLE tasks (
 CREATE TABLE routes (
   	route_id serial PRIMARY KEY,
   	client_id int REFERENCES clients(user_id) NOT NULL,
-	driver_id int REFERENCES drivers(user_id) NOT NULL,
-  	vehicle_id varchar(255) REFERENCES vehicles(license_plate) NOT NULL,
+	driver_id int REFERENCES drivers(user_id),
+  	vehicle_id varchar(255) REFERENCES vehicles(license_plate),
   	start_point varchar(255) NOT NULL,
   	finish_point varchar(255) NOT NULL,
   	distance int NOT NULL, -- derivable but costly performance-wise
   	start_time timestamp,
   	finish_time timestamp -- total time is derivable
+	status route_status_type DEFAULT 'awaiting'
 )
+
 
 CREATE TABLE fuelling_details (
   	vehicle_id varchar(255) REFERENCES vehicles(license_plate) NOT NULL,

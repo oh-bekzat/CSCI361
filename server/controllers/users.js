@@ -13,30 +13,30 @@ usersRouter.get('/', async (req, res) => {
 
 usersRouter.post('/', async (req, res) => {
     try {
-        const { user_role, license_code, ...otherUserData } = req.body;
+        const { user_role, license_code, ...otherUserData } = req.body
 
         if (user_role === 'driver' && !license_code) {
-            return res.status(400).json({ error: 'Driver license code is required for drivers' });
+            return res.status(400).json({ error: 'Driver license code is required for drivers' })
         }
 
         // Create a new user
         const newUser = await User.create({
             user_role,
             ...otherUserData
-        });
+        })
 
         // If the user is a driver, create a corresponding driver object
         if (user_role === 'driver') {
             await Driver.create({
                 user_id: newUser.user_id,
                 license_code: license_code
-            });
+            })
         }
 
         res.status(201).json(newUser);
     } catch (error) {
         console.error('Error creating user:', error);
-        res.status(500).json({ error: 'Internal server error' });
+        res.status(500).json({ error: 'Internal server error' })
     }
 })
 
