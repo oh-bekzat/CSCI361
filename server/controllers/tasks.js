@@ -8,6 +8,36 @@ const Photo = require('../models/Photo')
 
 const tasksRouter = express.Router()
 
+tasksRouter.get('/maintenance/:vehicleId', async (req, res) => {
+    try {
+        const { vehicleId } = req.params
+
+        const maintenanceDetails = await MaintenanceDetail.findAll({
+            where: { vehicle_id: vehicleId },
+        })
+
+        res.status(200).json({ maintenanceDetails })
+    } catch (error) {
+        console.error('Error fetching maintenance details:', error)
+        res.status(500).json({ error: 'Internal server error' })
+    }
+})
+
+tasksRouter.get('/fuelling/:vehicleId', async (req, res) => {
+    try {
+        const { vehicleId } = req.params
+
+        const fuellingDetails = await FuellingDetail.findAll({
+            where: { vehicle_id: vehicleId },
+        })
+
+        res.status(200).json({ fuellingDetails })
+    } catch (error) {
+        console.error('Error fetching fuelling details:', error)
+        res.status(500).json({ error: 'Internal server error' })
+    }
+})
+
 tasksRouter.post('/', async (req, res) => {
   try {
     const { admin_id, description, task_type, assignee_id, date, vehicle_id } = req.body

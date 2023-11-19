@@ -27,7 +27,6 @@ CREATE TABLE administrators (
 
 CREATE TABLE vehicles (
   	license_plate varchar(255) PRIMARY KEY,
-	vehicle_image bytea NOT NULL,
   	make varchar(255) NOT NULL,
   	model varchar(255) NOT NULL, 
   	manufacture_year int CHECK (manufacture_year >= date_part('year', CURRENT_DATE) - 30 AND
@@ -43,7 +42,9 @@ CREATE TABLE vehicles (
 
 CREATE TABLE drivers ( -- without active tasks attribute first
   	user_id int REFERENCES users(user_id) UNIQUE NOT NULL, -- no need for driver_id, relationship is 1 to 1
-  	license_code char(6) CHECK (license_code ~ '^[0-9]{6}$') UNIQUE NOT NULL
+  	license_code char(6) CHECK (license_code ~ '^[0-9]{6}$') UNIQUE NOT NULL,
+	rating NUMERIC(3,2) DEFAULT 0,
+	n_ratings INT DEFAULT 0
 )
 
 CREATE TABLE clients (
@@ -122,7 +123,7 @@ CREATE TABLE auctioned_vehicles_photos (
 
 CREATE TABLE reports (
   	report_id serial PRIMARY KEY,
-    driver_id int REFERENCES drivers(user_id) NOT NULL,
+  	driver_id int REFERENCES drivers(user_id) NOT NULL,
   	total_distance int NOT NUll,
   	total_time int NOT NULL,
   	total_maintenance_cost int NOT NULL,

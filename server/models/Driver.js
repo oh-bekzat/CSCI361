@@ -13,6 +13,16 @@ const Driver = sequelize.define('Driver', {
             key: 'user_id'
         }
     },
+    rating: {
+        type: DataTypes.NUMERIC(3, 2),
+        allowNull: false,
+        defaultValue: 0,
+    },
+    n_ratings: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 0,
+    },
     license_code: {
         type: DataTypes.CHAR(6),
         allowNull: false,

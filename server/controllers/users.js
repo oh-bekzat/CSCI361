@@ -19,13 +19,11 @@ usersRouter.post('/', async (req, res) => {
             return res.status(400).json({ error: 'Driver license code is required for drivers' })
         }
 
-        // Create a new user
         const newUser = await User.create({
             user_role,
             ...otherUserData
         })
 
-        // If the user is a driver, create a corresponding driver object
         if (user_role === 'driver') {
             await Driver.create({
                 user_id: newUser.user_id,
