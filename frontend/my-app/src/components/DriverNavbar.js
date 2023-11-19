@@ -5,8 +5,9 @@ import './Navbar.css';
 const Navbar = () => {
   return (
     <header>
-        <a href="/">
-            <div className="header-32-bold">VMS Project</div>
+        <a href="/" className="logo-container">
+        <img src={require('./assets/driver.png')} alt="Driver" />
+        <div className="header-32-bold">VMS Project</div>
         </a>
         <div className="navbar">
             <a href="./">Tasks</a>

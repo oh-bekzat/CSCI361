@@ -1,14 +1,27 @@
 header {
     display: flex;
     justify-content: space-between;
-    background-color: #EDC53F;
+    background-color: #edc53f;
     align-items: center;
     padding: 10px 32px;
     margin-left: -16px;
     box-shadow: 0 0 10px 0 rgba(154, 138, 138, 0.3);
     height: 50pt;
-}
-.navbar{
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: white;
+  }
+  
+  .logo-container img {
+    width: 50pt;
+    margin-right: 10px; /* Adjust the margin as needed */
+  }
+  
+  .navbar {
     display: flex;
     justify-content: space-between;
     gap: 100px;
@@ -16,13 +29,13 @@ header {
     color: white;
     font-size: 20px;
     font-weight: bold;
-}
-
-.navbar-item:hover{
-    color: #abaaaa;
-}
-
-a {
-    color: white;
+  }
+  
+  .navbar a:hover {
+    color: #bdbbbb;
+  }
+  
+  .navbar a {
+    color: rgba(255, 255, 255, 0.963);
     text-decoration: none;
-}
+  }
