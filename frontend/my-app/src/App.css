@@ -1,0 +1,110 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html{
+    background-color: #eeeeee;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.yellow {
+  color: #EDC53F;
+}
+
+.light-orange {
+  color: #F3A141;
+}
+
+.orange {
+  color: #E87E42;
+}
+
+.header-48-bold {
+  font-size: 48px;
+  font-weight: bold;
+}
+
+.header-48 {
+    font-size: 48px;
+}
+
+.header-40-bold {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.header-40 {
+    font-size: 40px;
+}
+
+.header-32-bold {
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.header-32 {
+    font-size: 32px;
+}
+
+.body-24-bold {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.body-24 {
+  font-size: 24px;
+}
+
+.body-20-bold {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.body-20 {
+  font-size: 20px;
+}
+
+.body-16-bold {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.body-16 {
+  font-size: 16px;
+}
+
+.body-14-bold {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.body-14 {
+  font-size: 14px;
+}
+
+.label-13 {
+  font-size: 13px;
+}
+
+.label-12 {
+  font-size: 12px;
+}
+
+.label-11 {
+  font-size: 11px;
+}
+
+.label-13-bold {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.label-12-bold {
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.label-11-bold {
+  font-size: 11px;
+  font-weight: bold;
+}
