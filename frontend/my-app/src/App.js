@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
-import Navbar from './components/Navbar';
+import Navbar from './components/DriverNavbar';
 import Home from './components/pages/Home';
 import DriverHomePage from './components/pages/DriverHome';
 import History from './components/pages/DriverHistory';

@@ -10,9 +10,8 @@ const Navbar = () => {
         </a>
         <div className="navbar">
             <a href="./">Tasks</a>
-            <a href="./Services">Services</a>
-            <a href="./vehicle-info">Vehicle Info</a>
             <a href="./history">History</a>
+            <a href="./vehicle-info">Vehicle Info</a>
             <a href="./profile">Profile</a>
         </div>
     </header>

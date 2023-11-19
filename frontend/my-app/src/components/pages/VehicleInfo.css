@@ -1,0 +1,55 @@
+/* VehicleInfoPage.css */
+
+.vehicle-info-page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .photo-stack {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  .photo-stack img {
+    width: 100%;
+    max-height: 150px; /* Set a maximum height for the images */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .general-info {
+    width: 55%;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .general-info h2 {
+    color: #333;
+  }
+  
+  .general-info p {
+    color: #555;
+    margin: 8px 0;
+  }
+  
+  .general-info button {
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+  }
+  
+  .general-info button:hover {
+    background-color: #0056b3;
+  }
+  

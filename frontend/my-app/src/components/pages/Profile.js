@@ -29,6 +29,8 @@ const Profile = () => {
           />
           <div className="user-name-container">
             <h2>{userData?.name || 'User Name'}</h2>
+            <img src={require('../assets/star.png')} style={{ width: '20pt' }}  />
+            {/* <div className='body-20'><img src={require('../assets/star.png')} /></div> */}
           </div>
         </div>
 
@@ -45,9 +47,6 @@ const Profile = () => {
           </div>
           <div className="info-item">
             <span className="body-14"><strong>Government ID:</strong> {userData?.governmentId || 'Not available'}</span>
-          </div>
-          <div className="info-item">
-            <span className="body-14"><strong>Role:</strong> {userData?.role || 'Not available'}</span>
           </div>
         </div>
 
