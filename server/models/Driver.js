@@ -24,6 +24,6 @@ const Driver = sequelize.define('Driver', {
 }, {
     tableName: 'drivers',
     timestamps: false
-});
+})
 
 module.exports = Driver
