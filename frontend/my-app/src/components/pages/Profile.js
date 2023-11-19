@@ -1,9 +1,66 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import './Profile.css'; // Include your styles
 
-function Profile() {
+const Profile = () => {
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    // Simulating a fetch request to an API endpoint
+    fetch('https://api.example.com/userdata')
+      .then(response => response.json())
+      .then(data => setUserData(data))
+      .catch(error => console.error('Error fetching data:', error));
+  }, []);
+
+  const handleLogout = () => {
+    // Add your logout logic here
+    console.log('User logged out'); // For example, you can log a message or call a logout API
+  };
+
   return (
-    <div>Profile</div>
-  )
-}
+    <div className="profile-container">
+      <div className="left-section">
+        {/* Profile Photo */}
+        <div className="profile-photo-container">
+          <img
+            src={userData?.profilePhotoUrl || 'https://placekitten.com/200/200'}
+            alt="Profile"
+            className="profile-photo"
+          />
+          <div className="user-name-container">
+            <h2>{userData?.name || 'User Name'}</h2>
+          </div>
+        </div>
 
-export default Profile
+        {/* Personal Info */}
+        <div className="personal-info-container">
+          <div className="info-item">
+            <span className="body-14"><strong>Email:</strong> {userData?.email || 'Not available'}</span>
+          </div>
+          <div className="info-item">
+            <span className="body-14"><strong>Address:</strong> {userData?.address || 'Not available'}</span>
+          </div>
+          <div className="info-item">
+            <span className="body-14"><strong>Phone Number:</strong> {userData?.phoneNumber || 'Not available'}</span>
+          </div>
+          <div className="info-item">
+            <span className="body-14"><strong>Government ID:</strong> {userData?.governmentId || 'Not available'}</span>
+          </div>
+          <div className="info-item">
+            <span className="body-14"><strong>Role:</strong> {userData?.role || 'Not available'}</span>
+          </div>
+        </div>
+
+        {/* Logout Button */}
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+            <button className="button-124" onClick={handleLogout}>
+            Logout
+            </button>
+        </div>
+
+      </div>
+    </div>
+  );
+};
+
+export default Profile;
