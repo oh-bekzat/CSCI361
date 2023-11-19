@@ -14,6 +14,10 @@ const Vehicle = sequelize.define('Vehicle', {
         type: DataTypes.STRING(255),
         allowNull: false,
     },
+    vehicle_image: {
+        type: DataTypes.BLOB('long'), // Assuming 'long' is appropriate for your use case
+        allowNull: false,
+    },
     manufacture_year: {
         type: DataTypes.INTEGER,
         allowNull: false,

@@ -32,9 +32,9 @@ routesRouter.post('/', async (req, res) => {
     }
 })
 
-routesRouter.put('/:routeId', async (req, res) => {
+routesRouter.put('/assign/:routeId', async (req, res) => {
     try {
-        const { admin_id, driver_id, vehicle_id, start_time, finish_time } = req.body
+        const { admin_id, driver_id, license_plate } = req.body
         const { routeId } = req.params
 
         if (!admin_id) {
@@ -58,9 +58,7 @@ routesRouter.put('/:routeId', async (req, res) => {
 
         const updatedRoute = await existingRoute.update({
             driver_id: driver_id,
-            vehicle_id: vehicle_id,
-            start_time: start_time,
-            finish_time: finish_time,
+            vehicle_id: license_plate,
             status: 'assigned' 
         })
 
@@ -70,5 +68,58 @@ routesRouter.put('/:routeId', async (req, res) => {
         res.status(500).json({ error: 'Internal server error' })
     }
 })
+
+routesRouter.put('/start/:routeId', async (req, res) => {
+    try {
+        const { driver_id, start_time } = req.body
+        const { routeId } = req.params
+
+        const existingRoute = await Route.findByPk(routeId)
+        if (!existingRoute) {
+            return res.status(404).json({ error: 'Route not found' });
+        }
+
+        if (existingRoute.driver_id !== driver_id) {
+            return res.status(400).json({ error: 'Driver ID does not match the existing route' });
+        }
+
+        const updatedRoute = await existingRoute.update({
+            start_time: start_time,
+            status: 'started' 
+        })
+
+        res.status(200).json(updatedRoute);
+    } catch (error) {
+        console.error('Error updating route:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+});
+
+routesRouter.put('/finish/:routeId', async (req, res) => {
+    try {
+        const { driver_id, finish_time } = req.body
+        const { routeId } = req.params
+
+        const existingRoute = await Route.findByPk(routeId)
+        if (!existingRoute) {
+            return res.status(404).json({ error: 'Route not found' });
+        }
+
+        if (existingRoute.driver_id !== driver_id) {
+            return res.status(400).json({ error: 'Driver ID does not match the existing route' });
+        }
+
+        const updatedRoute = await existingRoute.update({
+            finish_time: finish_time,
+            status: 'completed' 
+        })
+
+        res.status(200).json(updatedRoute);
+    } catch (error) {
+        console.error('Error updating route:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+})
+
 
 module.exports = routesRouter
