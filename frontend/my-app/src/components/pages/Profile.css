@@ -21,6 +21,9 @@
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   height: 250px; /* Increase the height */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .profile-photo {
@@ -35,6 +38,7 @@
 
 .personal-info-container {
   margin-top: 20px;
+
 }
 
 .additional-info-container {
@@ -46,14 +50,7 @@
 }
 
 .user-name-container {
-  position: absolute;
-  bottom: 48%; /* Center vertically */
-  left: 50%;
-  transform: translate(-50%, 2%); /* Center horizontally and adjust vertically */
-  max-width: 300px;
-  border-radius: 8px;
-  text-align: center;
-  width: 100%;
+  margin-top: 10px; /* Add some space between the photo and user name */
 }
 
 .personal-info-container {
