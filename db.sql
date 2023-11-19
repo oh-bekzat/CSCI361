@@ -7,7 +7,7 @@ CREATE TYPE task_status_type AS ENUM ('assigned', 'taken', 'completed')
 CREATE TABLE users (
   	user_id serial PRIMARY KEY,
   	email varchar(255) UNIQUE NOT NULL, -- Validation is redundant as admin is responsible
-	password text NOT NULL, -- Password is hashed - it can be very long; no need for length check
+	password_hashed text NOT NULL, -- Password is hashed - it can be very long; no need for length check
   	firstname varchar(255) NOT NULL,
 	middlename varchar(255),
   	lastname varchar(255) NOT NULL,

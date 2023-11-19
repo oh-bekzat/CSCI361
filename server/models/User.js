@@ -12,7 +12,7 @@ const User = sequelize.define('User', {
         allowNull: false,
         unique: true
     },
-    password: {
+    password_hashed: {
         type: DataTypes.TEXT,
         allowNull: false
     },
@@ -49,10 +49,6 @@ const User = sequelize.define('User', {
         type: DataTypes.ENUM,
         values: ['client', 'driver', 'maintenance_person', 'fuelling_person'],
         allowNull: false
-    },
-    driver_license_code: {
-        type: DataTypes.STRING(255),
-        allowNull: true
     }
 }, {
     tableName: 'users',
