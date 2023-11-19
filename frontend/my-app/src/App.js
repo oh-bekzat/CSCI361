@@ -14,15 +14,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <>
-              <Navbar />
-              <DriverHomePage />
-            </>
-          }
-        />
+        <Route path="/" element={<><Navbar /><DriverHomePage /></>} />
         <Route path="/history" element={<History />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/services" element={<Services />} />
