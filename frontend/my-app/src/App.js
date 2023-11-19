@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Navbar from './components/Navbar';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
@@ -6,15 +6,9 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 function App() {
   return (
-    <>
-      <Router>
-        <Navbar/>
-        <Switch>
-          <Route path='/' exact />
-        </Switch>
-      </Router>
-      
-    </>
+    <div className="App">
+      <Navbar/>
+    </div>
   );
 }
 
