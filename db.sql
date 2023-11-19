@@ -4,6 +4,8 @@ CREATE TYPE task_type AS ENUM ('maintenance', 'fuelling')
 
 CREATE TYPE task_status_type AS ENUM ('assigned', 'taken', 'completed')
 
+CREATE TYPE route_status_type AS ENUM ('assigned', 'awaiting', 'started', 'completed')
+
 CREATE TABLE users (
   	user_id serial PRIMARY KEY,
   	email varchar(255) UNIQUE NOT NULL, -- Validation is redundant as admin is responsible
@@ -47,18 +49,6 @@ CREATE TABLE drivers ( -- without active tasks attribute first
 	n_ratings INT DEFAULT 0
 )
 
-CREATE TABLE clients (
-  	user_id int REFERENCES users(user_id) UNIQUE NOT NULL -- cannot have two or more roles
-)
-
-CREATE TABLE maintenance_persons (
-  	user_id int REFERENCES users(user_id) UNIQUE NOT NULL
-)
-
-CREATE TABLE fuelling_persons (
-  	user_id int REFERENCES users(user_id) UNIQUE NOT NULL
-)
-
 CREATE TABLE tasks (
   	task_id serial PRIMARY KEY,
   	description text NOT NULL,
@@ -71,14 +61,14 @@ CREATE TABLE tasks (
 
 CREATE TABLE routes (
   	route_id serial PRIMARY KEY,
-  	client_id int REFERENCES clients(user_id) NOT NULL,
+  	client_id int REFERENCES users(user_id) NOT NULL,
 	driver_id int REFERENCES drivers(user_id),
   	vehicle_id varchar(255) REFERENCES vehicles(license_plate),
   	start_point varchar(255) NOT NULL,
   	finish_point varchar(255) NOT NULL,
   	distance int NOT NULL, -- derivable but costly performance-wise
   	start_time timestamp,
-  	finish_time timestamp -- total time is derivable
+  	finish_time timestamp, -- total time is derivable
 	status route_status_type DEFAULT 'awaiting'
 )
 
@@ -104,7 +94,7 @@ CREATE TABLE maintenance_details (
 )
 
 CREATE TABLE auctioned_vehicles (
-    auctioned_vehicle_id varchar(255) REFERENCES vehicles(license_plate)
+    auctioned_vehicle_id varchar(255) PRIMARY KEY REFERENCES vehicles(license_plate),
     vehicle_cost int NOT NULL,
     description text NOT NULL
 )
