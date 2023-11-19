@@ -15,7 +15,7 @@ const Vehicle = sequelize.define('Vehicle', {
         allowNull: false,
     },
     vehicle_image: {
-        type: DataTypes.BLOB('long'), // Assuming 'long' is appropriate for your use case
+        type: DataTypes.TEXT,
         allowNull: false,
     },
     manufacture_year: {

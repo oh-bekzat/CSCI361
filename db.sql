@@ -37,7 +37,8 @@ CREATE TABLE vehicles (
   	tank_volume real NOT NULL,
   	mileage int NOT NULL,
   	last_fueled_date date NOT NULL,
-  	last_maintained_date date NOT NULL
+  	last_maintained_date date NOT NULL,
+	vehicle_image text NOT NULL
 )
 
 CREATE TABLE drivers ( -- without active tasks attribute first
@@ -102,10 +103,9 @@ CREATE TABLE maintenance_details (
 )
 
 CREATE TABLE auctioned_vehicles (
-    auctioned_vehicle_id varchar(255) NOT NULL PRIMARY KEY,
+    auctioned_vehicle_id varchar(255) REFERENCES vehicles(license_plate)
     vehicle_cost int NOT NULL,
-    description text NOT NULL,
-    FOREIGN KEY (auctioned_vehicle_id) REFERENCES vehicles(license_plate) ON DELETE CASCADE ON UPDATE CASCADE
+    description text NOT NULL
 )
 
 CREATE TABLE photos (
@@ -115,16 +115,16 @@ CREATE TABLE photos (
 )
 
 CREATE TABLE auctioned_vehicles_photos (
-    auctioned_vehicle_id varchar(255) REFERENCES auctioned_vehicles(auctioned_vehicle_id) ON DELETE CASCADE,  -- Cascade delete if referenced auctioned vehicle is deleted
-    photo_id int REFERENCES photos(photo_id) ON DELETE CASCADE,  -- Cascade delete if referenced photo is deleted
-    PRIMARY KEY (auctioned_vehicle_id, photo_id)
+    auctioned_vehicle_id varchar(255) REFERENCES auctioned_vehicles(auctioned_vehicle_id),
+    photo_id serial PRIMARY KEY,
+	photo_url TEXT NOT NULL
 )
 
 CREATE TABLE reports (
   	report_id serial PRIMARY KEY,
     driver_id int REFERENCES drivers(user_id) NOT NULL,
   	total_distance int NOT NUll,
-  	total_time int NOT NULL, -- seconds for instance
+  	total_time int NOT NULL,
   	total_maintenance_cost int NOT NULL,
   	total_fuel real NOT NULL
 )
