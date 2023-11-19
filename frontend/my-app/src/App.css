@@ -116,7 +116,7 @@ html{
     color: white;
     font-size: 13px;
     font-weight: bold;
-    background-color: #E87E42; /* Default button background color */
+    background-color: #EDC53F; /* Default button background color */
     border: none;
     border-radius: 5px; /* Adjust as needed */
     cursor: pointer;
@@ -124,7 +124,7 @@ html{
 }
   
 .button-264:hover {
-    background-color: #BA6A0C; /* Button background color on hover */
+    background-color: #d4b037; /* Button background color on hover */
 }
 
 .button-124 {
@@ -134,7 +134,7 @@ html{
     color: white;
     font-size: 13px;
     font-weight: bold;
-    background-color: #E87E42; /* Default button background color */
+    background-color: #EDC53F; /* Default button background color */
     border: none;
     border-radius: 5px; /* Adjust as needed */
     cursor: pointer;
@@ -142,7 +142,7 @@ html{
 }
   
 .button-124:hover {
-    background-color: #BA6A0C; /* Button background color on hover */
+    background-color: #d4b037; /* Button background color on hover */
 }
 
 .input-264 {

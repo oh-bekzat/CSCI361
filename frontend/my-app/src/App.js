@@ -4,7 +4,7 @@ import './App.css';
 import Navbar from './components/Navbar';
 import Home from './components/pages/Home';
 import DriverHomePage from './components/pages/DriverHome';
-import History from './components/pages/History';
+import History from './components/pages/DriverHistory';
 import Profile from './components/pages/Profile';
 import Services from './components/pages/Services';
 import VehicleInfo from './components/pages/VehicleInfo';

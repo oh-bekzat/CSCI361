@@ -1,9 +1,8 @@
-// DriverHomePage.js
 import React, { useState, useEffect } from 'react';
 import './DriverHome.css';
 import axios from 'axios';
 
-const DriverHomePage = ({driverId}) => {
+const History = ({driverId}) => {
   // Sample data for assigned tasks
 //   const [assignedTasks, setAssignedTasks] = useState([]);
 //   const [selectedTask, setSelectedTask] = useState(null);
@@ -33,20 +32,6 @@ const DriverHomePage = ({driverId}) => {
     setSelectedTask(task);
   };
 
-  const handleStartTask = () => {
-    // Logic to handle starting the task
-    console.log('Task started:', selectedTask);
-  };
-
-  const handleDeclineTask = () => {
-    // Logic to handle declining the task
-    console.log('Task declined:', selectedTask);
-  };
-  const handleFinishTask = () => {
-    // Logic to handle finishing the task
-    console.log('Task finished:', selectedTask);
-  };
-
   return (
     <div className="driver-home-page">
       <div className="task-list">
@@ -63,7 +48,7 @@ const DriverHomePage = ({driverId}) => {
               <span className='label-11-bold' style={{ marginLeft: '20px' }}>Point of arrival: </span> <span className='label-11'>{task.departure}</span>
               </div>
               <div>
-              <span className='label-11-bold' style={{ marginLeft: '20px' }}>Status: </span> <span className='label-11'>{task.status}</span>
+              <span className='label-11-bold' style={{ marginLeft: '20px' }}>Date: </span> <span className='label-11'>{task.status}</span>
               </div>
             </li>
           ))}
@@ -89,19 +74,6 @@ const DriverHomePage = ({driverId}) => {
             <div>
                 <span className='body-14-bold'>Point of arrival: </span> <span className='body-14'>{selectedTask.departure}</span>
             </div>
-            <div>
-                <span className='body-14-bold'>Status: </span> <span className='body-14'>{selectedTask.status}</span>
-            </div>
-            <div className="button-container">
-              {selectedTask.status === 'Active' ? (
-                <button className='button-264' style={{ backgroundColor: '#4a92f7' }} onClick={handleFinishTask}>Finish Task</button>
-              ) : (
-                <div>
-                <button className='button-264' style={{ backgroundColor: '#50C878' }} onClick={handleStartTask}>Start Task</button>
-                <button className='button-264' style={{ backgroundColor: '#c94040' }} onClick={handleDeclineTask}>Decline Task</button>
-                </div>
-              )}
-            </div>
           </>
         ) : (
           <div className='body-24'>Select a route to view details.</div>
@@ -111,4 +83,4 @@ const DriverHomePage = ({driverId}) => {
   );
 };
 
-export default DriverHomePage;
+export default History;
