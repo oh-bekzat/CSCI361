@@ -17,7 +17,7 @@ const LoginPage = () => {
   };
 
   return (
-    <div>
+    <div className="login-container">
       {isLoggedIn ? (
         <div>
           <h2>Welcome, {username}!</h2>
