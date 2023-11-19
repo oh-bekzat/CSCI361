@@ -1,72 +1,72 @@
 /* Profile.css */
 
 .profile-container {
-    display: flex;
-    flex-direction: column; /* Stack children vertically */
-    align-items: center; /* Center items horizontally */
-    max-width: 400px;
-    
-    margin: 0 auto;
-    padding: 20px; /* Add padding for spacing */
-  }
+  display: flex;
+  flex-direction: column; /* Stack children vertically */
+  align-items: center; /* Center items horizontally */
+  max-width: 400px;
   
-  .left-section {
-    width: 100%; /* Take full width of the container */
-    box-sizing: border-box;
-  }
-  
-  .profile-photo-container {
-   
-    padding: 20px; /* Increased padding for space above and below */
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 250px; /* Increase the height */
-  }
-  
-  .profile-photo {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    object-fit: cover;
-    display: block; /* Remove default image spacing */
-    margin: 0 auto; /* Center the image within its container */
-    padding: 20px;
-  }
-  
-  .personal-info-container {
-    margin-top: 20px;
-  }
-  
-  .additional-info-container {
-    width: 100%; /* Take full width of the container */
-    max-width: 400px;
-    background-color: #c0c0c0;
-    padding: 15px;
-    border-radius: 8px;
-  }
-  
-  .user-name-container {
-    position: absolute;
-    bottom: 48%; /* Center vertically */
-    left: 50%;
-    transform: translate(-50%, 2%); /* Center horizontally and adjust vertically */
-    max-width: 300px;
-    border-radius: 8px;
-    text-align: center;
-    width: 100%;
-  }
+  margin: 0 auto;
+  padding: 20px; /* Add padding for spacing */
+}
 
-  .personal-info-container {
-    margin-top: 20px;
-  }
-  
-  .info-item {
-    margin-bottom: 20px; /* Add spacing between items */
-  }
+.left-section {
+  width: 100%; /* Take full width of the container */
+  box-sizing: border-box;
+}
 
-  /* button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    /* Add any additional styling for your button */
+.profile-photo-container {
+ 
+  padding: 20px; /* Increased padding for space above and below */
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: 250px; /* Increase the height */
+}
+
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block; /* Remove default image spacing */
+  margin: 0 auto; /* Center the image within its container */
+  padding: 20px;
+}
+
+.personal-info-container {
+  margin-top: 20px;
+}
+
+.additional-info-container {
+  width: 100%; /* Take full width of the container */
+  max-width: 400px;
+  background-color: #c0c0c0;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.user-name-container {
+  position: absolute;
+  bottom: 48%; /* Center vertically */
+  left: 50%;
+  transform: translate(-50%, 2%); /* Center horizontally and adjust vertically */
+  max-width: 300px;
+  border-radius: 8px;
+  text-align: center;
+  width: 100%;
+}
+
+.personal-info-container {
+  margin-top: 20px;
+}
+
+.info-item {
+  margin-bottom: 20px; /* Add spacing between items */
+}
+
+/* button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* Add any additional styling for your button */
   
