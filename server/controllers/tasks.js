@@ -118,7 +118,6 @@ tasksRouter.put('/fuelling/:taskId', async (req, res) => {
             photo_data: imageData,
           })
         })
-  
         await Promise.all(photoPromises)
       }
   
