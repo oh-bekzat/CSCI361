@@ -10,10 +10,10 @@ const Navbar = () => {
         <div className="header-32-bold">VMS Project</div>
         </a>
         <div className="navbar">
-            <a href="./">Tasks</a>
-            <a href="./history">History</a>
-            <a href="./vehicle-info">Vehicle Info</a>
-            <a href="./profile">Profile</a>
+            <a href="/driver">Tasks</a>
+            <a href="/driver/history">History</a>
+            <a href="/driver/vehicle-info">Vehicle Info</a>
+            <a href="/driver/profile">Profile</a>
         </div>
     </header>
   );

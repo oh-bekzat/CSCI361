@@ -6,7 +6,7 @@ const MainNavbar = () => {
   return (
     <header>
         <a href="/" className="logo-container">
-        <img src={require('./assets/driver.png')} alt="Driver" />
+        <img src={require('./assets/home-icon.png')} alt="Driver" />
         <div className="header-32-bold">VMS Project</div>
         </a>
         <div className="navbar">
