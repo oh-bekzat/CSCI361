@@ -13,11 +13,7 @@ const DriverHomePage = () => {
     // Fetch data from the localhost:3001/get-routes endpoint
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/routes/allRoutes', {
-          data: {
-            user_id: user_id
-          }
-        });
+        const response = await axios.get(`http://localhost:3001/routes/${user_id}`);
         setAssignedTasks(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -49,7 +45,7 @@ const DriverHomePage = () => {
     <div className="driver-home-page">
       <div className="task-list">
         <ul>
-          {assignedTasks.map((task) => (
+          {Array.isArray(assignedTasks) && assignedTasks.map((task) => (
             <li key={task.id} onClick={() => handleTaskSelection(task)}>
               <div>
                 <div className='body-20-bold'>{task.title}</div>
