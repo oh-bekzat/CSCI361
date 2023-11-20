@@ -58,12 +58,14 @@ const AdminManagesRoutes = () => {
               <td>{route.start_time}</td>
               <td>{route.status}</td>
               <td>
-                <button
-                  className="assign-button"
-                  onClick={() => handleAssignRoute(route.route_id)}
-                >
-                  Assign Driver
-                </button>
+                <Link to="/admin/routes/assign">
+                  <button
+                    className="assign-button"
+                    onClick={() => handleAssignRoute(route.route_id)}
+                  >
+                    Assign Driver
+                  </button>
+                </Link>
               </td>
             </tr>
           ))}
