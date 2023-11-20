@@ -10,7 +10,7 @@ function MaintenNavbar() {
       
         <div className='logo-container'>
           <Link to='/mainten'>
-          <span><img src={require('./assets/driver.png')} alt="Driver" /></span>
+          <span><img src={require('./assets/maintain.png')} alt="Driver" /></span>
             <span className="header-32-bold">VMS Project</span>
           </Link>
         </div>

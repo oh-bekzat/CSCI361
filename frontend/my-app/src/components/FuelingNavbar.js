@@ -10,7 +10,7 @@ function FuelingNavbar() {
       
         <div className='logo-container'>
           <Link to='/fueling'>
-          <span><img src={require('./assets/driver.png')} alt="Driver" /></span>
+          <span><img src={require('./assets/fueling.png')} alt="Driver" /></span>
             <span className="header-32-bold">VMS Project</span>
           </Link>
         </div>
