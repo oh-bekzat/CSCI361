@@ -1,8 +1,8 @@
 // RegistrationForm.js
 import React, { useState } from 'react';
-import './registerUser.css';
+import './registration.css';
 
-const RegistrationForm = () => {
+const RegistrationFormUser = () => {
   const [formData, setFormData] = useState({
     user_role: '',
     license_code: '',
@@ -78,14 +78,10 @@ const RegistrationForm = () => {
           <select name="user_role" value={formData.user_role} onChange={handleChange}>
             <option value="">Select Role</option>
             <option value="driver">Driver</option>
-            <option value="fueling-person">Fueling Person</option>
-            <option value="maintenance-person">Maintenance Person</option>
+            <option value="fuelling_person">Fuelling Person</option>
+            <option value="maintenance_person">Maintenance Person</option>
+            <option value="client">Client</option>
           </select>
-        </label>
-
-        <label>
-          License Code:
-          <input type="text" name="license_code" value={formData.license_code} onChange={handleChange} />
         </label>
 
         <label>
@@ -110,12 +106,19 @@ const RegistrationForm = () => {
 
         <label>
           Phone Number:
+          <div className='label-12 note'>Start with 8, ex: 87773378532</div>
           <input type="tel" name="phone_number" value={formData.phone_number} onChange={handleChange} />
         </label>
 
         <label>
           IIN:
+          <div className='label-12 note'>Must be 12 characters</div>
           <input type="text" name="iin" value={formData.iin} onChange={handleChange} />
+        </label>
+        <label>
+          License Code: 
+          <div className='label-12 note'>*Only required if the selected role is "driver"</div>
+          <input type="text" name="license_code" value={formData.license_code} onChange={handleChange} />
         </label>
         {errors.user_role && <span className="error-text">{errors.user_role}</span>}
 
@@ -125,4 +128,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default RegistrationFormUser;
