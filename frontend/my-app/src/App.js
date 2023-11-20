@@ -26,6 +26,10 @@ import FuelingTasks from './components/pages/FuelingTasks';
 import MaintenNavbar from './components/MaintenNavbar';
 import MaintenHistory from './components/pages/MaintenHistory';
 import MaintenTasks from './components/pages/MaintenTasks';
+import ClientNavbar from './components/ClientNavbar';
+import ClientHome from './components/pages/ClientHome';
+import ClientRequest from './components/pages/ClientRequest';
+
 
 function App() {
   return (
@@ -56,6 +60,10 @@ function App() {
         <Route path="/mainten/profile" element={<><MaintenNavbar /><Profile /></>} />
         <Route path="/mainten/history" element={<><MaintenNavbar /><MaintenHistory /></>} />
         <Route path="/mainten/" element={<><MaintenNavbar /><MaintenTasks /></>} />
+        
+        <Route path="/client/" element={<><ClientNavbar /><ClientHome /></>} />
+        <Route path="/client/make-request" element={<><ClientNavbar /><ClientRequest /></>} />
+        <Route path="/client/logout" element={<><MainNavbar /><Home /></>} />
         
       </Routes>
    
