@@ -34,7 +34,7 @@ const Report = sequelize.define('Report', {
       allowNull: false,
     }
 }, {
-    tableName: 'drivers',
+    tableName: 'reports',
     timestamps: false
 })
 
