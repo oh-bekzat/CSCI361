@@ -24,7 +24,7 @@ const LoginPage = () => {
     })
     .then((data) => {
       setIsLoggedIn(true);
-      alert('Login successful!');
+      redirectBasedOnRole(data.user_role);
       console.log('User ID:', data.userId);
       console.log('User Role:', data.user_role);
       // You may store the received token in localStorage or a state management system
@@ -38,7 +38,7 @@ const LoginPage = () => {
 const redirectBasedOnRole = (userRole) => {
   switch (userRole) {
     case 'maintenance':
-      navigate('/maintenance'); // Redirect to maintenance page
+      navigate('/mainten'); // Redirect to maintenance page
       break;
     case 'fueling':
       navigate('/fueling'); // Redirect to fueling page
