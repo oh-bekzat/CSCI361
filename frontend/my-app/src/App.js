@@ -11,7 +11,8 @@ import LoginPage from './components/pages/Login';
 import MainNavbar from './components/MainNavbar';
 import AboutUs from './components/pages/AboutUs';
 import Auction from './components/pages/Auction';
-import RegistrationForm from './components/pages/registerUser';
+import RegistrationFormUser from './components/pages/registerUser';
+import RegistrationFormVehicle from './components/pages/registerVehicle';
 
 function App() {
   return (
@@ -28,7 +29,8 @@ function App() {
         <Route path="/" element={<><MainNavbar /><Home /></>} />
         <Route path="/about-us" element={<><MainNavbar /><AboutUs /></>} />
         <Route path="/auction" element={<><MainNavbar /><Auction /></>} />
-        <Route path="/admin/register" element={<><RegistrationForm/></>} />
+        <Route path="/admin/register/user" element={<><RegistrationFormUser/></>} />
+        <Route path="/admin/register/vehicle" element={<><RegistrationFormVehicle/></>} />
       </Routes>
    
     </BrowserRouter>
