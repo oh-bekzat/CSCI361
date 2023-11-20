@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, BrowserRouter } from 'react-router-dom';
 import './App.css';
 import Navbar from './components/DriverNavbar';
 import Home from './components/pages/Home';
@@ -15,7 +15,8 @@ import RegistrationForm from './components/pages/registerUser';
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
+    
       <Routes>
         <Route path="/driver/" element={<><Navbar /><DriverHomePage /></>} />
         <Route path="/driver/history" element={<><Navbar /><History /></>} />
@@ -29,7 +30,8 @@ function App() {
         <Route path="/auction" element={<><MainNavbar /><Auction /></>} />
         <Route path="/admin/register" element={<><RegistrationForm/></>} />
       </Routes>
-    </Router>
+   
+    </BrowserRouter>
   );
 }
 
