@@ -1,9 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
 import './car_cell.js'
+import axios from 'axios';
 
 const CarCell = ({ car }) => {
   const [isInAuction, setIsInAuction] = useState(false);
+  const [startTime, setStartTime] = useState('');
+  const [finishTime, setFinishTime] = useState('')
 
   useEffect(() => {
     // Fetch data from the database to check if the car is in the auction
@@ -35,6 +38,34 @@ const CarCell = ({ car }) => {
       console.error('Error adding to auction:', error);
     }
   };
+
+  const generateReport = async (vehicleId) => {
+    try {
+      // Your API endpoint URL
+      const apiUrl = `http://localhost:3001/reports/${vehicleId}`
+
+      // Example data to send in the request body
+      const requestData = {
+        start_time: startTime,
+        finish_time: finishTime,
+      }
+
+      // Make an Axios POST request
+      const response = await axios.post(apiUrl, requestData, { responseType: 'arraybuffer' });
+
+      // Log the response or handle it as needed
+      const blob = new Blob([response.data], { type: 'application/pdf' });
+
+    // Create a data URL from the Blob
+    const url = URL.createObjectURL(blob);
+
+    // Open the PDF in a new window
+    window.open(url, '_blank');
+  } catch (error) {
+    console.error('Error generating report:', error);
+  }
+  }
+
   return (
     
 
@@ -99,9 +130,18 @@ const CarCell = ({ car }) => {
             {isInAuction ? (
               <div className="in-auction-label">In Auction</div>
             ) : (
-              <button className="button-124" onClick={handleAddToAuction}>
-                Add to Auction
-              </button>
+              <div>
+                <button className="button-124" onClick={handleAddToAuction}>
+                  Add to Auction
+                </button>
+                <label>Start time:</label>
+                <input type="datetime-local" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
+                <label>Finish time:</label>
+                <input type="datetime-local" value={finishTime} onChange={(e) => setFinishTime(e.target.value)} />
+                <button className="reportButton" onClick={() => generateReport(car.license_plate)}>
+                  Generate report
+                </button>
+              </div>
             )}
           </div>
       </div>
