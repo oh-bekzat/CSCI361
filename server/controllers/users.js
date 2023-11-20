@@ -38,6 +38,29 @@ usersRouter.post('/', async (req, res) => {
     }
 })
 
+
+usersRouter.post('/login', async (req, res) => {
+    const { username, password } = req.body;
+    try {
+        const user = await User.findOne({
+            where: {
+                email: username,
+                password_hashed: password
+            }
+        })
+        if (!user) { 
+            return res.status(401).json({ error: 'User not found' })
+        }
+        res.status(201).json({
+            userId: user.user_id,
+            user_role: user.user_role,
+          });
+    } catch (error) {
+        console.error('Error fetching user:', error)
+        res.status(500).json({ error: 'Internal server error' })
+    }
+  });
+
 usersRouter.get('/:id', async (req, res) => {
     try {
         const user = await User.findByPk(req.params.id)
