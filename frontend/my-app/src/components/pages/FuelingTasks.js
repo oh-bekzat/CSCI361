@@ -74,10 +74,7 @@ const FuelingTasks = () => {
               <span className='body-14-bold'>Licence Plate: </span> <span className='body-14'>{selectedTask.vehicleId}</span>
             </div>
             {/* Input Boxes */}
-            <div>
-              <label htmlFor="cost">Cost:</label>
-              <input type="text" id="cost" value={cost} onChange={(e) => setCost(e.target.value)} />
-            </div>
+            
             <div>
               <label htmlFor="fuelingDate">Fueling Date:</label>
               <input type="date" id="fuelingDate" value={fuelingDate} onChange={(e) => setFuelingDate(e.target.value)} />
