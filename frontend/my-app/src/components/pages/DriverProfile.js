@@ -49,6 +49,9 @@ const Profile = () => {
           <div className="info-item">
             <span className="body-14"><strong>Government ID:</strong> {userData?.governmentId || 'Not available'}</span>
           </div>
+          <div className="info-item">
+            <span className="body-14"><strong>Dispatcher contact:</strong> {userData?.dispatcherContact || '+77182214141'}</span>
+          </div>
         </div>
 
         {/* Logout Button */}
