@@ -2,27 +2,25 @@
 import React, { useState, useEffect } from 'react';
 import './DriverHome.css';
 import axios from 'axios';
-import { useLocation } from 'react-router-dom';
 
 const DriverHomePage = () => {
   // Sample data for assigned tasks
   const [assignedTasks, setAssignedTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
-  const location = useLocation();
-  const userId = localStorage.getItem("userId");
+  const user_id = localStorage.getItem("driverId");
 
-    useEffect(() => {
+  useEffect(() => {
     // Fetch data from the localhost:3001/get-routes endpoint
-        const fetchData = async () => {
-        try {
-            const response = await axios.get('http://localhost:3001/routes/allRoutes');
-            setAssignedTasks(response.data);
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-        };
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/routes/${user_id}`);
+        setAssignedTasks(response.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
     fetchData();
-    }, []);
+  }, []);
 
   // Function to handle task selection
   const handleTaskSelection = (task) => {
@@ -47,7 +45,7 @@ const DriverHomePage = () => {
     <div className="driver-home-page">
       <div className="task-list">
         <ul>
-          {assignedTasks.map((task) => (
+          {Array.isArray(assignedTasks) && assignedTasks.map((task) => (
             <li key={task.id} onClick={() => handleTaskSelection(task)}>
               <div>
                 <div className='body-20-bold'>{task.title}</div>

@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import './DriverProfile.css'; // Include your styles
+import { useNavigate } from 'react-router-dom';
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Simulating a fetch request to an API endpoint
-    fetch('https://api.example.com/userdata')
+    const driverId = localStorage.getItem("driverId");
+    fetch(`http://localhost:3001/users/${driverId}`)
       .then(response => response.json())
       .then(data => setUserData(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -14,7 +17,9 @@ const Profile = () => {
 
   const handleLogout = () => {
     // Add your logout logic here
-    console.log('User logged out'); // For example, you can log a message or call a logout API
+    console.log('User logged out');
+    localStorage.removeItem("driverId");
+    navigate('/');
   };
 
   return (
@@ -29,7 +34,7 @@ const Profile = () => {
               className="profile-photo"
             />
             <div className="user-name-container">
-            <h2>{userData?.name || 'User Name'}</h2>
+            <h2>{userData?.firstname + ' ' + userData?.lastname || 'User Name'}</h2>
             <img src={require('../assets/star.png')} style={{ width: '20pt' }} alt="Star" />
           </div>
           </div>
@@ -41,13 +46,10 @@ const Profile = () => {
             <span className="body-14"><strong>Email:</strong> {userData?.email || 'Not available'}</span>
           </div>
           <div className="info-item">
-            <span className="body-14"><strong>Address:</strong> {userData?.address || 'Not available'}</span>
+            <span className="body-14"><strong>Phone Number:</strong> {userData?.phone_number || 'Not available'}</span>
           </div>
           <div className="info-item">
-            <span className="body-14"><strong>Phone Number:</strong> {userData?.phoneNumber || 'Not available'}</span>
-          </div>
-          <div className="info-item">
-            <span className="body-14"><strong>Government ID:</strong> {userData?.governmentId || 'Not available'}</span>
+            <span className="body-14"><strong>Government ID:</strong> {userData?.iin || 'Not available'}</span>
           </div>
           <div className="info-item">
             <span className="body-14"><strong>Dispatcher contact:</strong> {userData?.dispatcherContact || '+7 (718) 221-41-41'}</span>

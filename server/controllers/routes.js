@@ -19,12 +19,10 @@ routesRouter.get('/', async (req, res) => {
     }
 })
 
-routesRouter.get('/allRoutes', async (req, res) => {
+routesRouter.get('/:user_id', async (req, res) => {
     try {
-        const { user_id } = req.body
-
         const routes = await Route.findAll({
-            where: { driver_id: user_id },
+            where: { driver_id: req.params.user_id },
         })
 
         res.status(200).json({ routes })
