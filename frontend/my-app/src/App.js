@@ -48,13 +48,12 @@ function App() {
         <Route path="/" element={<><MainNavbar /><Home /></>} />
         <Route path="/about-us" element={<><MainNavbar /><AboutUs /></>} />
         <Route path="/auction" element={<><MainNavbar /><Auction /></>} />
-        <Route path="/admin/register/user" element={<><RegistrationFormUser/></>} />
-        <Route path="/admin/register/vehicle" element={<><RegistrationFormVehicle/></>} />
         <Route path="/admin/" element={<><AdminNavbar /><AdminHomePage /></>} />
         <Route path="/admin/tasks" element={<><AdminNavbar /><AdminTasks /></>} />
         <Route path="/admin/routes" element={<><AdminNavbar /><AdminRoutes /></>} />
         <Route path="/admin/users" element={<><AdminNavbar /><AdminUsers /></>} />
-        <Route path="/admin/users/add" element={<><AddUserPage/></>} />
+        <Route path="/admin/users/add" element={<><AdminNavbar /><RegistrationFormUser/></>} />
+        <Route path="/admin/vehicles/add" element={<><AdminNavbar /><RegistrationFormVehicle/></>} />
         <Route path="/admin/vehicles" element={<><AdminNavbar /><AdminVehicles /></>} />
         <Route path="/fueling/profile" element={<><FuelingNavbar /><Profile /></>} />
         <Route path="/fueling/history" element={<><FuelingNavbar /><FuelingHistory /></>} />
