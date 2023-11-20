@@ -23,6 +23,7 @@ import AdminRoutes from './components/pages/AdminRoutes';
 import FuelingNavbar from './components/FuelingNavbar';
 import FuelingHistory from './components/pages/FuelingHistory';
 import FuelingTasks from './components/pages/FuelingTasks';
+import FuelProfile from './components/pages/FuelingProfile';
 import MaintenNavbar from './components/MaintenNavbar';
 import MaintenHistory from './components/pages/MaintenHistory';
 import MaintenTasks from './components/pages/MaintenTasks';
@@ -56,7 +57,7 @@ function App() {
         <Route path="/admin/users/add" element={<><AdminNavbar /><RegistrationFormUser/></>} />
         <Route path="/admin/vehicles/add" element={<><AdminNavbar /><RegistrationFormVehicle/></>} />
         <Route path="/admin/vehicles" element={<><AdminNavbar /><AdminVehicles /></>} />
-        <Route path="/fueling/profile" element={<><FuelingNavbar /><Profile /></>} />
+        <Route path="/fueling/profile" element={<><FuelingNavbar /><FuelProfile /></>} />
         <Route path="/fueling/history" element={<><FuelingNavbar /><FuelingHistory /></>} />
         <Route path="/fueling/" element={<><FuelingNavbar /><FuelingTasks /></>} />
         <Route path="/mainten/profile" element={<><MaintenNavbar /><Profile /></>} />
