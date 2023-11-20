@@ -19,7 +19,12 @@ import AdminTasks from './components/pages/AdminTasks';
 import AdminUsers from './components/pages/AdminUsers';
 import AdminVehicles from './components/pages/AdminVehicles';
 import AdminRoutes from './components/pages/AdminRoutes';
-
+import FuelingNavbar from './components/FuelingNavbar';
+import FuelingHistory from './components/pages/FuelingHistory';
+import FuelingTasks from './components/pages/FuelingTasks';
+import MaintenNavbar from './components/MaintenNavbar';
+import MaintenHistory from './components/pages/MaintenHistory';
+import MaintenTasks from './components/pages/MaintenTasks';
 
 function App() {
   return (
@@ -43,6 +48,13 @@ function App() {
         <Route path="/admin/routes" element={<><AdminNavbar /><AdminRoutes /></>} />
         <Route path="/admin/users" element={<><AdminNavbar /><AdminUsers /></>} />
         <Route path="/admin/vehicles" element={<><AdminNavbar /><AdminVehicles /></>} />
+        <Route path="/fueling/profile" element={<><FuelingNavbar /><Profile /></>} />
+        <Route path="/fueling/history" element={<><FuelingNavbar /><FuelingHistory /></>} />
+        <Route path="/fueling/" element={<><FuelingNavbar /><FuelingTasks /></>} />
+        <Route path="/mainten/profile" element={<><MaintenNavbar /><Profile /></>} />
+        <Route path="/mainten/history" element={<><MaintenNavbar /><MaintenHistory /></>} />
+        <Route path="/mainten/" element={<><MaintenNavbar /><MaintenTasks /></>} />
+        
       </Routes>
    
     </BrowserRouter>
