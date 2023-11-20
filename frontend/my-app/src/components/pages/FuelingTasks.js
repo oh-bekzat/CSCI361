@@ -92,7 +92,7 @@ const FuelingTasks = () => {
               <input type="text" id="gasStation" value={gasStation} onChange={(e) => setGasStation(e.target.value)} />
             </div>
             <div className="button-container">
-              <button onClick={handleAssignFuelingTask}>Assign Fueling Task</button>
+              <button onClick={handleAssignFuelingTask}>Finish Fueling Task</button>
             </div>
           </>
         ) : (
