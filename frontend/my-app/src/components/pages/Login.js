@@ -46,7 +46,7 @@ const redirectBasedOnRole = (userRole, userId) => {
       navigate('/fueling'); // Redirect to fueling page
       break;
     case 'driver':
-      localStorage.setItem('driverId', null);
+      localStorage.setItem('driverId', userId);
       navigate('/driver');
       // navigate('/driver'); // Redirect to driver page
       break;
