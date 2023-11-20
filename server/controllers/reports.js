@@ -1,12 +1,12 @@
 const express = require('express');
 const { Op } = require('sequelize');
-const Report = require('../models/report');
+const Report = require('../models/Report');
 const MaintenanceDetail = require('../models/MaintenanceDetail')
 const Route = require('../models/Route')
 
 const reportsRouter = express.Router()
 
-router.post('/:vehicle_id', async (req, res) => {
+reportsRouter.post('/:vehicle_id', async (req, res) => {
   try {
     const { vehicle_id } = req.params
     const { start_time, finish_time } = req.body

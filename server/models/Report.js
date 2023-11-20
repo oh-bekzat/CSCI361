@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize')
 const sequelize = require('../database')
-const Driver = require('./Driver')
+const Vehicle = require('./Vehicle')
 
 const Report = sequelize.define('Report', {
     report_id: {
@@ -8,13 +8,12 @@ const Report = sequelize.define('Report', {
       primaryKey: true,
       autoIncrement: true,
     },
-    driver_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      references: {
-        model: Driver,
-        key: 'user_id',
-      },
+    vehicle_id: {
+        type: DataTypes.STRING(255),
+        references: {
+            model: Vehicle,
+            key: 'license_plate',
+        },
     },
     total_distance: {
       type: DataTypes.INTEGER,
