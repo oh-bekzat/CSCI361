@@ -28,6 +28,16 @@ routesRouter.post('/', async (req, res) => {
     }
 })
 
+routesRouter.get('/', async (req, res) => {
+    try {
+        const routes = await Route.findAll()
+        res.status(200).json({ routes })
+    } catch (error) {
+        console.error('Error fetching routes:', error)
+        res.status(500).json({ error: 'Internal server error' })
+    }
+})
+
 routesRouter.get('/requested/:user_id', async (req, res) => {
     try {
 

@@ -11,6 +11,19 @@ usersRouter.get('/', async (req, res) => {
     }
 })
 
+usersRouter.get('/drivers', async (req, res) => {
+    try {
+        const users = await User.findAll({
+            where: {
+                user_role: 'driver'
+            }
+        })
+        res.json(users)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+})
+
 usersRouter.post('/', async (req, res) => {
     try {
         const { user_role, license_code, ...otherUserData } = req.body

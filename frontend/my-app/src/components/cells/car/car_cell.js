@@ -40,15 +40,15 @@ const CarCell = ({ car }) => {
 
     <div className="car-details">
       <div className="car-image">
-        <img src={require('../../assets/car_example.png')} alt={`${car.make} ${car.model}`} />
+        <img src={car.vehicle_image} alt={`${car.make} ${car.model}`} />
       </div>
       <div className="car-info-container">
         <div className="car-info">
-          <div className="body-20-bold">{`${car.make} ${car.model} ${car.year} y.`}</div>
+          <div className="body-20-bold">{`${car.make} ${car.model} ${car.manufacture_year} y.`}</div>
           <div className="car-property">
             <div>
-              <span className="label-14-bold">id:</span>{' '}
-              <span className="label-14">{car.id}</span>
+              <span className="label-14-bold">License Plate:</span>{' '}
+              <span className="label-14">{car.license_plate}</span>
             </div>
             <div>
               <span className="label-14-bold">Make:</span>{' '}
@@ -59,8 +59,8 @@ const CarCell = ({ car }) => {
               <span className="label-14">{car.model}</span>
             </div>
             <div>
-              <span className="label-14-bold">Year:</span>{' '}
-              <span className="label-14">{car.year}</span>
+              <span className="label-14-bold">Manufacture Year:</span>{' '}
+              <span className="label-14">{car.manufacture_year}</span>
             </div>
             {/* Add more properties as needed */}
           </div>
@@ -70,15 +70,27 @@ const CarCell = ({ car }) => {
             {/* Display additional car properties here */}
             <div>
               <span className="label-14-bold">Fuel Volume:</span>{' '}
-              <span className="label-14">{car.fuelVolume}</span>
+              <span className="label-14">{car.fuel_volume}</span>
             </div>
             <div>
               <span className="label-14-bold">Tank Volume:</span>{' '}
-              <span className="label-14">{car.tankVolume}</span>
+              <span className="label-14">{car.tank_volume}</span>
             </div>
             <div>
               <span className="label-14-bold">Mileage:</span>{' '}
               <span className="label-14">{car.mileage}</span>
+            </div>
+            <div>
+              <span className="label-14-bold">Capacity:</span>{' '}
+              <span className="label-14">{car.capacity} passengers</span>
+            </div>
+            <div>
+              <span className="label-14-bold">Last fueled date:</span>{' '}
+              <span className="label-14">{car.last_fueled_date}</span>
+            </div>
+            <div>
+              <span className="label-14-bold">Last maintained date:</span>{' '}
+              <span className="label-14">{car.last_maintained_date}</span>
             </div>
             {/* Add more properties as needed */}
           </div>
