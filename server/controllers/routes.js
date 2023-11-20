@@ -4,30 +4,32 @@ const Admin = require('../models/Admin.js')
 const Driver = require('../models/Driver.js')
 const routesRouter = require('express').Router()
 
-routesRouter.post('/', async (req, res) => {
+routesRouter.get('/', async (req, res) => {
     try {
-        const { user_id, start_point, finish_point, distance } = req.body
+        const { user_id } = req.body
 
-        if (!user_id || !start_point || !finish_point || !distance) {
-            return res.status(400).json({ error: 'Fields are required' })
-        }
-
-        const user = await User.findByPk(user_id)
-
-        if (!user || user.user_role !== 'client') {
-            return res.status(400).json({ error: 'The specified user is not a client' })
-        }
-
-        const newRoute = await Route.create({
-            client_id: user_id,
-            start_point,
-            finish_point,
-            distance
+        const routes = await Route.findAll({
+            where: { client_id: user_id },
         })
 
-        res.status(201).json(newRoute)
+        res.status(200).json({ routes })
     } catch (error) {
-        console.error('Error creating route:', error)
+        console.error('Error fetching routes:', error)
+        res.status(500).json({ error: 'Internal server error' })
+    }
+})
+
+routesRouter.get('/allRoutes', async (req, res) => {
+    try {
+        const { user_id } = req.body
+
+        const routes = await Route.findAll({
+            where: { driver_id: user_id },
+        })
+
+        res.status(200).json({ routes })
+    } catch (error) {
+        console.error('Error fetching routes:', error)
         res.status(500).json({ error: 'Internal server error' })
     }
 })

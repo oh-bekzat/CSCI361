@@ -26,12 +26,18 @@ import FuelingTasks from './components/pages/FuelingTasks';
 import MaintenNavbar from './components/MaintenNavbar';
 import MaintenHistory from './components/pages/MaintenHistory';
 import MaintenTasks from './components/pages/MaintenTasks';
+import ClientNavbar from './components/ClientNavbar';
+import ClientHome from './components/pages/ClientHome';
+import ClientRequest from './components/pages/ClientRequest';
+
 
 function App() {
   return (
     <BrowserRouter>
     
       <Routes>
+        {/* <Route path="/driver" render={(props) => <><Navbar /><DriverHomePage {...props} /></>} /> */}
+        
         <Route path="/driver/" element={<><Navbar /><DriverHomePage /></>} />
         <Route path="/driver/history" element={<><Navbar /><History /></>} />
         <Route path="/driver/profile" element={<><Navbar /><Profile /></>} />
@@ -42,13 +48,12 @@ function App() {
         <Route path="/" element={<><MainNavbar /><Home /></>} />
         <Route path="/about-us" element={<><MainNavbar /><AboutUs /></>} />
         <Route path="/auction" element={<><MainNavbar /><Auction /></>} />
-        <Route path="/admin/register/user" element={<><RegistrationFormUser/></>} />
-        <Route path="/admin/register/vehicle" element={<><RegistrationFormVehicle/></>} />
         <Route path="/admin/" element={<><AdminNavbar /><AdminHomePage /></>} />
         <Route path="/admin/tasks" element={<><AdminNavbar /><AdminTasks /></>} />
         <Route path="/admin/routes" element={<><AdminNavbar /><AdminRoutes /></>} />
         <Route path="/admin/users" element={<><AdminNavbar /><AdminUsers /></>} />
-        <Route path="/admin/users/add" element={<><AddUserPage/></>} />
+        <Route path="/admin/users/add" element={<><AdminNavbar /><RegistrationFormUser/></>} />
+        <Route path="/admin/vehicles/add" element={<><AdminNavbar /><RegistrationFormVehicle/></>} />
         <Route path="/admin/vehicles" element={<><AdminNavbar /><AdminVehicles /></>} />
         <Route path="/fueling/profile" element={<><FuelingNavbar /><Profile /></>} />
         <Route path="/fueling/history" element={<><FuelingNavbar /><FuelingHistory /></>} />
@@ -56,6 +61,10 @@ function App() {
         <Route path="/mainten/profile" element={<><MaintenNavbar /><Profile /></>} />
         <Route path="/mainten/history" element={<><MaintenNavbar /><MaintenHistory /></>} />
         <Route path="/mainten/" element={<><MaintenNavbar /><MaintenTasks /></>} />
+        
+        <Route path="/client/" element={<><ClientNavbar /><ClientHome /></>} />
+        <Route path="/client/make-request" element={<><ClientNavbar /><ClientRequest /></>} />
+        <Route path="/client/logout" element={<><MainNavbar /><Home /></>} />
         
       </Routes>
    
