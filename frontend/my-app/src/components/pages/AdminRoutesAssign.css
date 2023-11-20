@@ -1,0 +1,26 @@
+.manage-routes-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 25px;
+  }
+  
+  .select-drivers-container {
+    text-align: center;
+    margin-top: 20px; /* Adjust the margin-top as needed */
+  }
+  
+  .assign-button {
+    padding: 10px 15px; /* Adjust the padding as needed */
+    font-size: 14px;
+    cursor: pointer;
+    background-color: #EDC53F;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    width: 100%;
+  }
+  
+  .assign-button:hover {
+    background-color: #ccab39;
+  }
