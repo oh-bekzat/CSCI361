@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import './Auction.css';
+import '../../components/cells/car/car_cell.css';
 import axios from 'axios';
 import CarCell from '../../components/cells/car/car_cell';
+
+import { Link } from 'react-router-dom';
 
 const AdminVehicles = () => {
   const cars = [{
@@ -50,6 +52,9 @@ const AdminVehicles = () => {
 
   return (
     <div className="auction-page">
+      <Link to="/admin/vehicles/add">
+      <button className="button-124">Add Vehicle</button>
+      </Link>
       {auctionCars.map((car, index) => (
         <CarCell key={index} car={car} />
       ))}
