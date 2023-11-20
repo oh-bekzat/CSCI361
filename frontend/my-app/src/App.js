@@ -17,6 +17,7 @@ import AdminHomePage from './components/pages/AdminHome';
 import AdminNavbar from './components/AdminNavbar';
 import AdminTasks from './components/pages/AdminTasks';
 import AdminUsers from './components/pages/AdminUsers';
+import AddUserPage from './components/pages/AdminAddUsers';
 import AdminVehicles from './components/pages/AdminVehicles';
 import AdminRoutes from './components/pages/AdminRoutes';
 import FuelingNavbar from './components/FuelingNavbar';
@@ -25,12 +26,18 @@ import FuelingTasks from './components/pages/FuelingTasks';
 import MaintenNavbar from './components/MaintenNavbar';
 import MaintenHistory from './components/pages/MaintenHistory';
 import MaintenTasks from './components/pages/MaintenTasks';
+import ClientNavbar from './components/ClientNavbar';
+import ClientHome from './components/pages/ClientHome';
+import ClientRequest from './components/pages/ClientRequest';
+
 
 function App() {
   return (
     <BrowserRouter>
     
       <Routes>
+        {/* <Route path="/driver" render={(props) => <><Navbar /><DriverHomePage {...props} /></>} /> */}
+        
         <Route path="/driver/" element={<><Navbar /><DriverHomePage /></>} />
         <Route path="/driver/history" element={<><Navbar /><History /></>} />
         <Route path="/driver/profile" element={<><Navbar /><Profile /></>} />
@@ -47,6 +54,7 @@ function App() {
         <Route path="/admin/tasks" element={<><AdminNavbar /><AdminTasks /></>} />
         <Route path="/admin/routes" element={<><AdminNavbar /><AdminRoutes /></>} />
         <Route path="/admin/users" element={<><AdminNavbar /><AdminUsers /></>} />
+        <Route path="/admin/users/add" element={<><AddUserPage/></>} />
         <Route path="/admin/vehicles" element={<><AdminNavbar /><AdminVehicles /></>} />
         <Route path="/fueling/profile" element={<><FuelingNavbar /><Profile /></>} />
         <Route path="/fueling/history" element={<><FuelingNavbar /><FuelingHistory /></>} />
@@ -54,6 +62,10 @@ function App() {
         <Route path="/mainten/profile" element={<><MaintenNavbar /><Profile /></>} />
         <Route path="/mainten/history" element={<><MaintenNavbar /><MaintenHistory /></>} />
         <Route path="/mainten/" element={<><MaintenNavbar /><MaintenTasks /></>} />
+        
+        <Route path="/client/" element={<><ClientNavbar /><ClientHome /></>} />
+        <Route path="/client/make-request" element={<><ClientNavbar /><ClientRequest /></>} />
+        <Route path="/client/logout" element={<><MainNavbar /><Home /></>} />
         
       </Routes>
    

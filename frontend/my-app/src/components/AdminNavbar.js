@@ -10,7 +10,7 @@ function AdminNavbar() {
       
         <div className='logo-container'>
           <Link to='/admin'>
-          <span><img src={require('./assets/driver.png')} alt="Admin" /></span>
+          <span><img src={require('./assets/key.png')} alt="Admin" /></span>
             <span className="header-32-bold">VMS Project</span>
           </Link>
         </div>

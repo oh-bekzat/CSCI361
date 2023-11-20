@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -22,7 +24,7 @@ const LoginPage = () => {
     })
     .then((data) => {
       setIsLoggedIn(true);
-      alert('Login successful!');
+      redirectBasedOnRole(data.user_role,data.userId);
       console.log('User ID:', data.userId);
       console.log('User Role:', data.user_role);
       // You may store the received token in localStorage or a state management system
@@ -30,6 +32,25 @@ const LoginPage = () => {
     .catch((error) => {
       alert(error.message || 'An error occurred during login');
     });
+};
+
+
+const redirectBasedOnRole = (userRole,userId) => {
+  switch (userRole) {
+    case 'maintenance':
+      navigate('/mainten'); // Redirect to maintenance page
+      break;
+    case 'fueling':
+      navigate('/fueling'); // Redirect to fueling page
+      break;
+    case 'driver':
+      navigate('/driver', { state: { userId } });
+      // navigate('/driver'); // Redirect to driver page
+      break;
+    default:
+      // Handle other roles or unknown roles
+      break;
+  }
 };
 
   return (
