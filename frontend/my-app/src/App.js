@@ -20,7 +20,6 @@ import AdminUsers from './components/pages/AdminUsers';
 import AddUserPage from './components/pages/AdminAddUsers';
 import AdminVehicles from './components/pages/AdminVehicles';
 import AdminRoutes from './components/pages/AdminRoutes';
-import AdminRoutesAssign from './components/pages/AdminRoutesAssign';
 import FuelingNavbar from './components/FuelingNavbar';
 import FuelingHistory from './components/pages/FuelingHistory';
 import FuelingTasks from './components/pages/FuelingTasks';
@@ -54,7 +53,6 @@ function App() {
         <Route path="/admin/" element={<><AdminNavbar /><AdminHomePage /></>} />
         <Route path="/admin/tasks" element={<><AdminNavbar /><AdminTasks /></>} />
         <Route path="/admin/routes" element={<><AdminNavbar /><AdminRoutes /></>} />
-        <Route path="/admin/routes/assign" element={<><AdminNavbar /><AdminRoutesAssign /></>} />
         <Route path="/admin/users" element={<><AdminNavbar /><AdminUsers /></>} />
         <Route path="/admin/users/add" element={<><AdminNavbar /><RegistrationFormUser/></>} />
         <Route path="/admin/vehicles/add" element={<><AdminNavbar /><RegistrationFormVehicle/></>} />

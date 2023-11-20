@@ -97,7 +97,6 @@ const redirectBasedOnRole = (userRole, userId) => {
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
           <button className="button-124" onClick={handleLogin}>Login</button>
-          <button className="button-124" onClick={handleReport}>Report</button>
         </div>
       )}
     </div>
