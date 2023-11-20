@@ -31,12 +31,12 @@ import './Navbar.css';
 function Navbar() {
  
   return (
-    <header className="header">
-      <nav className='navbar'>
+    <header className="header navbar">
+      
         <div className='logo-container'>
           <Link to='/driver'>
-            <img src={require('./assets/driver.png')} alt="Driver" />
-            <div className="header-32-bold">VMS Project</div>
+          <span><img src={require('./assets/driver.png')} alt="Driver" /></span>
+            <span className="header-32-bold">VMS Project</span>
           </Link>
         </div>
         <ul className='navbar'>
@@ -61,9 +61,10 @@ function Navbar() {
             </Link>
           </li>
         </ul>
-      </nav>
+      
     </header>
   );
 }
 
 export default Navbar;
+
