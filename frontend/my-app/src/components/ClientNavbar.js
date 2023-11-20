@@ -26,8 +26,8 @@ function ClientNavbar() {
           </li>
           
           <li>
-            <Link to='/client/logout' className='nav-links' >
-              Logout
+            <Link to='/client/profile' className='nav-links' >
+              Profile
             </Link>
           </li>
         </ul>

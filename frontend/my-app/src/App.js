@@ -29,6 +29,7 @@ import MaintenTasks from './components/pages/MaintenTasks';
 import ClientNavbar from './components/ClientNavbar';
 import ClientHome from './components/pages/ClientHome';
 import ClientRequest from './components/pages/ClientRequest';
+import ClientProfile from './components/pages/ClientProfile';
 
 
 function App() {
@@ -64,7 +65,7 @@ function App() {
         
         <Route path="/client/" element={<><ClientNavbar /><ClientHome /></>} />
         <Route path="/client/make-request" element={<><ClientNavbar /><ClientRequest /></>} />
-        <Route path="/client/logout" element={<><MainNavbar /><Home /></>} />
+        <Route path="/client/profile" element={<><ClientNavbar /><ClientProfile /></>} />
         
       </Routes>
    

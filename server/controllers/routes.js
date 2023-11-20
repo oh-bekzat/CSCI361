@@ -4,12 +4,35 @@ const Admin = require('../models/Admin.js')
 const Driver = require('../models/Driver.js')
 const routesRouter = require('express').Router()
 
-routesRouter.get('/', async (req, res) => {
+routesRouter.post('/', async (req, res) => {
+    var randomValue = Math.floor(Math.random() * (100 - 10 + 1)) + 10;
     try {
-        const { user_id } = req.body
+        const { user_id, start_point, finish_point } = req.body
+        if (!user_id || !start_point || !finish_point) {
+            return res.status(400).json({ error: 'Fields are required' })
+        }
+        const user = await User.findByPk(user_id)
+        if (!user || user.user_role !== 'client') {
+            return res.status(400).json({ error: 'The specified user is not a client' })
+        }
+        const newRoute = await Route.create({
+            client_id: user_id,
+            start_point,
+            finish_point,
+            distance: randomValue
+        })
+        res.status(201).json(newRoute)
+    } catch (error) {
+        console.error('Error creating route:', error)
+        res.status(500).json({ error: 'Internal server error' })
+    }
+})
+
+routesRouter.get('/requested/:user_id', async (req, res) => {
+    try {
 
         const routes = await Route.findAll({
-            where: { client_id: user_id },
+            where: { client_id: req.params.user_id  },
         })
 
         res.status(200).json({ routes })
@@ -19,12 +42,11 @@ routesRouter.get('/', async (req, res) => {
     }
 })
 
-routesRouter.get('/:user_id', async (req, res) => {
+routesRouter.get('/assigned/:user_id', async (req, res) => {
     try {
         const routes = await Route.findAll({
             where: { driver_id: req.params.user_id },
         })
-
         res.status(200).json({ routes })
     } catch (error) {
         console.error('Error fetching routes:', error)

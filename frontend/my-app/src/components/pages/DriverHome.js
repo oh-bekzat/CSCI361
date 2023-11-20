@@ -13,7 +13,8 @@ const DriverHomePage = () => {
     // Fetch data from the localhost:3001/get-routes endpoint
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:3001/routes/${user_id}`);
+        const response = await axios.get(`http://localhost:3001/routes/assigned/${user_id}`);
+        console.log(response.data);
         setAssignedTasks(response.data);
       } catch (error) {
         console.error('Error fetching data:', error);

@@ -32,7 +32,25 @@ const LoginPage = () => {
     .catch((error) => {
       alert(error.message || 'An error occurred during login');
     });
-};
+    };
+  const handleReport = () => 
+  {fetch('http://localhost:3001/reports/2', {
+    method: 'POST',
+    body: {
+      "start_time": "2022-08-02 09:30:00", 
+      "finish_time": "2024-08-02 09:30:00"
+    },
+    })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error('Invalid username or password');
+      }
+      return response.json();
+    })
+    .catch((error) => {
+      alert(error.message || 'An error occurred during login');
+    });
+    };
 
 
 const redirectBasedOnRole = (userRole, userId) => {
@@ -79,6 +97,7 @@ const redirectBasedOnRole = (userRole, userId) => {
             <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
           </div>
           <button className="button-124" onClick={handleLogin}>Login</button>
+          <button className="button-124" onClick={handleReport}>Report</button>
         </div>
       )}
     </div>
