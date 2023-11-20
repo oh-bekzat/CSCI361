@@ -13,6 +13,13 @@ import AboutUs from './components/pages/AboutUs';
 import Auction from './components/pages/Auction';
 import RegistrationFormUser from './components/pages/registerUser';
 import RegistrationFormVehicle from './components/pages/registerVehicle';
+import AdminHomePage from './components/pages/AdminHome';
+import AdminNavbar from './components/AdminNavbar';
+import AdminTasks from './components/pages/AdminTasks';
+import AdminUsers from './components/pages/AdminUsers';
+import AdminVehicles from './components/pages/AdminVehicles';
+import AdminRoutes from './components/pages/AdminRoutes';
+
 
 function App() {
   return (
@@ -25,12 +32,17 @@ function App() {
         <Route path="/driver/vehicle-info" element={<><Navbar /><VehicleInfo /></>} />
         <Route path="/login" element={<><MainNavbar /><LoginPage /></>} />
         {/* Add a default route to redirect to home if none of the above routes match */}
-        <Route path="*" element={<Navigate to="/" />} />
+        {/* <Route path="*" element={<Navigate to="/" />} /> */}
         <Route path="/" element={<><MainNavbar /><Home /></>} />
         <Route path="/about-us" element={<><MainNavbar /><AboutUs /></>} />
         <Route path="/auction" element={<><MainNavbar /><Auction /></>} />
         <Route path="/admin/register/user" element={<><RegistrationFormUser/></>} />
         <Route path="/admin/register/vehicle" element={<><RegistrationFormVehicle/></>} />
+        <Route path="/admin/" element={<><AdminNavbar /><AdminHomePage /></>} />
+        <Route path="/admin/tasks" element={<><AdminNavbar /><AdminTasks /></>} />
+        <Route path="/admin/routes" element={<><AdminNavbar /><AdminRoutes /></>} />
+        <Route path="/admin/users" element={<><AdminNavbar /><AdminUsers /></>} />
+        <Route path="/admin/vehicles" element={<><AdminNavbar /><AdminVehicles /></>} />
       </Routes>
    
     </BrowserRouter>
