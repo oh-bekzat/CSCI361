@@ -47,10 +47,10 @@ const MaintenTasks = ({ maintenId }) => {
                 <div className='body-20-bold'>{task.title}</div>
               </div>
               <div>
-                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Point of departure: </span> <span className='label-11'>{task.departure}</span>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Date: </span> <span className='label-11'>{task.date}</span>
               </div>
               <div>
-                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Point of arrival: </span> <span className='label-11'>{task.arrival}</span>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Title: </span> <span className='label-11'>{task.title}</span>
               </div>
             </li>
           ))}
