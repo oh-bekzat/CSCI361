@@ -10,7 +10,7 @@ const ClientRequest = () => {
 
     try {
       // Retrieve user_id from localStorage
-      const user_id = localStorage.getItem("user_id");
+      const user_id = localStorage.getItem("clientId");
 
       // Validate user inputs if needed
 
