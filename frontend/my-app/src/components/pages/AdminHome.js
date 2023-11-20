@@ -14,15 +14,15 @@ const AdminHomePage = ({adminId}) => {
             <button onClick={() => console.log('Manage Users clicked')}>Manage Users</button>
         </Link>
         <Link to="/admin/vehicles">
-            <button onClick={() => console.log('Vehicles clicked')}>Vehicles</button>
+            <button onClick={() => console.log('Vehicles clicked')}>Manage Vehicles</button>
         </Link>
       </div>
       <div className="button-container right">
         <Link to="/admin/routes">
-            <button onClick={() => console.log('Routes clicked')}>Routes</button>
+            <button onClick={() => console.log('Routes clicked')}>Manage Routes</button>
         </Link>
         <Link to="/admin/tasks">
-            <button onClick={() => console.log('Tasks clicked')}>Tasks</button>
+            <button onClick={() => console.log('Tasks clicked')}>Manage Tasks</button>
         </Link>
       </div>
       <button className="logout-button" onClick={() => console.log('Logout clicked')}>
