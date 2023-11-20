@@ -50,7 +50,7 @@ const MaintenTasks = ({ maintenId }) => {
                 <span className='label-11-bold' style={{ marginLeft: '20px' }}>Point of departure: </span> <span className='label-11'>{task.departure}</span>
               </div>
               <div>
-                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Point of arrival: </span> <span className='label-11'>{task.departure}</span>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Point of arrival: </span> <span className='label-11'>{task.arrival}</span>
               </div>
             </li>
           ))}

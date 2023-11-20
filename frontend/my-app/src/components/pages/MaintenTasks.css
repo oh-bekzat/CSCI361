@@ -1,16 +1,17 @@
+/* MaintenTasks.css */
+
 .driver-home-page {
     display: flex;
     justify-content: space-between;
     padding: 20px;
   }
   
-  .tasks-header {
-    cursor: pointer;
-  }
-  
   .task-list {
     width: 20%;
-    display: none; /* Initially hide the task list */
+  }
+  
+  .task-list h2 {
+    color: #333;
   }
   
   .task-list ul {
@@ -78,4 +79,3 @@
     margin-right: 0;
     /* Remove margin from the last button to prevent extra spacing */
   }
-  
