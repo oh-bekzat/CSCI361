@@ -19,6 +19,21 @@ routesRouter.get('/', async (req, res) => {
     }
 })
 
+routesRouter.get('/allRoutes', async (req, res) => {
+    try {
+        const { user_id } = req.body
+
+        const routes = await Route.findAll({
+            where: { driver_id: user_id },
+        })
+
+        res.status(200).json({ routes })
+    } catch (error) {
+        console.error('Error fetching routes:', error)
+        res.status(500).json({ error: 'Internal server error' })
+    }
+})
+
 routesRouter.put('/assign/:routeId', async (req, res) => {
     try {
         const { admin_id, driver_id, license_plate } = req.body

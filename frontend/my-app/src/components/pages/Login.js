@@ -24,7 +24,6 @@ const LoginPage = () => {
     })
     .then((data) => {
       setIsLoggedIn(true);
-      localStorage.setItem('userId', data.userId);
       redirectBasedOnRole(data.user_role,data.userId);
       console.log('User ID:', data.userId);
       console.log('User Role:', data.user_role);
@@ -36,20 +35,24 @@ const LoginPage = () => {
 };
 
 
-const redirectBasedOnRole = (userRole,userId) => {
+const redirectBasedOnRole = (userRole, userId) => {
   switch (userRole) {
     case 'maintenance_person':
-      navigate('/mainten', { state: { userId } }); // Redirect to maintenance page
+      localStorage.setItem('maintenId', userId);
+      navigate('/mainten'); // Redirect to maintenance page
       break;
     case 'fuelling_person':
-      navigate('/fueling', { state: { userId } }); // Redirect to fueling page
+      localStorage.setItem('fuelId', userId);
+      navigate('/fueling'); // Redirect to fueling page
       break;
     case 'driver':
-      navigate('/driver', { state: { userId } });
+      localStorage.setItem('driverId', null);
+      navigate('/driver');
       // navigate('/driver'); // Redirect to driver page
       break;
     case 'client':
-        navigate('/client', { state: { userId } }); // Redirect to fueling page
+        localStorage.setItem('clientId', userId);
+        navigate('/client'); // Redirect to fueling page
         break;
     default:
       // Handle other roles or unknown roles

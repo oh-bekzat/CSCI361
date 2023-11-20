@@ -6,30 +6,23 @@ import { useLocation } from 'react-router-dom';
 
 const DriverHomePage = () => {
   // Sample data for assigned tasks
-//   const [assignedTasks, setAssignedTasks] = useState([]);
-//   const [selectedTask, setSelectedTask] = useState(null);
-  const location = useLocation();
-  const userId = location.state?.userId;
-
-  const [assignedTasks, setAssignedTasks] = useState([
-    { id: 1, title: userId, details: 'Details for Task 1', departure: 'Point A', status: 'Active'},
-    { id: 2, title: 'Route 2', details: 'Details for Task 2' }
-  ]);
-  // State to track the selected task
+  const [assignedTasks, setAssignedTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
+  const location = useLocation();
+  const userId = localStorage.getItem("userId");
 
-    // useEffect(() => {
-    // // Fetch data from the localhost:3001/get-routes endpoint
-    //     const fetchData = async () => {
-    //     try {
-    //         const response = await axios.get('http://localhost:3001/get-routes');
-    //         setAssignedTasks(response.data);
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //     }
-    //     };
-    // fetchData();
-    // }, []);
+    useEffect(() => {
+    // Fetch data from the localhost:3001/get-routes endpoint
+        const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:3001/routes/allRoutes');
+            setAssignedTasks(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+        };
+    fetchData();
+    }, []);
 
   // Function to handle task selection
   const handleTaskSelection = (task) => {
