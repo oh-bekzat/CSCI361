@@ -1,0 +1,46 @@
+/* AddUserPage.css */
+
+.add-user-page {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 80vh;
+  }
+  
+  .user-list {
+    width: 80%;
+    padding: 40px;
+  }
+  
+  .user-list h2 {
+    color: #333;
+  }
+  
+  .user-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .user-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 2px solid #ccc; /* Add a border line */
+  }
+  
+  .user-list li button {
+    width: 80px; /* Adjust the width based on your design */
+    padding: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #EDC53F; /* Adjust the background color */
+    color: #fff; /* Adjust the text color */
+    border: none;
+    border-radius: 10px;
+  }
+  
+  .user-list li button:hover {
+    background-color: #ccab39; /* Adjust the background color on hover */
+  }
+  
