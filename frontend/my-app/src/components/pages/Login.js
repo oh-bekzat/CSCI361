@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './Login.css';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -30,6 +32,24 @@ const LoginPage = () => {
     .catch((error) => {
       alert(error.message || 'An error occurred during login');
     });
+};
+
+
+const redirectBasedOnRole = (userRole) => {
+  switch (userRole) {
+    case 'maintenance':
+      navigate('/maintenance'); // Redirect to maintenance page
+      break;
+    case 'fueling':
+      navigate('/fueling'); // Redirect to fueling page
+      break;
+    case 'driver':
+      navigate('/driver'); // Redirect to driver page
+      break;
+    default:
+      // Handle other roles or unknown roles
+      break;
+  }
 };
 
   return (
