@@ -25,7 +25,6 @@ const RegistrationFormVehicle = () => {
       [name]: value,
     }));
   };
-
   const validateForm = () => {
     const newErrors = {};
 
@@ -36,6 +35,26 @@ const RegistrationFormVehicle = () => {
         newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
       }
     });
+
+    // Check if manufacture_year is a valid integer
+    if (formData.manufacture_year && !Number.isInteger(parseInt(formData.manufacture_year, 10))) {
+      newErrors.manufacture_year = 'Manufacture year must be a valid integer';
+    }
+
+    // Check if capacity is a valid integer
+    if (formData.capacity && !Number.isInteger(parseInt(formData.capacity, 10))) {
+      newErrors.capacity = 'Capacity must be a valid integer';
+    }
+
+    // Check if tank_volume is a valid float
+    if (formData.tank_volume && isNaN(parseFloat(formData.tank_volume))) {
+      newErrors.tank_volume = 'Tank volume must be a valid number';
+    }
+
+    // Check if fuel_volume is a valid float
+    if (formData.fuel_volume && isNaN(parseFloat(formData.fuel_volume))) {
+      newErrors.fuel_volume = 'Fuel volume must be a valid number';
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -68,7 +87,25 @@ const RegistrationFormVehicle = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log('Vehicle registration successful:', data);
-          // Handle success, redirect, or show a success message to the user
+          setSuccessMessage('Added successfully');
+          // Reset the form after successful submission
+          setFormData({
+            license_plate: '',
+            make: '',
+            model: '',
+            manufacture_year: '',
+            capacity: '',
+            fuel_volume: '',
+            tank_volume: '',
+            vehicle_image: '',
+            mileage: 0,
+            last_fueled_date: new Date().toISOString().split('T')[0],
+            last_maintained_date: new Date().toISOString().split('T')[0],
+          });
+          // Clear success message after a few seconds
+          setTimeout(() => {
+            setSuccessMessage('');
+          }, 3000);
         })
         .catch((error) => {
           console.error('Error during vehicle registration:', error);
@@ -80,6 +117,7 @@ const RegistrationFormVehicle = () => {
   return (
     <div className="registration-container">
       <h2>Registering Vehicle</h2>
+      {successMessage && <div className="success-message">{successMessage}</div>}
       <form onSubmit={handleSubmit}>
         <label>
           License Plate:
@@ -123,7 +161,7 @@ const RegistrationFormVehicle = () => {
         </label>
 
         {errors.license_plate && <span className="error-text">{errors.license_plate}</span>}
-
+        {successMessage && <div className="success-message">{successMessage}</div>}
         <button className='button-264' type="submit">Register vehicle</button>
       </form>
     </div>
