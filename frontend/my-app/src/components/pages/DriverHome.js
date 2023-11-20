@@ -2,14 +2,17 @@
 import React, { useState, useEffect } from 'react';
 import './DriverHome.css';
 import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
-const DriverHomePage = ({driverId}) => {
+const DriverHomePage = () => {
   // Sample data for assigned tasks
 //   const [assignedTasks, setAssignedTasks] = useState([]);
 //   const [selectedTask, setSelectedTask] = useState(null);
+  const location = useLocation();
+  const userId = location.state?.userId;
 
   const [assignedTasks, setAssignedTasks] = useState([
-    { id: 1, title: 'Route 1', details: 'Details for Task 1', departure: 'Point A', status: 'Active'},
+    { id: 1, title: userId, details: 'Details for Task 1', departure: 'Point A', status: 'Active'},
     { id: 2, title: 'Route 2', details: 'Details for Task 2' }
   ]);
   // State to track the selected task

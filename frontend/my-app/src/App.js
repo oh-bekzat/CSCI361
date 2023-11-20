@@ -36,6 +36,8 @@ function App() {
     <BrowserRouter>
     
       <Routes>
+        {/* <Route path="/driver" render={(props) => <><Navbar /><DriverHomePage {...props} /></>} /> */}
+        
         <Route path="/driver/" element={<><Navbar /><DriverHomePage /></>} />
         <Route path="/driver/history" element={<><Navbar /><History /></>} />
         <Route path="/driver/profile" element={<><Navbar /><Profile /></>} />

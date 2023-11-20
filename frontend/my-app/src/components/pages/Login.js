@@ -24,7 +24,7 @@ const LoginPage = () => {
     })
     .then((data) => {
       setIsLoggedIn(true);
-      redirectBasedOnRole(data.user_role);
+      redirectBasedOnRole(data.user_role,data.userId);
       console.log('User ID:', data.userId);
       console.log('User Role:', data.user_role);
       // You may store the received token in localStorage or a state management system
@@ -35,7 +35,7 @@ const LoginPage = () => {
 };
 
 
-const redirectBasedOnRole = (userRole) => {
+const redirectBasedOnRole = (userRole,userId) => {
   switch (userRole) {
     case 'maintenance':
       navigate('/mainten'); // Redirect to maintenance page
@@ -44,7 +44,8 @@ const redirectBasedOnRole = (userRole) => {
       navigate('/fueling'); // Redirect to fueling page
       break;
     case 'driver':
-      navigate('/driver'); // Redirect to driver page
+      navigate('/driver', { state: { userId } });
+      // navigate('/driver'); // Redirect to driver page
       break;
     default:
       // Handle other roles or unknown roles
