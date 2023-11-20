@@ -47,10 +47,7 @@ const AuctionPage = ({ driverId }) => {
           </div>
           <div className="car-info">
             <div className="car-property">
-              <div>
-                <span className="label-14-bold">Fuel Volume:</span>{' '}
-                <span className="label-14">80%</span>
-              </div>
+      
               <div>
                 <span className="label-14-bold">Tank Volume:</span>{' '}
                 <span className="label-14">60 liters</span>
@@ -60,12 +57,12 @@ const AuctionPage = ({ driverId }) => {
                 <span className="label-14">10,000 miles</span>
               </div>
               <div>
-                <span className="label-14-bold">Last Fueled Date:</span>{' '}
+                <span className="label-14-bold">Cost:</span>{' '}
                 <span className="label-14">2023-11-20</span>
               </div>
               <div>
-                <span className="label-14-bold">Last Maintained Date:</span>{' '}
-                <span className="label-14">2023-11-15</span>
+                <span className="label-14-bold">Description:</span>{' '}
+                <span className="label-14">Alloy wheels, tinted windows, wind deflectors, daytime running lights, leather seats, combination upholstery, audio system, Bluetooth, MP3, USB, climate control, power steering (ГУР), ABS, SRS, alarm system, central locking, cruise control, heated seats, rearview camera, tax paid, passed technical inspection, no additional investment required.</span>
               </div>
             </div>
           </div>
