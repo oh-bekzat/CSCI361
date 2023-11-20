@@ -61,9 +61,15 @@ const AuctionPage = ({ driverId }) => {
                 <span className="label-14">2023-11-20</span>
               </div>
               <div>
-                <span className="label-14-bold">Description:</span>{' '}
-                <span className="label-14">Alloy wheels, tinted windows, wind deflectors, daytime running lights, leather seats, combination upholstery, audio system, Bluetooth, MP3, USB, climate control, power steering (ГУР), ABS, SRS, alarm system, central locking, cruise control, heated seats, rearview camera, tax paid, passed technical inspection, no additional investment required.</span>
+                <span className="label-14-bold">Contact:</span>{' '}
+                <span className="label-14" style={{ textDecoration: 'underline' }}>+7771-555-11-22</span>
               </div>
+
+              <div>
+                <span className="label-14-bold">Description:</span>{' '}
+                <span className="label-14" >Alloy wheels, tinted windows, wind deflectors, daytime running lights, leather seats, combination upholstery, audio system, Bluetooth, MP3, USB, climate control, power steering (ГУР), ABS, SRS, alarm system, central locking, cruise control, heated seats, rearview camera, tax paid, passed technical inspection, no additional investment required.</span>
+              </div>
+              
             </div>
           </div>
         </div>
