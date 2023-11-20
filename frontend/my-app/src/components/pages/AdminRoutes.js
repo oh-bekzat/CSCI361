@@ -3,44 +3,89 @@ import React, { useState, useEffect } from 'react';
 import './AdminRoutes.css';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import AssignDriverModal from './AdminDriverPopUp';
+import Modal from 'react-modal';
+import AssignDriverModal from './AdminRoutesPopUp';
 
 const AdminManagesRoutes = () => {
   const [routes, setRoutes] = useState([]);
   const [isAssignDriverModalOpen, setAssignDriverModalOpen] = useState(false);
-  const [selectedRouteId, setSelectedRouteId] = useState(null);
+  const [selectedRoute, setSelectedRoute] = useState(null);
   const [selectedDriverId, setSelectedDriverId] = useState('');
+  const [drivers, setDrivers] = useState([]);
+  const [cars, setCars] = useState([]);
+  const [selectedCar, setSelectedCar] = useState('');
 
   useEffect(() => {
-    const fetchVehicles = async () => {
+    const fetchRoutes = async () => {
       try {
         const response = await axios.get('http://localhost:3001/routes');
         setRoutes(response.data.routes);
       } catch (error) {
+        console.error('Error fetching routes:', error);
+      }
+    };
+
+    const fetchDrivers = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/users/drivers');
+        setDrivers(response.data);
+      } catch (error) {
+        console.error('Error fetching drivers:', error);
+      }
+    };
+    
+    const fetchVehicles = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/vehicles');
+        setCars(response.data);
+      } catch (error) {
         console.error('Error fetching vehicles:', error);
       }
     };
-    fetchVehicles();
-  }, []); 
 
-  const handleAssignRoute = (routeId) => {
-    // Open the modal and set the selected route ID
+    fetchVehicles();
+    fetchRoutes();
+    fetchDrivers();
+  }, []);
+
+  const handleAssignRoute = (route) => {
+    setSelectedRoute(route);
     setAssignDriverModalOpen(true);
-    setSelectedRouteId(routeId);
   };
 
   const handleDriverSelect = (driverId) => {
-    // Update the selected driver ID
     setSelectedDriverId(driverId);
   };
-
-  const handleAssignDriver = () => {
-    // Logic to handle assigning a driver to the selected route
-    console.log('Assigning driver', selectedDriverId, 'to route', selectedRouteId);
-
-    // Close the modal
-    setAssignDriverModalOpen(false);
+  const handleCarSelect = (carId) => {
+    setSelectedCar(carId);
   };
+  const handleAssignDriver = async() => {
+    setAssignDriverModalOpen(false);
+    try {
+      // Check if selectedRoute is defined before using it
+      if (selectedRoute) {
+        // Your logic to assign driver to route
+        const response = await axios.put(`http://localhost:3001/routes/assign/${selectedRoute}`, {
+          admin_id: 1,
+          driver_id: selectedDriverId,
+          license_plate: selectedCar,
+        });
+  
+        console.log('Assigning driver', selectedDriverId, 'to route', selectedRoute.route_id);
+        console.log('Server response:', response.data);
+  
+        // Additional logic if needed after successful assignment
+      } else {
+        console.error('Selected route is undefined.');
+      }
+  
+      // Close the modal
+      setAssignDriverModalOpen(false);
+    } catch (error) {
+      console.error('Error assigning driver:', error);
+      // Handle error response or set an appropriate state to show an error message
+    }
+  };  
 
   return (
     <div className="manage-routes-page">
@@ -72,14 +117,12 @@ const AdminManagesRoutes = () => {
               <td>{route.status}</td>
               <td>
                 {route.status === 'awaiting' && (
-                  <Link to="/admin/routes/assign">
                     <button
                       className="assign-button"
                       onClick={() => handleAssignRoute(route.route_id)}
                     >
                       Assign Driver
                     </button>
-                  </Link>
                 )}
                 {/* Add additional conditions for other status values */}
               </td>
@@ -87,11 +130,17 @@ const AdminManagesRoutes = () => {
           ))}
         </tbody>
       </table>
+      {/* Assign Driver Modal */}
       <AssignDriverModal
-        isOpen={isAssignDriverModalOpen}
-        onRequestClose={() => setAssignDriverModalOpen(false)}
-        onDriverSelect={handleDriverSelect}
-      />
+          isOpen={isAssignDriverModalOpen}
+          onRequestClose={() => setAssignDriverModalOpen(false)}
+          onDriverSelect={handleDriverSelect}
+          drivers={drivers}
+          onCarSelect={handleCarSelect}
+          cars={cars}
+          onAssignDriver={handleAssignDriver}
+          selectedRoute={selectedRoute}
+        />
       {isAssignDriverModalOpen && (
         <button onClick={handleAssignDriver}>Confirm Assign Driver</button>
       )}

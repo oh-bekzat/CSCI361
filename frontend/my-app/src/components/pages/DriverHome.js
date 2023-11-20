@@ -15,7 +15,7 @@ const DriverHomePage = () => {
       try {
         const response = await axios.get(`http://localhost:3001/routes/assigned/${user_id}`);
         console.log(response.data);
-        setAssignedTasks(response.data);
+        setAssignedTasks(response.data.routes);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -46,16 +46,16 @@ const DriverHomePage = () => {
     <div className="driver-home-page">
       <div className="task-list">
         <ul>
-          {Array.isArray(assignedTasks) && assignedTasks.map((task) => (
+          {assignedTasks.map((task) => (
             <li key={task.id} onClick={() => handleTaskSelection(task)}>
               <div>
-                <div className='body-20-bold'>{task.title}</div>
+                <div className='body-20-bold'>Route {task.route_id}</div>
               </div>
               <div>
-                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Point of departure: </span> <span className='label-11'>{task.departure}</span>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Point of departure: </span> <span className='label-11'>{task.start_point}</span>
               </div>
               <div>
-              <span className='label-11-bold' style={{ marginLeft: '20px' }}>Point of arrival: </span> <span className='label-11'>{task.departure}</span>
+              <span className='label-11-bold' style={{ marginLeft: '20px' }}>Point of arrival: </span> <span className='label-11'>{task.finish_point}</span>
               </div>
               <div>
               <span className='label-11-bold' style={{ marginLeft: '20px' }}>Status: </span> <span className='label-11'>{task.status}</span>
@@ -70,19 +70,19 @@ const DriverHomePage = () => {
         {selectedTask ? (
             <>
           <div>
-            <div className='body-24-bold'>{selectedTask.title}</div>
+            <div className='body-24-bold'>Route {selectedTask.route_id}</div>
           </div>
-            <div>
+            {/* <div>
                 <span className='body-14-bold'>Date: </span> <span className='body-14'>{selectedTask.departure}</span>
             </div>
             <div>
                 <span className='body-14-bold'>Time: </span> <span className='body-14'>{selectedTask.departure}</span>
+            </div> */}
+            <div>
+                <span className='body-14-bold'>Point of departure: </span> <span className='body-14'>{selectedTask.start_point}</span>
             </div>
             <div>
-                <span className='body-14-bold'>Point of departure: </span> <span className='body-14'>{selectedTask.departure}</span>
-            </div>
-            <div>
-                <span className='body-14-bold'>Point of arrival: </span> <span className='body-14'>{selectedTask.departure}</span>
+                <span className='body-14-bold'>Point of arrival: </span> <span className='body-14'>{selectedTask.finish_point}</span>
             </div>
             <div>
                 <span className='body-14-bold'>Status: </span> <span className='body-14'>{selectedTask.status}</span>
