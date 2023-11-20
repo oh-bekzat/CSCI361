@@ -17,6 +17,7 @@ import AdminHomePage from './components/pages/AdminHome';
 import AdminNavbar from './components/AdminNavbar';
 import AdminTasks from './components/pages/AdminTasks';
 import AdminUsers from './components/pages/AdminUsers';
+import AddUserPage from './components/pages/AdminAddUsers';
 import AdminVehicles from './components/pages/AdminVehicles';
 import AdminRoutes from './components/pages/AdminRoutes';
 import FuelingNavbar from './components/FuelingNavbar';
@@ -47,6 +48,7 @@ function App() {
         <Route path="/admin/tasks" element={<><AdminNavbar /><AdminTasks /></>} />
         <Route path="/admin/routes" element={<><AdminNavbar /><AdminRoutes /></>} />
         <Route path="/admin/users" element={<><AdminNavbar /><AdminUsers /></>} />
+        <Route path="/admin/users/add" element={<><AddUserPage/></>} />
         <Route path="/admin/vehicles" element={<><AdminNavbar /><AdminVehicles /></>} />
         <Route path="/fueling/profile" element={<><FuelingNavbar /><Profile /></>} />
         <Route path="/fueling/history" element={<><FuelingNavbar /><FuelingHistory /></>} />
