@@ -1,13 +1,26 @@
 /* AdminTasks.css */
 
-.driver-home-page {
+.driver-home-page-button {
     display: flex;
-    justify-content: space-between;
+    justify-content:space-between;
+    flex-direction: column;
     padding: 20px;
   }
+  .driver-home-page {
+    display: flex;
+    justify-content:space-between;
+    padding: 20px;
+  }
+
   
-  .task-list {
-    width: 20%;
+.task-list {
+  
+  width: 40%;
+  max-width: 400px; /* Optionally set a max-width for the task list */
+  margin-bottom: 20px; /* Add margin to create space between task list and details */
+}
+  .button-124 {
+    margin-bottom: 20px; /* Add margin to the button to create space between the button and task list */
   }
   
   .task-list h2 {
@@ -29,6 +42,7 @@
   
   .task-details {
     display: flex;
+    flex: 1;
     flex-direction: column; 
     gap: 20px;
     width: 75%;
