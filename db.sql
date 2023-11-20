@@ -113,13 +113,13 @@ CREATE TABLE auctioned_vehicles_photos (
 
 CREATE TABLE reports (
   	report_id serial PRIMARY KEY,
-  	driver_id int REFERENCES drivers(user_id) NOT NULL,
+  	vehicle_id varchar(255) REFERENCES vehicles(license_plate) NOT NULL,
   	total_distance int NOT NUll,
-  	total_time int NOT NULL,
+  	start_time timestamp NOT NULL,
+  	finish_time timestamp NOT NULL,
   	total_maintenance_cost int NOT NULL,
   	total_fuel real NOT NULL
 )
-
 
 INSERT INTO users (email, password_hashed, firstname, lastname, address, phone_number, iin, user_role) VALUES 
 ('client@example.com', 'hashedpassword1', 'John', 'Doe', '123 Street', '12345678901', '123456789012', 'client'),
