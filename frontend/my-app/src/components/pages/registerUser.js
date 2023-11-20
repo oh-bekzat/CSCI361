@@ -13,6 +13,63 @@ const RegistrationFormUser = () => {
     phone_number: '',
     iin: '',
   });
+  // const [errors, setErrors] = useState({});
+
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
+  // const validateForm = () => {
+  //   const newErrors = {};
+
+  //   // Check if user_role is selected
+  //   if (!formData.user_role) {
+  //     newErrors.user_role = 'Select role';
+  //   }
+
+  //   // Check for required fields
+  //   const requiredFields = ['firstname', 'lastname', 'email', 'password_hashed', 'phone_number', 'iin'];
+  //   requiredFields.forEach((field) => {
+  //     if (!formData[field]) {
+  //       newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
+  //     }
+  //   });
+
+  //   setErrors(newErrors);
+  //   return Object.keys(newErrors).length === 0;
+  // };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+
+  //   if (validateForm()) {
+  //     // Replace 'http://localhost:3001/register' with your actual API endpoint
+  //     const apiUrl = 'http://localhost:3001/users';
+
+  //     // Make a request to your server with formData
+  //     fetch(apiUrl, {
+  //       method: 'POST',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //       body: JSON.stringify(formData),
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         console.log('Registration successful:', data);
+  //         // Handle success, redirect, or show a success message to the user
+  //       })
+  //       .catch((error) => {
+  //         console.error('Error during registration:', error);
+  //         // Handle error, show an error message to the user, etc.
+  //       });
+  //   }
+  // };
+
+  const [successMessage, setSuccessMessage] = useState('');
   const [errors, setErrors] = useState({});
 
   const handleChange = (e) => {
@@ -22,6 +79,7 @@ const RegistrationFormUser = () => {
       [name]: value,
     }));
   };
+
   const validateForm = () => {
     const newErrors = {};
 
@@ -46,7 +104,7 @@ const RegistrationFormUser = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      // Replace 'http://localhost:3001/register' with your actual API endpoint
+      // Replace 'http://localhost:3001/users' with your actual API endpoint
       const apiUrl = 'http://localhost:3001/users';
 
       // Make a request to your server with formData
@@ -60,7 +118,22 @@ const RegistrationFormUser = () => {
         .then((response) => response.json())
         .then((data) => {
           console.log('Registration successful:', data);
-          // Handle success, redirect, or show a success message to the user
+          setSuccessMessage('Registered successfully');
+          // Reset the form after successful submission
+          setFormData({
+            user_role: '',
+            license_code: '',
+            firstname: '',
+            lastname: '',
+            email: '',
+            password_hashed: '',
+            phone_number: '',
+            iin: '',
+          });
+          // Clear success message after a few seconds
+          setTimeout(() => {
+            setSuccessMessage('');
+          }, 3000);
         })
         .catch((error) => {
           console.error('Error during registration:', error);
@@ -71,7 +144,7 @@ const RegistrationFormUser = () => {
 
   return (
     <div className="registration-container">
-      <h2>Registration Form</h2>
+      <h2>Registring Users</h2>
       <form onSubmit={handleSubmit}>
         <label>
           User Role:
@@ -123,6 +196,7 @@ const RegistrationFormUser = () => {
         {errors.user_role && <span className="error-text">{errors.user_role}</span>}
 
         <button className='button-264' type="submit">Register</button>
+        {successMessage && <div className="success-message">{successMessage}</div>}
       </form>
     </div>
   );
