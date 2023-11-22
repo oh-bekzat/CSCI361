@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './DriverProfile.css'; // Include your styles
+import './DriverProfile.css';
 import { useNavigate } from 'react-router-dom';
 
 import axios from 'axios';
