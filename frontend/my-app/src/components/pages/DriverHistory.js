@@ -29,23 +29,23 @@ const History = () => {
     console.log(filteredTasks)
   };
 
-  const sortedTasks = [...assignedTasks].sort((a, b) => {
-    if (a.status === 'started' && b.status !== 'started') {
-      return -1;
-    } else if (b.status === 'started' && a.status !== 'started') {
-      return 1;
-    } else {
-      return 0;
-    }
-  });
+  const filteredTasks = assignedTasks.filter((task) => task.status === 'completed');
 
-  const filteredTasks = sortedTasks.filter((task) => task.status === 'completed');
+  const sortedTasks = filteredTasks.sort((a, b) => a.route_id - b.route_id);
+
+  const finalSortedTasks = sortedTasks.sort((a, b) => {
+        const dateA = a.finish_time.split("T")[0];
+        const dateB = b.finish_time.split("T")[0];
+      
+        // Convert the date strings to Date objects and compare
+        return new Date(dateB) - new Date(dateA);
+  });
 
   return (
     <div className="driver-home-page">
       <div className="task-list">
         <ul>
-          {filteredTasks.map((task) => (
+          {finalSortedTasks.map((task) => (
             <li style={{
               boxShadow:
                 task.status === 'assigned'
@@ -53,7 +53,7 @@ const History = () => {
                   : task.status === 'started'
                   ? '0 0 3px rgba(207, 53, 33, 1)' // Red for started
                   : '0 0 3px rgba(50, 168, 82, 1)', // Default color for other statuses
-            }} key={task.id} onClick={() => handleTaskSelection(task)}>
+            }} key={task.route_id} onClick={() => handleTaskSelection(task)}>
               <div>
                 <div className='body-20-bold'>Route {task.route_id}</div>
               </div>

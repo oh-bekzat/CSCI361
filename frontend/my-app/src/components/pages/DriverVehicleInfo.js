@@ -1,86 +1,85 @@
 // VehicleInfoPage.js
-import React, { useState } from 'react';
-import './DriverVehicleInfo.css';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const VehicleInfo = ({ vehicle_id }) => {
-  const [assignedTasks] = useState([
-    {
-      id: 1,
-      carId: '202030300',
-      title: 'Hyundai Sonata 2021 y.',
-      model: 'Sonata',
-      Make: 'Hyundai',
-      year: '2021',
-      color: 'white',
-      plate: '777 AAA 01',
-      capacity: '5 passengers',
-      volume: '60 lites',
-      mileage: '24990',
-    },
-  ]);
+const VehicleInfo = () => {
+  const [vehicleInfo, setVehicleInfo] = useState(null);
+  // const [isStarted, setIsStarted] = useState(false);
+  const user_id = localStorage.getItem("driverId");
 
-  const [selectedTask, setSelectedTask] = useState(null);
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/routes/assigned/${user_id}`);
+        const startedRoute = response.data.routes.filter((vehicleInfo) => vehicleInfo.status === 'started');
+        if (startedRoute) {
+          // setIsStarted(true);
+          const vehicleId = startedRoute[0].vehicle_id;
+          console.log(vehicleId)
+          const response2 = await axios.get(`http://localhost:3001/vehicles/${vehicleId}`);
+          console.log(response2.data);
+          setVehicleInfo(response2.data);
+        } 
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
 
-  const handleTaskSelection = (task) => {
-    setSelectedTask(task);
-  };
 
   return (
     <div className="auction-page">
       <div className="car-details">
-        <ul>
-          {assignedTasks.map((task) => (
-            <li key={task.id} onClick={() => handleTaskSelection(task)}>
-              <div className="car-info-container">
-                <div className="car-image">
-                  <img src={require('../assets/car_example.png')} alt="Car" />
-                </div>
-                <div className="car-info">
-                  <div className="body-20-bold">{task.title}</div>
+      { vehicleInfo ? (
+        <div className="car-info-container">
+          <div className="car-image">
+              {vehicleInfo && <img src={vehicleInfo.vehicle_image} alt="Car" />}
+          </div>
+                <div className="car-info" style={{ marginLeft: '20px' }}>
+                  <div className="body-20-bold">{vehicleInfo.make} {vehicleInfo.model}</div>
                   <div className="car-property">
                     <div>
-                      <span className="body-14-bold">ID:</span>{' '}
-                      <span className="body-14">{task.carId}</span>
-                    </div>
-                    <div>
                       <span className="label-14-bold">Make:</span>{' '}
-                      <span className="body-14">{task.Make}</span>
+                      <span className="body-14">{vehicleInfo.make}</span>
                     </div>
                     <div>
                       <span className="label-14-bold">Model:</span>{' '}
-                      <span className="body-14">{task.model}</span>
+                      <span className="body-14">{vehicleInfo.model}</span>
                     </div>
                     <div>
                       <span className="label-14-bold">Year:</span>{' '}
-                      <span className="body-14">{task.year}</span>
+                      <span className="body-14">{vehicleInfo.manufacture_year }</span>
                     </div>
                     <div>
                       <span className="label-14-bold">License Plate:</span>{' '}
-                      <span className="body-14">{task.plate}</span>
+                      <span className="body-14">{vehicleInfo.license_plate}</span>
                     </div>
                     <div>
                       <span className="label-14-bold">Capacity:</span>{' '}
-                      <span className="body-14">{task.capacity}</span>
+                      <span className="body-14">{vehicleInfo.capacity} passengers</span>
                     </div>
                     <div>
                       <span className="label-14-bold">Tank Volume:</span>{' '}
-                      <span className="body-14">{task.volume}</span>
+                      <span className="body-14">{vehicleInfo.tank_volume}</span>
                     </div>
                     <div>
                       <span className="label-14-bold">Mileage:</span>{' '}
-                      <span className="body-14">{task.mileage}</span>
+                      <span className="body-14">{vehicleInfo.mileage}</span>
                     </div>
                     <div>
-                      <span className="label-14-bold">Color:</span>{' '}
-                      <span className="body-14">{task.color}</span>
+                      <span className="label-14-bold">Last maintained date:</span>{' '}
+                      <span className="body-14">{vehicleInfo.last_maintained_date}</span>
+                    </div>
+                    <div>
+                      <span className="label-14-bold">Last fueled date:</span>{' '}
+                      <span className="body-14">{vehicleInfo.last_fueled_date}</span>
                     </div>
                   </div>
                 </div>
-              </div>
-            </li>
-          ))}
-        </ul>
+              </div>)  : (
+        <div>No route started</div>
+      )}
       </div>
     </div>
   );

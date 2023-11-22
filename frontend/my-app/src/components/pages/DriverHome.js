@@ -103,7 +103,7 @@ const DriverHomePage = () => {
     <div className="driver-home-page">
       <div className="task-list">
         <ul>
-          {filteredTasks.map((task) => (
+          {Array.isArray(filteredTasks) && filteredTasks.map((task) => (
             <li style={{
               boxShadow:
                 task.status === 'assigned'
@@ -111,7 +111,7 @@ const DriverHomePage = () => {
                   : task.status === 'started'
                   ? '0 0 3px rgba(207, 53, 33, 1)' // Red for started
                   : '0 0 3px rgba(50, 168, 82, 1)', // Default color for other statuses
-            }} key={task.id} onClick={() => handleTaskSelection(task)}>
+            }} key={task.route_id} onClick={() => handleTaskSelection(task)}>
               <div>
                 <div className='body-20-bold'>Route {task.route_id}</div>
               </div>
