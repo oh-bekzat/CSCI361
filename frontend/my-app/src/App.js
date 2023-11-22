@@ -13,6 +13,7 @@ import AboutUs from './components/pages/AboutUs';
 import Auction from './components/pages/Auction';
 import RegistrationFormUser from './components/pages/registerUser';
 import RegistrationFormVehicle from './components/pages/registerVehicle';
+import AdminManageDrivers from './components/pages/AdminManageDrivers';
 import AdminHomePage from './components/pages/AdminHome';
 import AdminNavbar from './components/AdminNavbar';
 import AdminTasks from './components/pages/AdminTasks';
@@ -55,6 +56,7 @@ function App() {
         <Route path="/admin/routes" element={<><AdminNavbar /><AdminRoutes /></>} />
         <Route path="/admin/users" element={<><AdminNavbar /><AdminUsers /></>} />
         <Route path="/admin/users/add" element={<><AdminNavbar /><RegistrationFormUser/></>} />
+        <Route path="/admin/users/driver" element={<><AdminNavbar /><AdminManageDrivers/></>} />
         <Route path="/admin/vehicles/add" element={<><AdminNavbar /><RegistrationFormVehicle/></>} />
         <Route path="/admin/vehicles" element={<><AdminNavbar /><AdminVehicles /></>} />
         <Route path="/fueling/profile" element={<><FuelingNavbar /><FuelProfile /></>} />
