@@ -1,28 +1,47 @@
-// AdminUpdateDrivers.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './registration.css';
 
-const AdminManageDrivers = () => {
-  const [formData, setFormData] = useState({
-    phone_number: '87773378532',
-    license_code: '123212',
-    user_role:'Driver',
-    first_name: 'Aktan',
-    last_name: 'Seraliyev',
-    email: 'aktan.seraliyev@nu.edu.kz',
-    password: '12345678',
-    iin:'030105500722'
-  });
+const selectedDriverId = localStorage.getItem('selectedDriverId');
+console.log(selectedDriverId);
 
+const AdminUpdateDrivers = () => {
+  const [userData, setUserData] = useState({});
+  const [driverData, setDriverData] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
   const [errors, setErrors] = useState({});
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userResponse = await axios.get(`http://localhost:3001/users/${selectedDriverId}`);
+        setUserData(userResponse.data);
+
+        const driverResponse = await axios.get(`http://localhost:3001/users/drivers/${selectedDriverId}`);
+        setDriverData(driverResponse.data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+
+    // Check if the property is in userData or driverData and update the corresponding state
+    if (Object.keys(userData).includes(name)) {
+      setUserData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    } else if (Object.keys(driverData).includes(name)) {
+      setDriverData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
   const validateForm = () => {
@@ -31,7 +50,7 @@ const AdminManageDrivers = () => {
     // Check for required fields
     const requiredFields = ['phone_number', 'license_code'];
     requiredFields.forEach((field) => {
-      if (!formData[field]) {
+      if (!userData[field] && !driverData[field]) {
         newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
       }
     });
@@ -44,20 +63,15 @@ const AdminManageDrivers = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      // Replace 'http://localhost:3001/users' with your actual API endpoint
-      const apiUrl = 'http://localhost:3001/users';
+      // Replace 'http://localhost:3001/users/drivers/update' with your actual API endpoint
+      const apiUrl = `http://localhost:3001/users/${selectedDriverId}`;
 
-      // Make a request to your server with formData
-      fetch(apiUrl, {
-        method: 'PUT', // Assuming you use PUT for updating information
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('Update successful:', data);
+      // Make a request to your server with userData and driverData
+      console.log({ ...userData, ...driverData })
+      
+      axios.put(apiUrl, { ...userData, ...driverData })
+        .then((response) => {
+          console.log('Update successful:', response.data);
           setSuccessMessage('Updated successfully');
           // Clear success message after a few seconds
           setTimeout(() => {
@@ -76,28 +90,27 @@ const AdminManageDrivers = () => {
       <h2>Updating Information</h2>
       <form onSubmit={handleSubmit}>
         <br />
-        <p><strong>User Role:</strong> {formData.user_role}</p>
+        <p><strong>User Role:</strong> {userData.user_role}</p>
         <br />
-        <p><strong>First Name:</strong> {formData.first_name}</p>
+        <p><strong>First Name:</strong> {userData.firstname}</p>
         <br />
-        <p><strong>Last Name:</strong> {formData.last_name}</p>
+        <p><strong>Last Name:</strong> {userData.lastname}</p>
         <br />
-        <p><strong>Email:</strong> {formData.email}</p>
+        <p><strong>Email:</strong> {userData.email}</p>
         <br />
-        <p><strong>Password:</strong> {formData.password}</p>
+        <p><strong>Password:</strong> {userData.password_hashed}</p>
         <br />
-        <p><strong>IIN:</strong> {formData.iin}</p>
+        <p><strong>IIN:</strong> {userData.iin}</p>
         <label>
-        <br />
-        <strong>Phone Number:</strong>
+          <br />
+          <strong>Phone Number:</strong>
           <div className='label-12 note'>Start with 8, ex: 87773378532</div>
-          <input type="tel" name="phone_number" value={formData.phone_number} onChange={handleChange} />
+          <input type="tel" name="phone_number" value={userData.phone_number || ''} onChange={handleChange} />
         </label>
 
         <label>
-        <strong>License Code:</strong> 
-          <div className='label-12 note'>*Only required if the selected role is "driver"</div>
-          <input type="text" name="license_code" value={formData.license_code} onChange={handleChange} />
+          <strong>License Code:</strong>
+          <input type="text" name="license_code" value={driverData.license_code || ''} onChange={handleChange} />
         </label>
 
         {errors.phone_number && <span className="error-text">{errors.phone_number}</span>}
@@ -110,4 +123,4 @@ const AdminManageDrivers = () => {
   );
 };
 
-export default AdminManageDrivers;
+export default AdminUpdateDrivers;

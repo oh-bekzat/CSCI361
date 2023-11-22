@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import './registration.css';
 
-const AdminManageFueling = () => {
+const AdminUpdateFueling = () => {
   const [formData, setFormData] = useState({
     phone_number: '87773378532',
     user_role:'Fueling Person',
@@ -102,4 +102,4 @@ const AdminManageFueling = () => {
   );
 };
 
-export default AdminManageFueling;
+export default AdminUpdateFueling;
