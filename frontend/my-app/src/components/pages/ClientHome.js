@@ -58,7 +58,7 @@ const fetchVehicleData = async (task) => {
 
 const handleRatingChange = (e) => {
   const inputValue = e.target.value;
-  const parsedValue = parseFloat(inputValue);
+  const parsedValue = parseInt(inputValue,10);
 
   if (!isNaN(parsedValue) && parsedValue >= 0 && parsedValue <= 5) {
     // Do something with the valid numeric value, for example, setRating(parsedValue)
@@ -77,6 +77,7 @@ const handleRatingSubmit = async () => {
 
   try {
     const { driver_id } = selectedTask;
+    console.log(rating);
 
     const response = await axios.put(`http://localhost:3001/routes/rate/${driver_id}`, {
       newRating: rating,
@@ -177,7 +178,7 @@ return (
             <div>
               <span className='body-14-bold'>Status: </span> <span className='body-14'>{selectedTask.status}</span>
           </div>
-          {selectedTask.status === 'completed' && !isSubmitted &&(
+          {selectedTask.status === 'completed' && selectedTask.rate === null &&(
                 <div className="rating-dropdown">
                   {/* Add your dropdown component here */}
                   {/* For example, you can use a select element with options for ratings */}
@@ -193,10 +194,10 @@ return (
                   <button className="button-124" onClick={handleRatingSubmit}>Submit</button>
                 </div>
               )}
-              {isSubmitted && (
+              {selectedTask.rate != null && (
                 <div className="submitted-rating">
                   <span className='body-14-bold'>Rating: </span>
-                  <span className='body-14'>{rating}</span>
+                  <span className='body-14'>{selectedTask.rate}</span>
                 </div>
                 )}
         </>

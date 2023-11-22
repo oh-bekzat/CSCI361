@@ -187,10 +187,10 @@ routesRouter.put('/finish/:routeId', async (req, res) => {
 
 routesRouter.put('/rate/:driverId', async (req, res) => {
     try {
-      const newRating = req.body.new_rating
+      const newRating = req.body.newRating
       const routeId = req.body.routeId
-      const {driverId } = req.params
-
+      const {driverId} = req.params
+      console.log(newRating,routeId)
       const driver = await Driver.findByPk(driverId)
       if (!driver) {
         return res.status(404).json({ error: 'Driver not found' })
@@ -208,6 +208,7 @@ routesRouter.put('/rate/:driverId', async (req, res) => {
         rating: newAverageRating,
         n_ratings: numberOfRatings + 1
       })
+
       await existingRoute.update({
         rate: newRating
       })

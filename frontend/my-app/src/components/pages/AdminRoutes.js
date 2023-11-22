@@ -155,6 +155,11 @@ const AdminManagesRoutes = () => {
                     Waiting for a client to rate
                   </div>
                 )}
+                {route.status === 'completed' && route.rate != null && (
+                  <div className='body-14'>
+                    Rating: {route.rate}
+                  </div>
+                )}
                 {/* Add additional conditions for other status values */}
               </td>
             </tr>

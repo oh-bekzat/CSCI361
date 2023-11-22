@@ -7,6 +7,7 @@ import axios from 'axios';
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [driverRating, setDriverRating] = useState(null);
+  const [driverInfo, setDriverInfo] = useState(null);
   const navigate = useNavigate();
 
 
@@ -37,6 +38,7 @@ const Profile = () => {
     try {
       const response = await axios.get(`http://localhost:3001/users/drivers/${userId}`);
       setDriverRating(response.data.rating); // Assuming the response has a 'rating' property
+      setDriverInfo(response.data)
       console.log(response.data);
     } catch (error) {
       console.error('Error fetching driver rating:', error);
@@ -72,7 +74,7 @@ const Profile = () => {
             {driverRating !== null && (
               <div className="rating-container">
                 <img src={require('../assets/star.png')} style={{ width: '20pt' }} alt="Star" />
-                <span className="body-20-bold">{driverRating}</span>
+                <span className="body-20-bold">{driverRating}</span> <span className="body-20"> ({driverInfo.n_ratings})</span>
               </div>
             )}
             </div>
