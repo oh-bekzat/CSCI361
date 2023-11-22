@@ -14,6 +14,8 @@ import Auction from './components/pages/Auction';
 import RegistrationFormUser from './components/pages/registerUser';
 import RegistrationFormVehicle from './components/pages/registerVehicle';
 import AdminManageDrivers from './components/pages/AdminManageDrivers';
+import AdminManageMainten from './components/pages/AdminManageMainten';
+import AdminManageFueling from './components/pages/AdminManageFueling';
 import AdminHomePage from './components/pages/AdminHome';
 import AdminNavbar from './components/AdminNavbar';
 import AdminTasks from './components/pages/AdminTasks';
@@ -57,6 +59,8 @@ function App() {
         <Route path="/admin/users" element={<><AdminNavbar /><AdminUsers /></>} />
         <Route path="/admin/users/add" element={<><AdminNavbar /><RegistrationFormUser/></>} />
         <Route path="/admin/users/driver" element={<><AdminNavbar /><AdminManageDrivers/></>} />
+        <Route path="/admin/users/maintening" element={<><AdminNavbar /><AdminManageMainten/></>} />
+        <Route path="/admin/users/fueling" element={<><AdminNavbar /><AdminManageFueling/></>} />        
         <Route path="/admin/vehicles/add" element={<><AdminNavbar /><RegistrationFormVehicle/></>} />
         <Route path="/admin/vehicles" element={<><AdminNavbar /><AdminVehicles /></>} />
         <Route path="/fueling/profile" element={<><FuelingNavbar /><FuelProfile /></>} />

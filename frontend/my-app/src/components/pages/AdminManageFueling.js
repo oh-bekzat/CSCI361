@@ -1,12 +1,11 @@
-// AdminManageDrivers.js
+// AdminManageFueling.js
 import React, { useState } from 'react';
 import './registration.css';
 
-const AdminManageDrivers = () => {
+const AdminManageFueling = () => {
   const [formData, setFormData] = useState({
     phone_number: '87773378532',
-    license_code: '123212',
-    user_role:'Driver',
+    user_role:'Fueling Person',
     first_name: 'Aktan',
     last_name: 'Seraliyev',
     email: 'aktan.seraliyev@nu.edu.kz',
@@ -29,7 +28,7 @@ const AdminManageDrivers = () => {
     const newErrors = {};
 
     // Check for required fields
-    const requiredFields = ['phone_number', 'license_code'];
+    const requiredFields = ['phone_number'];
     requiredFields.forEach((field) => {
       if (!formData[field]) {
         newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
@@ -94,14 +93,7 @@ const AdminManageDrivers = () => {
           <input type="tel" name="phone_number" value={formData.phone_number} onChange={handleChange} />
         </label>
 
-        <label>
-        <strong>License Code:</strong> 
-          <div className='label-12 note'>*Only required if the selected role is "driver"</div>
-          <input type="text" name="license_code" value={formData.license_code} onChange={handleChange} />
-        </label>
-
         {errors.phone_number && <span className="error-text">{errors.phone_number}</span>}
-        {errors.license_code && <span className="error-text">{errors.license_code}</span>}
 
         <button className='button-264' type="submit">Update</button>
         {successMessage && <div className="success-message">{successMessage}</div>}
@@ -110,4 +102,4 @@ const AdminManageDrivers = () => {
   );
 };
 
-export default AdminManageDrivers;
+export default AdminManageFueling;
