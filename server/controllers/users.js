@@ -137,57 +137,63 @@ usersRouter.get('/drivers/:id', async (req, res) => {
 usersRouter.put('/:userId', async (req, res) => {
     const userId = req.params.userId;
     const {
-      email,
-      password_hashed,
-      firstname,
-      middlename,
-      lastname,
-      address,
-      phone_number,
-      user_role,
-      license_code,
+        email,
+        password_hashed,
+        firstname,
+        middlename,
+        lastname,
+        address,
+        phone_number,
+        user_role,
+        license_code,
     } = req.body;
-  
+
     try {
-      const updatedUser = await User.update(
-        {
-          email,
-          password_hashed,
-          firstname,
-          middlename,
-          lastname,
-          address,
-          phone_number,
-        },
-        {
-          where: { user_id: userId },
-          returning: true,
-        }
-      );
-  
-      if (updatedUser[0] === 0) {
-        return res.status(404).json({ msg: 'User not found' });
-      }
-  
-      const updatedUserData = updatedUser[1][0].get();
-  
-      if (user_role === 'driver') {
-        const [updatedDriverRowCount] = await Driver.update(
-          { license_code },
-          { where: { user_id: userId } }
+        // Update User
+        const updatedUser = await User.update(
+            {
+                email,
+                password_hashed,
+                firstname,
+                middlename,
+                lastname,
+                address,
+                phone_number,
+            },
+            {
+                where: { user_id: userId },
+                returning: true,
+            }
         );
-  
-        if (updatedDriverRowCount === 0) {
-          return res.status(404).json({ msg: 'Driver not found' });
+
+        if (updatedUser[0] === 0) {
+            return res.status(404).json({ msg: 'User not found' });
         }
-      }
-  
-      res.json(updatedUserData);
+
+        const updatedUserData = updatedUser[1][0].get();
+
+        // Update Driver if user_role is 'driver'
+        if (user_role !== 'driver') {
+            res.json(updatedUserData);
+        }
+
+        const [updatedDriverRowCount] = await Driver.update(
+            { license_code },
+            { where: { user_id: userId } }
+        );
+
+        res.json(updatedUserData);
+
+        if (updatedDriverRowCount === 0) {
+            return res.status(404).json({ msg: 'Driver not found' });
+        }
+
     } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server error');
+        console.error(err.message);
+        res.status(500).send('Server error');
     }
-})
+});
+
 
 
 module.exports = usersRouter
