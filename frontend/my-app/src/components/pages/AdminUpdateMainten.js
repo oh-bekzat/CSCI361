@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 import './registration.css';
 
-const AdminManageMainten = () => {
+const AdminUpdateMainten = () => {
   const [formData, setFormData] = useState({
     phone_number: '87773378532',
     user_role:'Maintenance Person',
@@ -102,4 +102,4 @@ const AdminManageMainten = () => {
   );
 };
 
-export default AdminManageMainten;
+export default AdminUpdateMainten;
