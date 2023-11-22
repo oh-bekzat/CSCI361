@@ -34,6 +34,7 @@ const ClientRequest = () => {
       setStartPoint('');
       setFinishPoint('');
       setDateTime('');
+      console.log(dateTime);
     } catch (error) {
       console.error('Error submitting route request:', error);
       // Handle the error as needed
