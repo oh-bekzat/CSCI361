@@ -7,7 +7,7 @@ const routesRouter = require('express').Router()
 routesRouter.post('/', async (req, res) => {
     var randomValue = Math.floor(Math.random() * (100 - 10 + 1)) + 10;
     try {
-        const { user_id, start_point, finish_point } = req.body
+        const { user_id, start_point, finish_point, requested_time } = req.body
         if (!user_id || !start_point || !finish_point) {
             return res.status(400).json({ error: 'Fields are required' })
         }
@@ -19,6 +19,7 @@ routesRouter.post('/', async (req, res) => {
             client_id: user_id,
             start_point,
             finish_point,
+            requested_time,
             distance: randomValue
         })
         res.status(201).json(newRoute)

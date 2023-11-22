@@ -69,7 +69,8 @@ CREATE TABLE routes (
   	distance int NOT NULL, -- derivable but costly performance-wise
   	start_time timestamp,
   	finish_time timestamp, -- total time is derivable
-	status route_status_type DEFAULT 'awaiting'
+	status route_status_type DEFAULT 'awaiting',
+	requested_time timestamp NOT NULL
 )
 
 CREATE TABLE fuelling_details (
