@@ -24,6 +24,32 @@ usersRouter.get('/drivers', async (req, res) => {
     }
 })
 
+usersRouter.get('/fueling', async (req, res) => {
+    try {
+        const users = await User.findAll({
+            where: {
+                user_role: 'fuelling_person'
+            }
+        })
+        res.json(users)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+})
+
+usersRouter.get('/maintenance', async (req, res) => {
+    try {
+        const users = await User.findAll({
+            where: {
+                user_role: 'maintenance_person'
+            }
+        })
+        res.json(users)
+    } catch (err) {
+        res.status(500).send(err.message)
+    }
+})
+
 usersRouter.post('/', async (req, res) => {
     try {
         const { user_role, license_code, ...otherUserData } = req.body

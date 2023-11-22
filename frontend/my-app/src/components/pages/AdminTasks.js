@@ -96,7 +96,9 @@ const AdminTasks = ({UserId}) => {
             <div>
                 <span className='body-14-bold'>Description: </span> <span className='body-14'>{selectedTask.description}</span>
             </div>
-            
+            {selectedTask.status === 'awaiting' && (
+        <button onClick={handleAssignTask}>Assign</button>
+      )}
           </>
         ) : (
           <div className='body-24'>Select a route to view details.</div>
