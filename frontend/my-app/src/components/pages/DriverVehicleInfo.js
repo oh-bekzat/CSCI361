@@ -1,6 +1,6 @@
 // VehicleInfoPage.js
 import React, { useState } from 'react';
-import './VehicleInfo.css';
+import './DriverVehicleInfo.css';
 import axios from 'axios';
 
 const VehicleInfo = ({ vehicle_id }) => {

@@ -6,7 +6,7 @@ import Home from './components/pages/Home';
 import DriverHomePage from './components/pages/DriverHome';
 import History from './components/pages/DriverHistory';
 import Profile from './components/pages/DriverProfile';
-import VehicleInfo from './components/pages/VehicleInfo';
+import VehicleInfo from './components/pages/DriverVehicleInfo';
 import LoginPage from './components/pages/Login';
 import MainNavbar from './components/MainNavbar';
 import AboutUs from './components/pages/AboutUs';
