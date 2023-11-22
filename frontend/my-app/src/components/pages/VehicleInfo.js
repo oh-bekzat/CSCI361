@@ -1,53 +1,86 @@
 // VehicleInfoPage.js
-import React, { useState, useEffect } from 'react';
-import './VehicleInfo.css'; // Create or import your CSS file
+import React, { useState } from 'react';
+import './VehicleInfo.css';
+import axios from 'axios';
 
-const VehicleInfo = () => {
-  const [vehicleData, setVehicleData] = useState(null);
+const VehicleInfo = ({ vehicle_id }) => {
+  const [assignedTasks] = useState([
+    {
+      id: 1,
+      carId: '202030300',
+      title: 'Hyundai Sonata 2021 y.',
+      model: 'Sonata',
+      Make: 'Hyundai',
+      year: '2021',
+      color: 'white',
+      plate: '777 AAA 01',
+      capacity: '5 passengers',
+      volume: '60 lites',
+      mileage: '24990',
+    },
+  ]);
 
-  // useEffect(() => {
-  //   // Fetch vehicle data from an API endpoint or other data source
-  //   // Update the API endpoint or data fetching logic based on your project
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch('http://localhost:3001/get-vehicle-info');
-  //       const data = await response.json();
-  //       setVehicleData(data);
-  //     } catch (error) {
-  //       console.error('Error fetching vehicle data:', error);
-  //     }
-  //   };
+  const [selectedTask, setSelectedTask] = useState(null);
 
-  //   fetchData();
-  // }, []); // Empty dependency array ensures useEffect runs once after the initial render
-
-  const handleChangeDetails = () => {
-    // Logic to handle changing vehicle details
-    console.log('Change Details button clicked');
+  const handleTaskSelection = (task) => {
+    setSelectedTask(task);
   };
 
   return (
-    <div className="vehicle-info-page">
-      {/* Left Section - Stack of Vehicle Photos */}
-      
-      <div className="photo-stack">
-        <img src={require('../assets/car_example.png')}></img>
-      </div>
-
-      {/* Right Section - General Information */}
-      <div className="general-info">
-        {vehicleData ? (
-          <div>
-            <h2>{vehicleData.model}</h2>
-            <p>Make: {vehicleData.make}</p>
-            <p>Year: {vehicleData.year}</p>
-            <p>Color: {vehicleData.color}</p>
-            {/* Add more details as needed */}
-            <button onClick={handleChangeDetails}>Change Details</button>
-          </div>
-        ) : (
-          <p>Loading vehicle information...</p>
-        )}
+    <div className="auction-page">
+      <div className="car-details">
+        <ul>
+          {assignedTasks.map((task) => (
+            <li key={task.id} onClick={() => handleTaskSelection(task)}>
+              <div className="car-info-container">
+                <div className="car-image">
+                  <img src={require('../assets/car_example.png')} alt="Car" />
+                </div>
+                <div className="car-info">
+                  <div className="body-20-bold">{task.title}</div>
+                  <div className="car-property">
+                    <div>
+                      <span className="body-14-bold">ID:</span>{' '}
+                      <span className="body-14">{task.carId}</span>
+                    </div>
+                    <div>
+                      <span className="label-14-bold">Make:</span>{' '}
+                      <span className="body-14">{task.Make}</span>
+                    </div>
+                    <div>
+                      <span className="label-14-bold">Model:</span>{' '}
+                      <span className="body-14">{task.model}</span>
+                    </div>
+                    <div>
+                      <span className="label-14-bold">Year:</span>{' '}
+                      <span className="body-14">{task.year}</span>
+                    </div>
+                    <div>
+                      <span className="label-14-bold">License Plate:</span>{' '}
+                      <span className="body-14">{task.plate}</span>
+                    </div>
+                    <div>
+                      <span className="label-14-bold">Capacity:</span>{' '}
+                      <span className="body-14">{task.capacity}</span>
+                    </div>
+                    <div>
+                      <span className="label-14-bold">Tank Volume:</span>{' '}
+                      <span className="body-14">{task.volume}</span>
+                    </div>
+                    <div>
+                      <span className="label-14-bold">Mileage:</span>{' '}
+                      <span className="body-14">{task.mileage}</span>
+                    </div>
+                    <div>
+                      <span className="label-14-bold">Color:</span>{' '}
+                      <span className="body-14">{task.color}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
