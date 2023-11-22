@@ -60,7 +60,7 @@ const Route = sequelize.define('Route', {
     requested_date: {
         type: DataTypes.DATE,
     },
-    driver_id: {
+    rate: {
         type: DataTypes.INTEGER,
     },
 }, {
