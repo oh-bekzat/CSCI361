@@ -76,6 +76,7 @@ const AdminManagesRoutes = () => {
   
         // Additional logic if needed after successful assignment
       } else {
+        console.log('Assigning driver', selectedDriverId, 'to route', selectedRoute.route_id);
         console.error('Selected route is undefined.');
       }
   

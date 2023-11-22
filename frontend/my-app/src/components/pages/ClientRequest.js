@@ -4,6 +4,7 @@ import axios from 'axios';
 const ClientRequest = () => {
   const [startPoint, setStartPoint] = useState('');
   const [finishPoint, setFinishPoint] = useState('');
+  const [dateTime, setDateTime] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +19,8 @@ const ClientRequest = () => {
       const requestData = {
         user_id: user_id,
         start_point: startPoint,
-        finish_point: finishPoint
+        finish_point: finishPoint,
+        date_time: dateTime
       };
 
       // Make a POST request
@@ -30,6 +32,7 @@ const ClientRequest = () => {
       // Clear the form inputs after submission
       setStartPoint('');
       setFinishPoint('');
+      setDateTime('');
     } catch (error) {
       console.error('Error submitting route request:', error);
       // Handle the error as needed
@@ -58,6 +61,17 @@ const ClientRequest = () => {
         onChange={(e) => setFinishPoint(e.target.value)}
         required
       />
+
+
+      <label htmlFor="dateTime">Date and Time:</label>
+        <input
+          type="datetime-local"  // Use "datetime-local" type for date and time input
+          id="dateTime"
+          name="dateTime"
+          value={dateTime}
+          onChange={(e) => setDateTime(e.target.value)}
+          required
+        />
 
       <button type="submit" className="button-124 request-button">Submit Route Request</button>
     </form>
