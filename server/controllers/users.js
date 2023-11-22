@@ -141,6 +141,8 @@ usersRouter.put('/:userId', async (req, res) => {
         password_hashed,
         firstname,
         middlename,
+        iin,
+        rating, n_ratings,
         lastname,
         address,
         phone_number,
@@ -149,17 +151,20 @@ usersRouter.put('/:userId', async (req, res) => {
     } = req.body;
 
     try {
+        // Construct the update object with non-null fields
+        const updateObject = {
+            ...(email && { email }),
+            ...(password_hashed && { password_hashed }),
+            ...(firstname && { firstname }),
+            ...(middlename && { middlename }),
+            ...(lastname && { lastname }),
+            ...(address && { address }),
+            ...(phone_number && { phone_number }),
+        };
+
         // Update User
         const updatedUser = await User.update(
-            {
-                email,
-                password_hashed,
-                firstname,
-                middlename,
-                lastname,
-                address,
-                phone_number,
-            },
+            updateObject,
             {
                 where: { user_id: userId },
                 returning: true,
@@ -173,26 +178,25 @@ usersRouter.put('/:userId', async (req, res) => {
         const updatedUserData = updatedUser[1][0].get();
 
         // Update Driver if user_role is 'driver'
-        if (user_role !== 'driver') {
-            res.json(updatedUserData);
-        }
+        if (user_role === 'driver') {
+            const [updatedDriverRowCount] = await Driver.update(
+                { license_code },
+                { where: { user_id: userId } }
+            );
 
-        const [updatedDriverRowCount] = await Driver.update(
-            { license_code },
-            { where: { user_id: userId } }
-        );
+            if (updatedDriverRowCount === 0) {
+                return res.status(404).json({ msg: 'Driver not found' });
+            }
+        }
 
         res.json(updatedUserData);
-
-        if (updatedDriverRowCount === 0) {
-            return res.status(404).json({ msg: 'Driver not found' });
-        }
 
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server error');
     }
 });
+
 
 
 
