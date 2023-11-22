@@ -57,6 +57,12 @@ const Route = sequelize.define('Route', {
     requested_time: {
         type: DataTypes.DATE,
     },
+    requested_date: {
+        type: DataTypes.DATE,
+    },
+    driver_id: {
+        type: DataTypes.INTEGER,
+    },
 }, {
     tableName: 'routes',
     timestamps: false,
