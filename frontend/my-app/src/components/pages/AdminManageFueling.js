@@ -15,7 +15,6 @@ const AdminManageFueling = ({userId}) => {
       try {
         const response = await axios.get(`http://localhost:3001/users/fueling`);
         setUserData(response.data); 
-  
         console.log(response.data);
       } catch (error) {
         console.error('Error fetching user data:', error);
@@ -50,68 +49,64 @@ const AdminManageFueling = ({userId}) => {
 
 
 
-//   return (
+  return (
     
-//     <div className="client-home-page">
-//       <div className="task-list">
-//         <ul>
-//           {Array.isArray(driverData) && driverData.map((Driver) => (
-//             <li key={Driver.user_id} onClick={() => handleDriverSelection(Driver)}>
-//               <div>
-//                   <span className='body-14-bold' style={{ marginLeft: '20px' }}>Driver </span> <span className='body-14'>{Driver.firstname} {Driver.lastname}</span>
-//               </div>
-//             </li>
-//           ))}
-//         </ul>
-//       </div>
+    <div className="client-home-page">
+      <div className="task-list">
+        <ul>
+          {Array.isArray(userData) && userData.map((User) => (
+            <li key={User.user_id} onClick={() => handleUserSelection(User)}>
+              <div>
+                  <span className='body-14-bold' style={{ marginLeft: '20px' }}>User </span> <span className='body-14'>{User.firstname} {User.lastname}</span>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
 
-//       {/* Right Section - Detailed Information */}
-//       <div className="task-details">
-//         {selectedDriver ? (
-//             <>
-//           <div>
-//             <div className='body-24-bold'>Driver Information : </div>
-//           </div>
-//             <div>
-//                 <span className='body-14-bold'>Id: </span> <span className='body-14'>{selectedDriver.user_id}</span>
-//             </div>
-//             <div>
-//                 <span className='body-14-bold'>Name: </span> <span className='body-14'>{selectedDriver.firstname}</span>
-//             </div>
-//             <div>
-//                 <span className='body-14-bold'>Lastname: </span> <span className='body-14'>{selectedDriver.lastname}</span>
-//             </div>
-//             <div>
-//                 <span className='body-14-bold'>Email: </span> <span className='body-14'>{selectedDriver.email}</span>
-//             </div>
-//             <div>
-//                 <span className='body-14-bold'>Phone Number: </span> <span className='body-14'>{selectedDriver.phone_number}</span>
-//             </div>
-//             <div>
-//                 <span className='body-14-bold'>IIN: </span> <span className='body-14'>{selectedDriver.iin}</span>
-//             </div>
-//             <div>
-//                 <span className='body-14-bold'>Licence Code: </span> <span className='body-14'>{userData.license_code}</span>
-//             </div>
-//             <div>
-//                 <span className='body-14-bold'>Rating: </span> <span className='body-14'>{userData.rating} ({userData.n_ratings})</span>
-//             </div>
-//             <div>
-//             <Link to="/admin/users/driver/update">
-//               <button className="button-124" onClick={handleEditDriverClick}>
-//                 Edit Driver
-//               </button>
-//             </Link>
-//             </div>
+      {/* Right Section - Detailed Information */}
+      <div className="task-details">
+        {selectedUser ? (
+            <>
+          <div>
+            <div className='body-24-bold'>Fueling Person Information : </div>
+          </div>
+            <div>
+                <span className='body-14-bold'>Id: </span> <span className='body-14'>{selectedUser.user_id}</span>
+            </div>
+            <div>
+                <span className='body-14-bold'>Name: </span> <span className='body-14'>{selectedUser.firstname}</span>
+            </div>
+            <div>
+                <span className='body-14-bold'>Lastname: </span> <span className='body-14'>{selectedUser.lastname}</span>
+            </div>
+            <div>
+                <span className='body-14-bold'>Email: </span> <span className='body-14'>{selectedUser.email}</span>
+            </div>
+            <div>
+                <span className='body-14-bold'>Phone Number: </span> <span className='body-14'>{selectedUser.phone_number}</span>
+            </div>
+            <div>
+                <span className='body-14-bold'>IIN: </span> <span className='body-14'>{selectedUser.iin}</span>
+            </div>
+            
+            
+            <div>
+            <Link to="/admin/users/fueling/update">
+              <button className="button-124" onClick={handleEditUserClick}>
+                Edit Fueling Person
+              </button>
+            </Link>
+            </div>
 
-//           </>
-//         ) : (
-//           <div className='body-24'>Select a Driver to view details.</div>
-//         )}
-//       </div>
-//     </div>
+          </>
+        ) : (
+          <div className='body-24'>Select a Driver to view details.</div>
+        )}
+      </div>
+    </div>
     
-//   );
+  );
  };
 
 export default AdminManageFueling
