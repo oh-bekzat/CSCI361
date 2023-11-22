@@ -87,4 +87,21 @@ usersRouter.get('/:id', async (req, res) => {
     }
 })
 
+usersRouter.get('/drivers/:id', async (req, res) => {
+    try {
+        const driver = await Driver.findOne({
+            where: {
+                user_id: req.params.id
+            }
+        })
+        if (!driver) {
+            return res.status(404).json({ error: 'Driver not found' })
+        }
+        res.status(200).json(driver)
+    } catch (error) {
+        console.error('Error fetching driver:', error)
+        res.status(500).json({ error: 'Internal server error' })
+    }
+})
+
 module.exports = usersRouter
