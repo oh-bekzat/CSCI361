@@ -5,6 +5,10 @@ import axios from 'axios';
 const ClientHome = ({clientId}) => {
   const [assignedTasks, setAssignedTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [driverData, setDriverData] = useState(null); // State to store driver data
+  const [vehicleData, setVehicleData] = useState(null); // State to store vehicle data
+  const [rating, setRating] = useState(null);
+  const [isSubmitted, setIsSubmitted] = useState(false);
   const user_id = localStorage.getItem("clientId");
 
   useEffect(() => {
@@ -18,12 +22,54 @@ const ClientHome = ({clientId}) => {
         console.error('Error fetching data:', error);
       }
     };
+    
     fetchData();
   }, []);
 
+    const fetchDriverData = async (task) => {
+      console.log(task)
+      if (task && task.driver_id) {
+        try {
+          const response = await axios.get(`http://localhost:3001/users/${task.driver_id}`);
+          setDriverData(response.data); // Assuming the response has driver_name and driver_phone
+          console.log("DriverData:", response.data)
+        } catch (error) {
+          console.error('Error fetching driver data:', error);
+        }
+      }
+    };
+
+    const fetchVehicleData = async (task) => {
+      console.log(task)
+      if (task && task.vehicle_id) {
+        try {
+          const response = await axios.get(`http://localhost:3001/vehicles/${task.vehicle_id}`);
+          setVehicleData(response.data); // Assuming the response has driver_name and driver_phone
+          console.log("VehicleData:", response.data)
+        } catch (error) {
+          console.error('Error fetching vehicle data:', error);
+        }
+      }
+    };
+  
+  
+    // Function to handle rating submission
+  const handleRatingSubmit = () => {
+    // Perform any necessary actions before submitting the rating
+    setIsSubmitted(true);
+  };
+
+
+
+
   // Function to handle task selection
-  const handleTaskSelection = (task) => {
-    setSelectedTask(task);
+  const handleTaskSelection = async (task) => {
+    console.log("pressed");
+    await setSelectedTask(task);
+    fetchDriverData(task);
+    fetchVehicleData(task);
+    setRating(null); // Reset rating when a new task is selected
+    setIsSubmitted(false); // Reset the submitted state
   };
 
   return (
@@ -67,11 +113,12 @@ const ClientHome = ({clientId}) => {
             </div>
             <div>
                 <span className='body-14-bold'>Status: </span> <span className='body-14'>{selectedTask.status}</span>
-                {selectedTask.status === 'Finished' && (
+                {selectedTask.status === 'completed' && !isSubmitted &&(
                   <div className="rating-dropdown">
                     {/* Add your dropdown component here */}
                     {/* For example, you can use a select element with options for ratings */}
-                    <select>
+                    <span className='body-14-bold'>Rate: </span>
+                    <select onChange={(e) => setRating(e.target.value)}>
                       <option value="0">0</option>
                       <option value="1">1</option>
                       <option value="2">2</option>
@@ -79,9 +126,35 @@ const ClientHome = ({clientId}) => {
                       <option value="4">4</option>
                       <option value="5">5</option>
                     </select>
+                    <button className="button-124" onClick={handleRatingSubmit}>Submit</button>
                   </div>
                 )}
+                {isSubmitted && (
+                  <div className="submitted-rating">
+                    <span className='body-14-bold'>Rating: </span>
+                    <span className='body-14'>{rating}</span>
+                  </div>
+                 )}
+
+
+
             </div>
+            {selectedTask.status === 'assigned' && driverData && vehicleData &&(
+                <>
+                  <div>
+                    <span className='body-14-bold'>Driver: </span> <span className='body-14'>{driverData.firstname} {driverData.lastname}</span>
+                  </div>
+                  <div>
+                    <span className='body-14-bold'>Phone: </span> <span className='body-14'>{driverData.phone_number}</span>
+                  </div>
+                  <div>
+                    <span className='body-14-bold'>License Plate: </span> <span className='body-14'>{vehicleData.license_plate}</span>
+                  </div>
+                  <div>
+                    <span className='body-14-bold'>Model: </span> <span className='body-14'>{vehicleData.make} {vehicleData.model}</span>
+                  </div> 
+                </>
+              )}
           </>
         ) : (
           <div className='body-24'>Select a route to view details.</div>
