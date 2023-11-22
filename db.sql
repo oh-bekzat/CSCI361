@@ -70,7 +70,8 @@ CREATE TABLE routes (
   	start_time timestamp,
   	finish_time timestamp, -- total time is derivable
 	status route_status_type DEFAULT 'awaiting',
-	requested_time timestamp NOT NULL
+	requested_time timestamp NOT NULL,
+	rate int
 )
 
 CREATE TABLE fuelling_details (
