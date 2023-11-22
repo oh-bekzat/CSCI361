@@ -104,48 +104,60 @@ usersRouter.get('/drivers/:id', async (req, res) => {
     }
 })
 
-usersRouter.put('/update/:userId', async (req, res) => {
-    const userId = req.params.userId;
-    const {
-      phone_number,
-    } = req.body;
+// usersRouter.put('/update/:userId', async (req, res) => {
+//     const userId = req.params.userId;
+//     const {
+//       phone_number,
+//     } = req.body;
   
-    try {
-      const updatedUser = await User.update(
-        {
-          phone_number,
-        },
-        {
-          where: { user_id: userId },
-          returning: true,
-        }
-      );
+//     try {
+//       const updatedUser = await User.update(
+//         {
+//           phone_number,
+//         },
+//         {
+//           where: { user_id: userId },
+//           returning: true,
+//         }
+//       );
   
-      if (updatedUser[0] === 0) {
-        return res.status(404).json({ msg: 'User not found' });
-      }
+//       if (updatedUser[0] === 0) {
+//         return res.status(404).json({ msg: 'User not found' });
+//       }
   
-      const updatedUserData = updatedUser[1][0].get();
+//       const updatedUserData = updatedUser[1][0].get();
   
-      res.json(updatedUserData);
-    } catch (err) {
-      console.error(err.message);
-      res.status(500).send('Server error');
-    }
-})
+//       res.json(updatedUserData);
+//     } catch (err) {
+//       console.error(err.message);
+//       res.status(500).send('Server error');
+//     }
+// })
 
-usersRouter.put('/drivers/update/:userId', async (req, res) => {
+usersRouter.put('/:userId', async (req, res) => {
     const userId = req.params.userId;
     const {
+      email,
+      password_hashed,
+      firstname,
+      middlename,
+      lastname,
+      address,
       phone_number,
+      user_role,
       license_code,
     } = req.body;
   
     try {
       const updatedUser = await User.update(
         {
+          email,
+          password_hashed,
+          firstname,
+          middlename,
+          lastname,
+          address,
           phone_number,
-          license_code,
         },
         {
           where: { user_id: userId },
@@ -158,6 +170,17 @@ usersRouter.put('/drivers/update/:userId', async (req, res) => {
       }
   
       const updatedUserData = updatedUser[1][0].get();
+  
+      if (user_role === 'driver') {
+        const [updatedDriverRowCount] = await Driver.update(
+          { license_code },
+          { where: { user_id: userId } }
+        );
+  
+        if (updatedDriverRowCount === 0) {
+          return res.status(404).json({ msg: 'Driver not found' });
+        }
+      }
   
       res.json(updatedUserData);
     } catch (err) {
