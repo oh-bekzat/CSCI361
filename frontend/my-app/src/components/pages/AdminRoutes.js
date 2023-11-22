@@ -95,6 +95,7 @@ const AdminManagesRoutes = () => {
     // Get the index of the status in the order array
     const statusIndexA = statusOrder.indexOf(a.status);
     const statusIndexB = statusOrder.indexOf(b.status);
+    console.log(routes)
 
     // Compare based on the status index
     return statusIndexA - statusIndexB;
@@ -149,9 +150,9 @@ const AdminManagesRoutes = () => {
                     Waiting for a driver to finish
                   </div>
                 )}
-                {route.status === 'completed' && (
+                {route.status === 'completed' && route.rate === null && (
                   <div className='body-14'>
-                    Waiting for a driver to finish
+                    Waiting for a client to rate
                   </div>
                 )}
                 {/* Add additional conditions for other status values */}
