@@ -10,7 +10,7 @@ function ClientNavbar() {
         <div className='logo-container'>
           <div>
           <Link to='/client'>
-          <span><img src={require('./assets/client.png')} alt="Home" /></span>
+          <span><img src={require('./assets/home-icon.png')} alt="Home" /></span>
           </Link>
           </div>
           <div className="header-32-bold">VMS Project</div>
