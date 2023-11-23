@@ -1,37 +1,28 @@
 // AdminTasks.js
 import React, { useState, useEffect } from 'react';
-import './AdminTasks.css';
+import './DriverHome.css';
 import axios from 'axios';
 
 import { Link } from 'react-router-dom';
 
-const AdminTasks = ({UserId}) => {
-  // Sample data for assigned tasks
-//   const [assignedTasks, setAssignedTasks] = useState([]);
-//   const [selectedTask, setSelectedTask] = useState(null);
-
-
+const AdminTasks = ({}) => {
 
 // user_id, maintenance_description, maintenance_date, maintenance_cost, images
-  const [assignedTasks, setAssignedTasks] = useState([
-    { id: 1, title: 'Task 1', details: 'Details for Task 1', date: '13.11.2023', time: '10:00',  description: 'Fuel this car until next week', type : 'Fueling',assignedPerson:'John Doe', vehicleId:'P198JJN', status:'active'},
-    { id: 2, title: 'Task 2', details: 'Details for Task 2', date: '24.11.2023', time: '13:00', description: 'Requires ordering new objects' ,type : 'Maintence',assignedPerson:'Emily Thompson',  vehicleId:'T129NNN', status:'active'},
-  ]);
-  // State to track the selected task
+  const [assignedTasks, setAssignedTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
 
-    // useEffect(() => {
-    // // Fetch data from the localhost:3001/get-routes endpoint
-    //     const fetchData = async () => {
-    //     try {
-    //         const response = await axios.get('http://localhost:3001/get-routes');
-    //         setAssignedTasks(response.data);
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //     }
-    //     };
-    // fetchData();
-    // }, []);
+    useEffect(() => {
+    // Fetch data from the localhost:3001/get-routes endpoint
+        const fetchData = async () => {
+        try {
+            const response = await axios.get('http://localhost:3001/tasks');
+            setAssignedTasks(response.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+        };
+    fetchData();
+    }, []);
 
   // Function to handle task selection
   const handleTaskSelection = (task) => {
@@ -48,8 +39,8 @@ const AdminTasks = ({UserId}) => {
   return (
     
     <div className="driver-home-page-button">
-      <Link to="/">
-        <button className="button-124">Add Task</button>
+      <Link to="/admin/tasks/add">
+        <button className="button-124" style={{margin: '20px'}}>Add Task</button>
       </Link>
       <div className="driver-home-page">
       <div className="task-list">
