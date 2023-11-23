@@ -42,6 +42,7 @@ import AdminAddFuelingTask from './components/pages/AdminAddFuelingTask';
 import AdminVehicleFuelingHistory from './components/pages/AdminVehicleFuelingHistory';
 import AdminVehicleMaintenanceHistory from './components/pages/AdminVehicleMaintenanceHistory';
 import MaintenProfile from './components/pages/MaintenProfile';
+import AddVehicleAuction from './components/pages/AdminAddToAuction';
 
 function App() {
   return (
@@ -73,6 +74,7 @@ function App() {
         <Route path="/admin/users/driver/update" element={<><AdminNavbar /><AdminUpdateDrivers/></>} />    
         <Route path="/admin/vehicles/add" element={<><AdminNavbar /><RegistrationFormVehicle/></>} />
         <Route path="/admin/vehicles" element={<><AdminNavbar /><AdminVehicles /></>} />
+        <Route path="/admin/vehicles/auction/:vehicleId" element={<><AdminNavbar /><AddVehicleAuction /></>} />
         <Route path="/fueling/profile" element={<><FuelingNavbar /><FuelProfile /></>} />
         <Route path="/fueling/history" element={<><FuelingNavbar /><FuelingHistory /></>} />
         <Route path="/fueling/" element={<><FuelingNavbar /><FuelingTasks /></>} />
