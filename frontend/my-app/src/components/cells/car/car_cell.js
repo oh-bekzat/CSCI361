@@ -74,8 +74,12 @@ const CarCell = ({ car }) => {
         <img src={car.vehicle_image} alt={`${car.make} ${car.model}`} />
       </div>
       <div className="car-info-container">
-        <div className="car-info">
+        <div className='car-name'>
           <div className="body-20-bold">{`${car.make} ${car.model} ${car.manufacture_year} y.`}</div>
+        </div>
+        <div className='car-container'>
+        <div className="car-info">
+          
           <div className="car-property">
             <div>
               <span className="label-14-bold">License Plate:</span>{' '}
@@ -138,11 +142,12 @@ const CarCell = ({ car }) => {
                 <input type="datetime-local" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
                 <label>Finish time:</label>
                 <input type="datetime-local" value={finishTime} onChange={(e) => setFinishTime(e.target.value)} />
-                <button className="reportButton" onClick={() => generateReport(car.license_plate)}>
+                <button className="button-124" onClick={() => generateReport(car.license_plate)}>
                   Generate report
                 </button>
               </div>
             )}
+          </div>
           </div>
       </div>
     </div>
