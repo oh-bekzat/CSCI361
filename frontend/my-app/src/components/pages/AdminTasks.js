@@ -37,7 +37,6 @@ const AdminTasks = ({}) => {
 
 
   return (
-    
     <div className="driver-home-page-button">
       <Link to="/admin/tasks/add">
         <button className="button-124" style={{margin: '20px', width: 'fit-content'}}>Add Maintenance Task</button>
