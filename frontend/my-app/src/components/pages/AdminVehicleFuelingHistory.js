@@ -52,14 +52,10 @@ const AdminVehicles = () => {
     return (
       <div className="fueling-card">
         <div className="fueling-info">
-          <h2>Fueling Details</h2>
-          <p>Fueling ID: {fuelingData.fuelling_id}</p>
+          <h2>{fuelingData.gas_station_name}</h2>
           <p>Fuel Amount: {fuelingData.fuel_amount}</p>
-          <p>Fuel Cost: {fuelingData.fuel_cost}</p>
+          <p>Cost: {fuelingData.fuel_cost}</p>
           <p>Fueling Date: {new Date(fuelingData.fuelling_date).toLocaleString()}</p>
-          <p>Gas Station: {fuelingData.gas_station_name}</p>
-          <p>Task ID: {fuelingData.task_id}</p>
-          <p>User ID: {fuelingData.user_id}</p>
           <p>Vehicle ID: {fuelingData.vehicle_id}</p>
         </div>
       </div>
@@ -70,8 +66,8 @@ const AdminVehicles = () => {
     const fetchVehicleFueling = async () => {
         try {
             const response = await axios.get(`http://localhost:3001/tasks/fueling/${car.vehicleId}`);
-            setHistory(response.data); 
-            console.log(response.data);
+            setHistory(response.data.fuellingDetails); 
+            console.log(response.data.fuellingDetails);
           } catch (error) {
             console.error('Error fetching user data:', error);
           }
@@ -84,8 +80,8 @@ const AdminVehicles = () => {
     <div className="history-page">
     <h1>Fueling History</h1>
       <div className="fueling-cards">
-        {history.map((fuellingData, index) => (
-          <FuelingHistory key={index} fuelingData={fuellingData} />
+        {history.map((fuelingData, index) => (
+          <FuelingHistory key={index} fuelingData={fuelingData} />
         ))}
       </div>
     </div>
