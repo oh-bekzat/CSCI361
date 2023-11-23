@@ -109,13 +109,13 @@ import Modal from 'react-modal';
 
 const AdminAddMainteningTask = () => {
   const [licensePlate, setLicencePlate] = useState('');
-  const [date, setDate] = useState('');
+  const [olddate, setDate] = useState('');
   const [maintainId, setMaintainId] = useState('');
   const [maintainers, setMaintainers] = useState([]);
   const [vehicles, setVehicles] = useState([]);
-  const admin_id = localStorage.getItem("admin_id");
+  const admin_id = "1";
 
-  const [description, setDescription] = useState([]);
+  const [description, setDescription] = useState('ewfegergrggrfr');
 
   useEffect(() => {
     // Fetch maintenance persons from the database
@@ -136,10 +136,9 @@ const AdminAddMainteningTask = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     try {
       // Retrieve user_id from localStorage
-      date =  date.split('T')[0];
+      const date =  olddate.split('T')[0];
 
       // Create request data
       const requestData = {
@@ -150,6 +149,8 @@ const AdminAddMainteningTask = () => {
         task_type: 'maintenance',
         description: description
       };
+
+      console.log("request data", requestData)
 
       // Make a POST request
       const response = await axios.post('http://localhost:3001/tasks', requestData);
@@ -199,7 +200,7 @@ const AdminAddMainteningTask = () => {
           type="date"
           id="date"
           name="date"
-          value={date}
+          value={olddate}
           onChange={(e) => setDate(e.target.value)}
           required
         /> 
