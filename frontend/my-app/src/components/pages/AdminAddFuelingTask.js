@@ -1,101 +1,122 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import Modal from 'react-modal';
 
-
-const AdminAddFuelingTask = () => {
+const AdminAddMainteningTask = () => {
   const [licensePlate, setLicencePlate] = useState('');
-  const [dateTime, setDateTime] = useState('');
-  const [fuelId, setfuelId] = useState('');
-  const [fuelers] = useState([
-    { user_id:1, firstname: 'Assem', lastname: 'Alieva' },
-  ]);
-  const handleAssign = () => {
-        // Call the provided onAssignfueler function with the selected fueler
-        // onAssignfueler();
-      };
+  const [olddate, setDate] = useState('');
+  const [maintainId, setMaintainId] = useState('');
+  const [maintainers, setMaintainers] = useState([]);
+  const [vehicles, setVehicles] = useState([]);
+  const admin_id = "1";
 
+  const [description, setDescription] = useState('ewfegergrggrfr');
+
+  useEffect(() => {
+    // Fetch maintenance persons from the database
+    axios.get('http://localhost:3001/users/fueling')
+      .then(response => setMaintainers(response.data))
+      .catch(error => console.error('Error fetching maintainers:', error));
+
+    // Fetch vehicles from the database
+    axios.get('http://localhost:3001/vehicles')
+      .then(response => setVehicles(response.data))
+      .catch(error => console.error('Error fetching vehicles:', error));
+  }, []);
+
+  const handleAssign = () => {
+    // Call the provided onAssignmaintainer function with the selected maintainer
+    // onAssignmaintainer();
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-  
     try {
       // Retrieve user_id from localStorage
-      const user_id = localStorage.getItem("clientId");
-      console.log(dateTime);
-      const [date, time] = dateTime.split('T');
+      const date =  olddate.split('T')[0];
 
       // Create request data
       const requestData = {
-        user_id: user_id,
-        license_plate: licensePlate,
-        requested_time: dateTime,
-        requested_date: date
+        admin_id: admin_id,
+        assignee_id: maintainId,
+        vehicle_id: licensePlate,
+        date: date,
+        task_type: 'fuelling',
+        description: description
       };
 
-      // Make a POST request
-      const response = await axios.post('http://localhost:3001/routes', requestData);
+      console.log("request data", requestData)
 
-      
+      // Make a POST request
+      const response = await axios.post('http://localhost:3001/tasks', requestData);
 
       console.log('Route request successful:', response.data);
       // Handle the response data as needed
 
       // Clear the form inputs after submission
       setLicencePlate('');
-      setDateTime('');
-      console.log(dateTime);
+      setDate('');
+      setMaintainId('');
+      setDescription('');
     } catch (error) {
       console.error('Error submitting route request:', error);
       // Handle the error as needed
     }
   };
-  
-  const handleFuelSelect = (mId) => {
-    setfuelId(mId);
+
+  const handleMaintenSelect = (mId) => {
+    setMaintainId(mId);
     console.log(mId);
   };
 
   return (
     <div className="request-container">
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="startPoint">License Plate:</label>
-      <input
-        type="text"
-        id="licensePlate"
-        name="licensePlate"
-        value={licensePlate}
-        onChange={(e) => setLicencePlate(e.target.value)}
-        required
-      />
-
-      <label htmlFor="dateTime">Date and Time:</label>
-        <input
-          type="datetime-local"  // Use "datetime-local" type for date and time input
-          id="dateTime"
-          name="dateTime"
-          value={dateTime}
-          onChange={(e) => setDateTime(e.target.value)}
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="licensePlate">License Plate:</label>
+        <select
+          id="licensePlate"
+          name="licensePlate"
+          value={licensePlate}
+          onChange={(e) => setLicencePlate(e.target.value)}
           required
-        />
-
-      <label>Choose a fueling person:</label>
-        <select onChange={(e) => handleFuelSelect(e.target.value)}>
+        >
           <option key="default" value="">
-            Select a fueling person
+            Select a License Plate
           </option>
-          {fuelers.map((fueler) => (
-            <option key={fueler.user_id} value={fueler.user_id}>
-              {fueler.firstname} {fueler.lastname}
+          {vehicles.map((vehicle) => (
+            <option key={vehicle.vehicle_id} value={vehicle.vehicle_id}>
+              {vehicle.license_plate}
             </option>
           ))}
         </select>
-        <button onClick={handleAssign}>Assign</button>
-    </form>
-    </div>
 
-    
+        <label htmlFor="date">Date  :</label>
+        <input
+          type="date"
+          id="date"
+          name="date"
+          value={olddate}
+          onChange={(e) => setDate(e.target.value)}
+          required
+        /> 
+
+        <label>Choose a fueling person:</label>
+        <select onChange={(e) => handleMaintenSelect(e.target.value)}>
+          <option key="default" value="">
+            Select a Fueling person
+          </option>
+          {maintainers.map((maintainer) => (
+            <option key={maintainer.user_id} value={maintainer.user_id}>
+              {maintainer.firstname} {maintainer.lastname}
+            </option>
+          ))}
+        </select>
+        <button type="submit" onClick={handleAssign}>Assign</button>
+      </form>
+    </div>
   );
 };
 
-export default AdminAddFuelingTask;
+export default AdminAddMainteningTask;
+
+
