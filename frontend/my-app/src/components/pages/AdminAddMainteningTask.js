@@ -202,7 +202,7 @@ const AdminAddMainteningTask = () => {
           value={date}
           onChange={(e) => setDate(e.target.value)}
           required
-        />
+        /> 
 
         <label>Choose a maintenance person:</label>
         <select onChange={(e) => handleMaintenSelect(e.target.value)}>
