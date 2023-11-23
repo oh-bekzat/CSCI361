@@ -1,36 +1,49 @@
-// AdminUpdateFueling.js
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import './registration.css';
 
-const AdminUpdateFueling = () => {
-  const [formData, setFormData] = useState({
-    phone_number: '87773378532',
-    user_role:'Fueling Person',
-    first_name: 'Aktan',
-    last_name: 'Seraliyev',
-    email: 'aktan.seraliyev@nu.edu.kz',
-    password: '12345678',
-    iin:'030105500722'
-  });
+const selectedFuelingId = localStorage.getItem('selectedFuelingId');
+console.log("idddd = ", selectedFuelingId);
 
+const AdminUpdateFueling = () => {
+  const [userData, setUserData] = useState({});
   const [successMessage, setSuccessMessage] = useState('');
   const [errors, setErrors] = useState({});
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const userResponse = await axios.get(`http://localhost:3001/users/${selectedFuelingId}`);
+        setUserData(userResponse.data);
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+
+    // Check if the property is in userData or driverData and update the corresponding state
+    if (Object.keys(userData).includes(name)) {
+      setUserData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    } 
+    
   };
 
   const validateForm = () => {
     const newErrors = {};
 
     // Check for required fields
-    const requiredFields = ['phone_number'];
+    const requiredFields = ['phone_number', 'firstname', 'lastname', 'password_hashed'];
     requiredFields.forEach((field) => {
-      if (!formData[field]) {
+      if (!userData[field]) {
         newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
       }
     });
@@ -43,20 +56,14 @@ const AdminUpdateFueling = () => {
     e.preventDefault();
 
     if (validateForm()) {
-      // Replace 'http://localhost:3001/users' with your actual API endpoint
-      const apiUrl = 'http://localhost:3001/users';
+      const apiUrl = `http://localhost:3001/users/${selectedFuelingId}`;
 
-      // Make a request to your server with formData
-      fetch(apiUrl, {
-        method: 'PUT', // Assuming you use PUT for updating information
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log('Update successful:', data);
+      // Make a request to your server with userData and driverData
+      console.log({ ...userData })
+      
+      axios.put(apiUrl, { ...userData })
+        .then((response) => {
+          console.log('Update successful:', response.data);
           setSuccessMessage('Updated successfully');
           // Clear success message after a few seconds
           setTimeout(() => {
@@ -75,25 +82,40 @@ const AdminUpdateFueling = () => {
       <h2>Updating Information</h2>
       <form onSubmit={handleSubmit}>
         <br />
-        <p><strong>User Role:</strong> {formData.user_role}</p>
+        <p><strong>User Role:</strong> {userData.user_role}</p>
         <br />
-        <p><strong>First Name:</strong> {formData.first_name}</p>
+        <p><strong>Email:</strong> {userData.email}</p>
         <br />
-        <p><strong>Last Name:</strong> {formData.last_name}</p>
-        <br />
-        <p><strong>Email:</strong> {formData.email}</p>
-        <br />
-        <p><strong>Password:</strong> {formData.password}</p>
-        <br />
-        <p><strong>IIN:</strong> {formData.iin}</p>
+        <p><strong>IIN:</strong> {userData.iin}</p>
+        
+       
         <label>
-        <br />
-        <strong>Phone Number:</strong>
-          <div className='label-12 note'>Start with 8, ex: 87773378532</div>
-          <input type="tel" name="phone_number" value={formData.phone_number} onChange={handleChange} />
+          <strong>First Name:</strong>
+          <input type="text" name="firstname" value={userData.firstname || ''} onChange={handleChange} />
         </label>
 
+
+        <label>
+          <strong>Last Name:</strong>
+          <input type="text" name="lastname" value={userData.lastname || ''} onChange={handleChange} />
+        </label>
+
+        <label>
+          <strong>Password:</strong>
+          <input type="text" name="password_hashed" value={userData.password_hashed || ''} onChange={handleChange} />
+        </label>
+
+        <label>
+          <strong>Phone Number:</strong>
+          <div className='label-12 note'>Start with 8, ex: 87773378532</div>
+          <input type="tel" name="phone_number" value={userData.phone_number || ''} onChange={handleChange} />
+        </label>
+
+
         {errors.phone_number && <span className="error-text">{errors.phone_number}</span>}
+        {errors.password_hashed && <span className="error-text">{errors.password_hashed}</span>}
+        {errors.firstname && <span className="error-text">{errors.firstname}</span>}
+        {errors.lastname && <span className="error-text">{errors.lastname}</span>}
 
         <button className='button-264' type="submit">Update</button>
         {successMessage && <div className="success-message">{successMessage}</div>}

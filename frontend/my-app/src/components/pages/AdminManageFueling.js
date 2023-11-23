@@ -43,7 +43,9 @@ const AdminManageFueling = ({userId}) => {
   const handleEditUserClick = () => {
     if (selectedUser) {
       // Save driver_id to local storage
-      localStorage.setItem('selectedUserId', selectedUser.user_id);
+      localStorage.setItem('selectedFuelingId', selectedUser.user_id);
+      const selectedFuelingId = localStorage.getItem('selectedFuelingId');
+      console.log("selectedFuelingId = ",selectedFuelingId )
     }
   };
 
@@ -93,7 +95,7 @@ const AdminManageFueling = ({userId}) => {
             
             <div>
             <Link to="/admin/users/fueling/update">
-              <button className="button-124" onClick={handleEditUserClick}>
+              <button className="button-264" onClick={handleEditUserClick}>
                 Edit Fueling Person
               </button>
             </Link>
@@ -101,7 +103,7 @@ const AdminManageFueling = ({userId}) => {
 
           </>
         ) : (
-          <div className='body-24'>Select a Driver to view details.</div>
+          <div className='body-24'>Select a Fueling person to view details.</div>
         )}
       </div>
     </div>

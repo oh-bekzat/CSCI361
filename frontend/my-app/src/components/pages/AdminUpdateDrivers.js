@@ -48,7 +48,7 @@ const AdminUpdateDrivers = () => {
     const newErrors = {};
 
     // Check for required fields
-    const requiredFields = ['phone_number', 'license_code'];
+    const requiredFields = ['phone_number', 'license_code', 'firstname', 'lastname', 'password_hashed'];
     requiredFields.forEach((field) => {
       if (!userData[field] && !driverData[field]) {
         newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
@@ -92,17 +92,28 @@ const AdminUpdateDrivers = () => {
         <br />
         <p><strong>User Role:</strong> {userData.user_role}</p>
         <br />
-        <p><strong>First Name:</strong> {userData.firstname}</p>
-        <br />
-        <p><strong>Last Name:</strong> {userData.lastname}</p>
-        <br />
         <p><strong>Email:</strong> {userData.email}</p>
         <br />
-        <p><strong>Password:</strong> {userData.password_hashed}</p>
-        <br />
         <p><strong>IIN:</strong> {userData.iin}</p>
+        
+       
         <label>
-          <br />
+          <strong>First Name:</strong>
+          <input type="text" name="firstname" value={userData.firstname || ''} onChange={handleChange} />
+        </label>
+
+
+        <label>
+          <strong>Last Name:</strong>
+          <input type="text" name="lastname" value={userData.lastname || ''} onChange={handleChange} />
+        </label>
+
+        <label>
+          <strong>Password:</strong>
+          <input type="text" name="password_hashed" value={userData.password_hashed || ''} onChange={handleChange} />
+        </label>
+
+        <label>
           <strong>Phone Number:</strong>
           <div className='label-12 note'>Start with 8, ex: 87773378532</div>
           <input type="tel" name="phone_number" value={userData.phone_number || ''} onChange={handleChange} />
@@ -115,6 +126,9 @@ const AdminUpdateDrivers = () => {
 
         {errors.phone_number && <span className="error-text">{errors.phone_number}</span>}
         {errors.license_code && <span className="error-text">{errors.license_code}</span>}
+        {errors.password_hashed && <span className="error-text">{errors.password_hashed}</span>}
+        {errors.firstname && <span className="error-text">{errors.firstname}</span>}
+        {errors.lastname && <span className="error-text">{errors.lastname}</span>}
 
         <button className='button-264' type="submit">Update</button>
         {successMessage && <div className="success-message">{successMessage}</div>}

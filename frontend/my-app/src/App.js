@@ -36,7 +36,7 @@ import ClientRequest from './components/pages/ClientRequest';
 import ClientProfile from './components/pages/ClientProfile';
 import AdminUpdateDrivers from './components/pages/AdminUpdateDrivers';
 import AdminUpdateFueling from './components/pages/AdminUpdateFueling';
-import AdminUpdateMainten from './components/pages/AdminUpdateMainten';
+import AdminUpdateMaintenance from './components/pages/AdminUpdateMainten';
 
 function App() {
   return (
@@ -64,7 +64,7 @@ function App() {
         <Route path="/admin/users/maintening" element={<><AdminNavbar /><AdminManageMainten/></>} />
         <Route path="/admin/users/fueling" element={<><AdminNavbar /><AdminManageFueling/></>} />    
         <Route path="/admin/users/fueling/update" element={<><AdminNavbar /><AdminUpdateFueling/></>} />    
-        <Route path="/admin/users/maintening/update" element={<><AdminNavbar /><AdminUpdateMainten/></>} />    
+        <Route path="/admin/users/mainten/update" element={<><AdminNavbar /><AdminUpdateMaintenance/></>} />    
         <Route path="/admin/users/driver/update" element={<><AdminNavbar /><AdminUpdateDrivers/></>} />    
         <Route path="/admin/vehicles/add" element={<><AdminNavbar /><RegistrationFormVehicle/></>} />
         <Route path="/admin/vehicles" element={<><AdminNavbar /><AdminVehicles /></>} />
