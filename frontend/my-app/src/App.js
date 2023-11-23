@@ -38,6 +38,7 @@ import AdminUpdateDrivers from './components/pages/AdminUpdateDrivers';
 import AdminUpdateFueling from './components/pages/AdminUpdateFueling';
 import AdminUpdateMaintenance from './components/pages/AdminUpdateMainten';
 import AdminAddTask from './components/pages/AdminAddTask';
+import AdminAddFuelingTask from './components/pages/AdminAddFuelingTask';
 import MaintenProfile from './components/pages/MaintenProfile';
 
 function App() {
@@ -80,6 +81,7 @@ function App() {
         <Route path="/client/make-request" element={<><ClientNavbar /><ClientRequest /></>} />
         <Route path="/client/profile" element={<><ClientNavbar /><ClientProfile /></>}/>
         <Route path="/admin/tasks/add" element={<><AdminNavbar /><AdminAddTask /></>}/>
+        <Route path="/admin/tasks/addfueling" element={<><AdminNavbar /><AdminAddFuelingTask /></>}/>
       </Routes>
    
     </BrowserRouter>
