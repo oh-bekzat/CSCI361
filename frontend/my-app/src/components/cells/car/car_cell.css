@@ -88,3 +88,25 @@
     border-radius: 4px;
     display: inline-block;
   }
+
+  .button-gap {
+    margin-left: 10px; /* Adjust the value to set the desired space */
+  }
+  
+  .button-vehicle {
+    width: auto;
+    height: 40px;
+    text-align: center;
+    color: white;
+    font-size: 13px;
+    font-weight: bold;
+    background-color: #EDC53F; /* Default button background color */
+    border: none;
+    border-radius: 5px; /* Adjust as needed */
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+  
+.button-vehicle:hover {
+    background-color: #d4b037; /* Button background color on hover */
+}

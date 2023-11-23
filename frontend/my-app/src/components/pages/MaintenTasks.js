@@ -10,9 +10,10 @@ const MaintenTasks = () => {
     task_id: '',
     vehicle_id: '',
     user_id: '',
-    description: '',
+    maintenance_description: '',
     maintenance_date: '',
     maintenance_cost: '',
+    images: ''
   });
   const [errors, setErrors] = useState({});
 
@@ -30,6 +31,10 @@ const MaintenTasks = () => {
   }, []);
 
   const fetchVehicleData = async (task) => {
+console.log("task = ",task)
+console.log("assignedTasks = ",assignedTasks)
+console.log("selectedTask = ",selectedTask)
+console.log("vehicleData = ",vehicleData)
     if (task && task.vehicle_id) {
       try {
         const response = await axios.get(`http://localhost:3001/vehicles/${task.vehicle_id}`);
@@ -51,7 +56,7 @@ const MaintenTasks = () => {
   const validateForm = () => {
     const newErrors = {};
 
-    const requiredFields = ['maintenance_cost', 'description', 'maintenance_date'];
+    const requiredFields = ['maintenance_cost', 'maintenance_description', 'maintenance_date'];
     requiredFields.forEach((field) => {
       if (!formData[field]) {
         newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
@@ -62,29 +67,36 @@ const MaintenTasks = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (validateForm()) {
-      const apiUrl = `http://localhost:3001/tasks/maintenance/${selectedTask.vehicle_id}`;
-
-      axios.post(apiUrl, formData)
-        .then((response) => {
-          console.log('Finished successfully:', response.data);
-          setFormData({
-            task_id: selectedTask.task_id,
-            vehicle_id: selectedTask.vehicle_id,
-            user_id: selectedTask.assignee_id,
-            description: '',
-            maintenance_date: '',
-            maintenance_cost: '',
-          });
-        })
-        .catch((error) => {
-          console.error('Error during maintenance task submission:', error);
+      const apiUrl = `http://localhost:3001/tasks/maintenance/${selectedTask.task_id}`;
+      console.log(
+        'Submitting maintenance task with the following data:',
+        formData
+      )
+      try {
+        await fetchVehicleData(selectedTask); // Wait for fetchVehicleData to complete
+  
+        const response = await axios.put(apiUrl, formData);
+        console.log('Finished successfully:', response.data);
+        
+        setFormData({
+          task_id: selectedTask.task_id,
+          vehicle_id: selectedTask.vehicle_id,
+          user_id: selectedTask.assignee_id,
+          maintenance_description: '',
+          maintenance_date: '',
+          maintenance_cost: '',
+          images: ''
         });
+      } catch (error) {
+        console.error('Error during maintenance task submission:', error);
+      }
     }
   };
+  
 
   const handleTaskSelection = (task) => {
     setSelectedTask(task);
@@ -94,9 +106,10 @@ const MaintenTasks = () => {
       task_id: task.task_id,
       vehicle_id: task.vehicle_id,
       user_id: task.assignee_id,
-      description: '',
+      maintenance_description: '',
       maintenance_date: '',
       maintenance_cost: '',
+      images: ''
     });
   };
 
@@ -138,7 +151,7 @@ const MaintenTasks = () => {
             </div>
             <div>
               <span className='body-14-bold'>Title: </span>
-              <span className='body-14'>{selectedTask.description}</span>
+              <span className='body-14'>{selectedTask.maintenance_description}</span>
             </div>
             <div>
               <span className='body-14-bold'>Vehicle Model: </span>
@@ -169,12 +182,12 @@ const MaintenTasks = () => {
                 required
               />
 
-              <label htmlFor="description">Description:</label>
+              <label htmlFor="maintenance_description">Description:</label>
               <input
                 type="text"
-                id="description"
-                name="description"
-                value={formData.description}
+                id="maintenance_description"
+                name="maintenance_description"
+                value={formData.maintenance_description}
                 onChange={handleChange}
                 required
               />
