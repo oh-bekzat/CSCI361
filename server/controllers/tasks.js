@@ -38,7 +38,7 @@ tasksRouter.get('/assigned/:userId', async (req, res) => {
   }
 })
 
-tasksRouter.get('/fuelling/:vehicleId', async (req, res) => {
+tasksRouter.get('/fueling/:vehicleId', async (req, res) => {
     try {
         const { vehicleId } = req.params
 

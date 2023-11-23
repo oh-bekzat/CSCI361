@@ -68,8 +68,9 @@ const AdminVehicles = () => {
       <Link to="/admin/vehicles/add">
         <button className="button-124">Add Vehicle</button>
       </Link>
-      {cars.map((car, index) => (
-        <CarCell key={index} car={car} />
+      {cars.map((car, index) => (<>
+        <Link to={`/admin/vehicles/fueling/${car.license_plate}`}><button className="button-124">Show fueling history</button></Link>
+        <CarCell key={index} car={car} /></>
       ))}
     </div>
   );
