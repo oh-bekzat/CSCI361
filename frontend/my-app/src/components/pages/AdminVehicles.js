@@ -8,60 +8,19 @@ const AdminVehicles = () => {
   
   const [cars, setCars] = useState([]);
 
-  // const cars = [{
-  //   license_plate: '',
-  //   make: '',
-  //   model: '',
-  //   manufacture_year: '',
-  //   capacity: '',
-  //   fuel_volume: '',
-  //   tank_volume: '',
-  //   vehicle_image: '',
-  //   mileage: 0,
-  //   last_fueled_date: new Date().toISOString().split('T')[0],
-  //   last_maintained_date: new Date().toISOString().split('T')[0],
-  // },
-  // {
-  //   license_plate: '',
-  //   make: '',
-  //   model: '',
-  //   manufacture_year: '',
-  //   capacity: '',
-  //   fuel_volume: '',
-  //   tank_volume: '',
-  //   vehicle_image: '',
-  //   mileage: 0,
-  //   last_fueled_date: new Date().toISOString().split('T')[0],
-  //   last_maintained_date: new Date().toISOString().split('T')[0],
-  // },
-  // {
-  //   license_plate: '',
-  //   make: '',
-  //   model: '',
-  //   manufacture_year: '',
-  //   capacity: '',
-  //   fuel_volume: '',
-  //   tank_volume: '',
-  //   vehicle_image: '',
-  //   mileage: 0,
-  //   last_fueled_date: new Date().toISOString().split('T')[0],
-  //   last_maintained_date: new Date().toISOString().split('T')[0],
-  // },
-  // ];
-
   useEffect(() => {
     const fetchVehicles = async () => {
       try {
         const response = await axios.get('http://localhost:3001/vehicles');
+        console.log(response.data)
         setCars(response.data);
       } catch (error) {
         console.error('Error fetching vehicles:', error);
       }
     };
     fetchVehicles();
+    console.log("cars = ",cars)
   }, []); 
-
-  const [auctionCars, setAuctionCars] = useState(cars.slice(0, Math.max(cars.length, 0)));
 
   return (
     <div className="auction-page">
@@ -72,6 +31,7 @@ const AdminVehicles = () => {
         <Link to={`/admin/vehicles/fueling/${car.license_plate}`}><button className="button-124">Show fueling history</button></Link>
         <CarCell key={index} car={car} /></>
       ))}
+      {/* {cars.map((car)=> car)} */}
     </div>
   );
 };

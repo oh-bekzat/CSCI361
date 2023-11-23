@@ -12,12 +12,23 @@ const MaintenTasks = ({ }) => {
   const [vehicleData, setVehicleData] = useState(null); 
   const [dateTime, setDateTime] = useState('');
   const [maintenanceCost, setMaintenanceCost] = useState('');
+  const [errors, setErrors] = useState({});
+
+  const [formData, setFormData] = useState({
+    task_id: selectedTask ? selectedTask.task_id : '',
+    vehicle_id: selectedTask ? selectedTask.vehicle_id : '',
+    user_id: selectedTask ? selectedTask.assignee_id : '',
+    description: '',
+    maintenance_date: '',
+    maintenance_cost: '',
+  });
 
   useEffect(() => {
     const fetchTasks = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/tasks/assigned/${user_id}`);
         setAssignedTasks(response.data.taskDetails);
+        console.log(assignedTasks)
       } catch (error) {
         console.error('Error fetching tasks:', error);
       }
@@ -41,60 +52,73 @@ const MaintenTasks = ({ }) => {
     }
   };
 
-  
-  const handleSubmit = async () => {
-    try {
-      // Ensure that a task is selected
-      if (!selectedTask) {
-        console.error('No task selected for assignment.');
-        return;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+
+    // Check for required fields
+    const requiredFields = ['maintenance_cost', 'description', 'maintenanceCost'];
+    requiredFields.forEach((field) => {
+      if (!formData[field]) {
+        newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
       }
-  
-      // Prepare data for the POST request
-      const assignmentData = {
-        task_id: selectedTask.task_id, // You may need to adjust this based on your task structure
-        vehicle_id: selectedTask.vehicle_id,
-        user_id: selectedTask.assignee_id,
-        description: maintenanceDescription,
-        vehicle_id: selectedTask.vehicle_id,
-        maintenance_date: dateTime,
-        maintenance_cost: maintenanceCost,
-      };
-  
-      // Create a FormData object for handling file uploads
-      // const formData = new FormData();
-      // formData.append('image', image);
-  
-      // // Append other assignment data to FormData
-      // Object.entries(assignmentData).forEach(([key, value]) => {
-      //   formData.append(key, value);
-      // });
-  
-      // Make a POST request to add assignment details
-      const response = await axios.post('http://localhost:3001/tasks/maintenance/${selectedTask.task_id}', assignmentData);
-  
-      // Check if the assignment was successful
-      if (response.status === 201) {
-        console.log('Task assigned successfully:', response.data);
-  
-        // Clear input fields and selected task after assignment
-        setMaintenanceCost('');
-        setImage(null);
-        setDateTime('');
-        setMaintenanceDescription('');
-        setSelectedTask(null);
-  
-        // Optionally, you can fetch updated assigned tasks from the server
-        // to reflect changes in the UI.
-        // Example: fetchTasks();
-      } else {
-        console.error('Error assigning task:', response.data);
-      }
-    } catch (error) {
-      console.error('Error assigning task:', error);
+    });
+
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (validateForm()) {
+      const apiUrl = 'http://localhost:3001/tasks/maintenance/${selectedTask.vehicle_id}';
+
+      // Make a request to your server with formData
+      fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          // console.log('Finished successfully:', data);
+          // setSuccessMessage('Finished successfully');
+          // Reset the form after successful submission
+          setFormData({
+            task_id: selectedTask.task_id, // You may need to adjust this based on your task structure
+            vehicle_id: selectedTask.vehicle_id,
+            user_id: selectedTask.assignee_id,
+            description: '',
+            vehicle_id: selectedTask.vehicle_id,
+            maintenance_date: '',
+            maintenance_cost: '',
+          });
+          // Clear success message after a few seconds
+          // setTimeout(() => {
+          //   setSuccessMessage('');
+          // }, 3000);
+        })
+        .catch((error) => {
+          console.error('Error during registration:', error);
+          // Handle error, show an error message to the user, etc.
+        });
     }
   };
-  
+
+
 
   // Function to handle file input change
   const handleImageChange = (e) => {
@@ -104,6 +128,15 @@ const MaintenTasks = ({ }) => {
   const handleTaskSelection = (task) => {
     setSelectedTask(task);
     fetchVehicleData(task);
+
+    setFormData({
+      task_id: task.task_id,
+      vehicle_id: task.vehicle_id,
+      user_id: task.assignee_id,
+      description: '',
+      maintenance_date: '',
+      maintenance_cost: '',
+    });
   };
 
   return (
@@ -160,25 +193,29 @@ const MaintenTasks = ({ }) => {
                   type="int"
                   id="maintenanceCost"
                   name="maintenanceCost"
-                  value={maintenanceCost}
+                  value={formData.maintenance_cost}
                   onChange={(e) => setMaintenanceCost(e.target.value)}
                   required
+
+
                 />
                 <label htmlFor="dateTime">Date and Time:</label>
                   <input
                     type="datetime-local"  // Use "datetime-local" type for date and time input
                     id="dateTime"
                     name="dateTime"
-                    value={dateTime}
+        
+                    value={formData.dateTime}
                     onChange={(e) => setDateTime(e.target.value)}
                     required
+
                   />
                 <label htmlFor="maintenanceDescription">Maintenance Description:</label>
                   <input
                     type="text"
                     id="maintenanceDescription"
                     name="maintenanceDescription"
-                    value={maintenanceDescription}
+                    value={formData.description}
                     onChange={(e) => setMaintenanceDescription(e.target.value)}
                     required
                   />
