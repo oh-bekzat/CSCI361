@@ -1,19 +1,54 @@
 import React, { useState, useEffect } from 'react';
-import './DriverProfile.css'; // Include your styles
+import './DriverProfile.css';
 import { useNavigate } from 'react-router-dom';
+
+import axios from 'axios';
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
+  const [driverRating, setDriverRating] = useState(null);
+  const [driverInfo, setDriverInfo] = useState(null);
   const navigate = useNavigate();
 
+
+  const userId = localStorage.getItem("driverId");
+  // useEffect(() => {
+  //   // Simulating a fetch request to an API endpoint
+  //   const driverId = localStorage.getItem("driverId");
+  //   fetch(`http://localhost:3001/users/${driverId}`)
+  //     .then(response => response.json())
+  //     .then(data => setUserData(data))
+  //     .catch(error => console.error('Error fetching data:', error));
+  
   useEffect(() => {
-    // Simulating a fetch request to an API endpoint
-    const driverId = localStorage.getItem("driverId");
-    fetch(`http://localhost:3001/users/${driverId}`)
-      .then(response => response.json())
-      .then(data => setUserData(data))
-      .catch(error => console.error('Error fetching data:', error));
-  }, []);
+    // Fetch user data
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/users/${userId}`);
+        // console.log(response.data);
+        setUserData(response.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    };
+
+
+  // Fetch driver rating data
+  const fetchDriverRating = async () => {
+    try {
+      const response = await axios.get(`http://localhost:3001/users/drivers/${userId}`);
+      setDriverRating(response.data.rating); // Assuming the response has a 'rating' property
+      setDriverInfo(response.data)
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error fetching driver rating:', error);
+    }
+  };
+   // Call both fetch functions
+   fetchUserData();
+   fetchDriverRating();
+ }, [userId]);
+
 
   const handleLogout = () => {
     // Add your logout logic here
@@ -35,7 +70,14 @@ const Profile = () => {
             />
             <div className="user-name-container">
             <h2>{userData?.firstname + ' ' + userData?.lastname || 'User Name'}</h2>
-            <img src={require('../assets/star.png')} style={{ width: '20pt' }} alt="Star" />
+            <div>
+            {driverRating !== null && (
+              <div className="rating-container">
+                <img src={require('../assets/star.png')} style={{ width: '20pt' }} alt="Star" />
+                <span className="body-20-bold">{driverRating}</span> <span className="body-20"> ({driverInfo.n_ratings})</span>
+              </div>
+            )}
+            </div>
           </div>
           </div>
         </div>

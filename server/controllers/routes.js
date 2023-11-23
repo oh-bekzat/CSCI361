@@ -7,7 +7,7 @@ const routesRouter = require('express').Router()
 routesRouter.post('/', async (req, res) => {
     var randomValue = Math.floor(Math.random() * (100 - 10 + 1)) + 10;
     try {
-        const { user_id, start_point, finish_point } = req.body
+        const { user_id, start_point, finish_point, requested_time,requested_date } = req.body
         if (!user_id || !start_point || !finish_point) {
             return res.status(400).json({ error: 'Fields are required' })
         }
@@ -19,7 +19,9 @@ routesRouter.post('/', async (req, res) => {
             client_id: user_id,
             start_point,
             finish_point,
-            distance: randomValue
+            distance: randomValue,
+            requested_time: new Date(requested_time),
+            requested_date: new Date(requested_date)
         })
         res.status(201).json(newRoute)
     } catch (error) {
@@ -185,13 +187,18 @@ routesRouter.put('/finish/:routeId', async (req, res) => {
 
 routesRouter.put('/rate/:driverId', async (req, res) => {
     try {
-      const newRating = req.body.new_rating
-      const { driverId } = req.params
-
+      const newRating = req.body.newRating
+      const routeId = req.body.routeId
+      const {driverId} = req.params
+      console.log(newRating,routeId)
       const driver = await Driver.findByPk(driverId)
       if (!driver) {
         return res.status(404).json({ error: 'Driver not found' })
       }
+      const existingRoute = await Route.findByPk(routeId)
+      if (!existingRoute) {
+        return res.status(404).json({ error: 'Route not found' })
+        }
 
       const currentRating = driver.rating
       const numberOfRatings = driver.n_ratings
@@ -202,6 +209,9 @@ routesRouter.put('/rate/:driverId', async (req, res) => {
         n_ratings: numberOfRatings + 1
       })
 
+      await existingRoute.update({
+        rate: newRating
+      })
       res.status(200).json({ newAverageRating })
     } catch (error) {
       console.error('Error updating driver rating:', error)

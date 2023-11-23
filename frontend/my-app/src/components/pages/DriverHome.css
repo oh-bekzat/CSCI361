@@ -32,6 +32,7 @@
     flex-direction: column; 
     gap: 20px;
     width: 75%;
+    padding-left: 40px;
   }
   
   .task-details h2 {

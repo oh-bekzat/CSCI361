@@ -6,13 +6,16 @@ import Home from './components/pages/Home';
 import DriverHomePage from './components/pages/DriverHome';
 import History from './components/pages/DriverHistory';
 import Profile from './components/pages/DriverProfile';
-import VehicleInfo from './components/pages/VehicleInfo';
+import VehicleInfo from './components/pages/DriverVehicleInfo';
 import LoginPage from './components/pages/Login';
 import MainNavbar from './components/MainNavbar';
 import AboutUs from './components/pages/AboutUs';
 import Auction from './components/pages/Auction';
 import RegistrationFormUser from './components/pages/registerUser';
 import RegistrationFormVehicle from './components/pages/registerVehicle';
+import AdminManageDrivers from './components/pages/AdminManageDrivers';
+import AdminManageMainten from './components/pages/AdminManageMainten';
+import AdminManageFueling from './components/pages/AdminManageFueling';
 import AdminHomePage from './components/pages/AdminHome';
 import AdminNavbar from './components/AdminNavbar';
 import AdminTasks from './components/pages/AdminTasks';
@@ -31,7 +34,9 @@ import ClientNavbar from './components/ClientNavbar';
 import ClientHome from './components/pages/ClientHome';
 import ClientRequest from './components/pages/ClientRequest';
 import ClientProfile from './components/pages/ClientProfile';
-
+import AdminUpdateDrivers from './components/pages/AdminUpdateDrivers';
+import AdminUpdateFueling from './components/pages/AdminUpdateFueling';
+import AdminUpdateMaintenance from './components/pages/AdminUpdateMainten';
 
 function App() {
   return (
@@ -55,6 +60,12 @@ function App() {
         <Route path="/admin/routes" element={<><AdminNavbar /><AdminRoutes /></>} />
         <Route path="/admin/users" element={<><AdminNavbar /><AdminUsers /></>} />
         <Route path="/admin/users/add" element={<><AdminNavbar /><RegistrationFormUser/></>} />
+        <Route path="/admin/users/driver" element={<><AdminNavbar /><AdminManageDrivers/></>} />
+        <Route path="/admin/users/maintening" element={<><AdminNavbar /><AdminManageMainten/></>} />
+        <Route path="/admin/users/fueling" element={<><AdminNavbar /><AdminManageFueling/></>} />    
+        <Route path="/admin/users/fueling/update" element={<><AdminNavbar /><AdminUpdateFueling/></>} />    
+        <Route path="/admin/users/mainten/update" element={<><AdminNavbar /><AdminUpdateMaintenance/></>} />    
+        <Route path="/admin/users/driver/update" element={<><AdminNavbar /><AdminUpdateDrivers/></>} />    
         <Route path="/admin/vehicles/add" element={<><AdminNavbar /><RegistrationFormVehicle/></>} />
         <Route path="/admin/vehicles" element={<><AdminNavbar /><AdminVehicles /></>} />
         <Route path="/fueling/profile" element={<><FuelingNavbar /><FuelProfile /></>} />

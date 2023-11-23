@@ -108,3 +108,21 @@ input {
 .button-container button:last-child {
   margin-right: 0; /* Remove margin from the last button to prevent extra spacing */
 }
+
+
+.rating-dropdown {
+  margin-top: 8px; /* Adjust margin as needed */
+}
+
+.rating-dropdown select {
+  padding: 8px;
+  font-size: 14px;
+  margin-right: 8px; /* Add margin to separate the select and button */
+}
+
+/* Optional: Style for better visibility */
+.rating-dropdown select {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}

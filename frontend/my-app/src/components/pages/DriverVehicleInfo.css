@@ -1,0 +1,96 @@
+/* VehicleInfo.css */
+
+.auction-page {
+  display: flex;
+  justify-content: space-between;
+  padding: 30px;
+}
+
+.car-details {
+  display: flex;
+  gap: 60px;
+  width: 75%;
+}
+
+.car-info-container {
+  display: flex;
+  width: 100%;
+}
+
+.car-image {
+  flex-shrink: 0;
+  margin-right: 20px; /* Adjust the margin between image and text */
+}
+
+.car-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.car-info {
+  display: flex;
+  flex-direction: column;
+  width: 48%;
+}
+
+.car-info .body-20-bold {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 5px; /* Reduced margin between lines of text */
+}
+
+.car-property {
+  display: flex;
+  flex-direction: column;
+}
+
+.car-property div {
+  margin-bottom: 5px; /* Reduced margin between lines of text */
+}
+
+.car-property .label-14-bold {
+  font-size: 14px;
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.car-property .label-14 {
+  font-size: 14px;
+}
+
+.car-details ul {
+  list-style: none;
+  padding: 0;
+}
+
+.car-details li {
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.car-details li:hover {
+  background-color: #f0f0f0;
+  transition: background-color 0.3s ease;
+}
+
+.button-container {
+  display: flex;
+  margin-top: 20px;
+}
+
+.button-container button {
+  margin-right: 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+}
+
+.button-container button:last-child {
+  margin-right: 0;
+}

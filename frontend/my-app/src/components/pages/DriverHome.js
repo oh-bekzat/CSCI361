@@ -28,28 +28,95 @@ const DriverHomePage = () => {
     setSelectedTask(task);
   };
 
-  const handleStartTask = () => {
-    // Logic to handle starting the task
-    console.log('Task started:', selectedTask);
+  const handleStartTask = async () => {
+    if (!selectedTask) {
+      console.error('No task selected');
+      return;
+    }
+
+    try {
+      const { route_id, driver_id } = selectedTask;
+      const start_time = new Date(); // Assuming you want to use the current time as the start time
+      console.log(start_time);
+
+      const response = await axios.put(`http://localhost:3001/routes/start/${route_id}`, {
+        driver_id,
+        start_time,
+      });
+      const updatedTask = response.data;
+
+      setAssignedTasks((prevTasks) =>
+        prevTasks.map((task) => (task.route_id === updatedTask.route_id ? updatedTask : task))
+      );
+
+      console.log('Task started:', updatedTask);
+    } catch (error) {
+      console.error('Error starting task:', error);
+    }
   };
 
   const handleDeclineTask = () => {
     // Logic to handle declining the task
     console.log('Task declined:', selectedTask);
   };
-  const handleFinishTask = () => {
-    // Logic to handle finishing the task
-    console.log('Task finished:', selectedTask);
+
+  const handleFinishTask = async () => {
+    if (!selectedTask) {
+      console.error('No task selected');
+      return;
+    }
+
+    try {
+      const { route_id, driver_id } = selectedTask;
+      const finish_time = new Date(); // Assuming you want to use the current time as the start time
+      console.log(finish_time);
+
+      const response = await axios.put(`http://localhost:3001/routes/finish/${route_id}`, {
+        driver_id,
+        finish_time,
+      });
+      const updatedTask = response.data;
+
+      setAssignedTasks((prevTasks) =>
+        prevTasks.map((task) => (task.route_id === updatedTask.route_id ? updatedTask : task))
+      );
+
+      console.log('Task started:', updatedTask);
+    } catch (error) {
+      console.error('Error starting task:', error);
+    }
   };
+
+  const sortedTasks = [...assignedTasks].sort((a, b) => {
+    if (a.status === 'started' && b.status !== 'started') {
+      return -1;
+    } else if (b.status === 'started' && a.status !== 'started') {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+
+  const filteredTasks = sortedTasks.filter((task) => task.status !== 'completed');
 
   return (
     <div className="driver-home-page">
       <div className="task-list">
         <ul>
-          {assignedTasks.map((task) => (
-            <li key={task.id} onClick={() => handleTaskSelection(task)}>
+          {Array.isArray(filteredTasks) && filteredTasks.map((task) => (
+            <li style={{
+              boxShadow:
+                task.status === 'assigned'
+                  ? '0 0 3px rgba(237, 197, 63, 1)' // Yellow for assigned
+                  : task.status === 'started'
+                  ? '0 0 3px rgba(207, 53, 33, 1)' // Red for started
+                  : '0 0 3px rgba(50, 168, 82, 1)', // Default color for other statuses
+            }} key={task.route_id} onClick={() => handleTaskSelection(task)}>
               <div>
                 <div className='body-20-bold'>Route {task.route_id}</div>
+              </div>
+              <div>
+                  <span className='label-11-bold' style={{ marginLeft: '20px' }}>Requested date and time: </span> <span className='label-11'>{task.requested_date}, {task.requested_time}</span>
               </div>
               <div>
                 <span className='label-11-bold' style={{ marginLeft: '20px' }}>Point of departure: </span> <span className='label-11'>{task.start_point}</span>
@@ -72,12 +139,9 @@ const DriverHomePage = () => {
           <div>
             <div className='body-24-bold'>Route {selectedTask.route_id}</div>
           </div>
-            {/* <div>
-                <span className='body-14-bold'>Date: </span> <span className='body-14'>{selectedTask.departure}</span>
-            </div>
             <div>
-                <span className='body-14-bold'>Time: </span> <span className='body-14'>{selectedTask.departure}</span>
-            </div> */}
+                <span className='body-14-bold'>Requested date and time: </span> <span className='body-14'>{selectedTask.requested_date}, {selectedTask.requested_time}</span>
+            </div>
             <div>
                 <span className='body-14-bold'>Point of departure: </span> <span className='body-14'>{selectedTask.start_point}</span>
             </div>
@@ -85,10 +149,13 @@ const DriverHomePage = () => {
                 <span className='body-14-bold'>Point of arrival: </span> <span className='body-14'>{selectedTask.finish_point}</span>
             </div>
             <div>
+                <span className='body-14-bold'>Vehicle: </span> <span className='body-14'>{selectedTask.vehicle_id}</span>
+            </div>
+            <div>
                 <span className='body-14-bold'>Status: </span> <span className='body-14'>{selectedTask.status}</span>
             </div>
             <div className="button-container">
-              {selectedTask.status === 'Active' ? (
+              {selectedTask.status === 'started' ? (
                 <button className='button-264' style={{ backgroundColor: '#4a92f7' }} onClick={handleFinishTask}>Finish Task</button>
               ) : (
                 <div>

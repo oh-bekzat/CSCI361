@@ -12,15 +12,16 @@ const ClientRequest = () => {
     try {
       // Retrieve user_id from localStorage
       const user_id = localStorage.getItem("clientId");
-
-      // Validate user inputs if needed
+      console.log(dateTime);
+      const [date, time] = dateTime.split('T');
 
       // Create request data
       const requestData = {
         user_id: user_id,
         start_point: startPoint,
         finish_point: finishPoint,
-        date_time: dateTime
+        requested_time: dateTime,
+        requested_date: date
       };
 
       // Make a POST request
@@ -33,6 +34,7 @@ const ClientRequest = () => {
       setStartPoint('');
       setFinishPoint('');
       setDateTime('');
+      console.log(dateTime);
     } catch (error) {
       console.error('Error submitting route request:', error);
       // Handle the error as needed
@@ -42,7 +44,7 @@ const ClientRequest = () => {
   return (
     <div className="request-container">
     <form onSubmit={handleSubmit}>
-      <label htmlFor="startPoint">Start Point:</label>
+      <label htmlFor="startPoint">Point of departure:</label>
       <input
         type="text"
         id="startPoint"
@@ -52,7 +54,7 @@ const ClientRequest = () => {
         required
       />
 
-      <label htmlFor="finishPoint">Finish Point:</label>
+      <label htmlFor="finishPoint">Point of arrival:</label>
       <input
         type="text"
         id="finishPoint"

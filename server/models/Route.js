@@ -54,6 +54,15 @@ const Route = sequelize.define('Route', {
         type: DataTypes.ENUM('awaiting', 'assigned', 'started', 'completed'),
         defaultValue: 'awaiting',
     },
+    requested_time: {
+        type: DataTypes.DATE,
+    },
+    requested_date: {
+        type: DataTypes.DATE,
+    },
+    rate: {
+        type: DataTypes.INTEGER,
+    },
 }, {
     tableName: 'routes',
     timestamps: false,

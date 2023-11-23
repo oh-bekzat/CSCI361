@@ -88,6 +88,21 @@ const AdminManagesRoutes = () => {
     }
   };  
 
+  const sortRoutes = (a, b) => {
+    // Define the order of statuses: 'awaiting', 'assigned', 'started', 'finished'
+    const statusOrder = ['awaiting', 'assigned', 'started', 'completed'];
+
+    // Get the index of the status in the order array
+    const statusIndexA = statusOrder.indexOf(a.status);
+    const statusIndexB = statusOrder.indexOf(b.status);
+    console.log(routes)
+
+    // Compare based on the status index
+    return statusIndexA - statusIndexB;
+  };
+
+  const sortedRoutes = [...routes].sort(sortRoutes);
+
   return (
     <div className="manage-routes-page">
       <h2>Manage Routes</h2>
@@ -96,9 +111,9 @@ const AdminManagesRoutes = () => {
           <tr>
             <th>Route ID</th>
             <th>Client ID</th>
-            <th>Start Point</th>
-            <th>Finish Point</th>
-            <th>Distance</th>
+            <th>Assigned Driver ID</th>
+            <th>Departure</th>
+            <th>Arrival</th>
             <th>Start Time</th>
             <th>Finish Time</th>
             <th>Status</th>
@@ -106,13 +121,13 @@ const AdminManagesRoutes = () => {
           </tr>
         </thead>
         <tbody>
-          {routes.map((route) => (
+          {sortedRoutes.map((route) => (
             <tr key={route.route_id}>
               <td>{route.route_id}</td>
               <td>{route.client_id}</td>
+              <td>{route.driver_id}</td>
               <td>{route.start_point}</td>
               <td>{route.finish_point}</td>
-              <td>{route.distance}</td>
               <td>{route.start_time}</td>
               <td>{route.finish_time}</td>
               <td>{route.status}</td>
@@ -124,6 +139,26 @@ const AdminManagesRoutes = () => {
                     >
                       Assign Driver
                     </button>
+                )}
+                {route.status === 'assigned' && (
+                  <div className='body-14'>
+                    Waiting for a driver to confirm
+                  </div>
+                )}
+                {route.status === 'started' && (
+                  <div className='body-14'>
+                    Waiting for a driver to finish
+                  </div>
+                )}
+                {route.status === 'completed' && route.rate === null && (
+                  <div className='body-14'>
+                    Waiting for a client to rate
+                  </div>
+                )}
+                {route.status === 'completed' && route.rate != null && (
+                  <div className='body-14'>
+                    Rating: {route.rate}
+                  </div>
                 )}
                 {/* Add additional conditions for other status values */}
               </td>
