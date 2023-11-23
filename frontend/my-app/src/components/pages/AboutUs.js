@@ -35,6 +35,7 @@ function AboutUs() {
                 <span className="label-14-bold">Maintenance:</span>{' '}
                 <span className="label-14">Group responsible for maintaining vehicles in the system</span>
               </div>
+              
               <div>
                 <span className="label-14-bold">Fueling:</span>{' '}
                 <span className="label-14">Group responsible for fueling vehicle in the system</span>
