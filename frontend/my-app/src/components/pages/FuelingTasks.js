@@ -1,102 +1,220 @@
-
-
-// FuelingTasks.js
-import React, { useState } from 'react';
-import './MaintenTasks.css'; // Ensure you have a corresponding CSS file for styling
+import React, { useState, useEffect } from 'react';
+import './MaintenTasks.css';
+import axios from 'axios';
 
 const FuelingTasks = () => {
-  // Sample data for fueling tasks
-  const [fuelingTasks, setFuelingTasks] = useState([
-    { id: 1, title: 'Fueling Task 1', details: 'Details for Fueling Task 1', vehicleId: 'S124SLA', date: '15.09.2023', time: '12:00' },
-    { id: 2, title: 'Fueling Task 2', details: 'Details for Fueling Task 2',  vehicleId: 'S124SLA', date: '24.10.2023', time: '14:00' },
-  ]);
-
-  // State for input values
-  const [cost, setCost] = useState('');
-  const [fuelingDate, setFuelingDate] = useState('');
-  const [fuelingAmount, setFuelingAmount] = useState('');
-  const [fuelingCost, setFuelingCost] = useState('');
-  const [gasStation, setGasStation] = useState('');
-
-  // State to track the selected task
+  const [assignedTasks, setAssignedTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
+  const [vehicleData, setVehicleData] = useState(null);
+  const [formData, setFormData] = useState({
+    task_id: '',
+    vehicle_id: '',
+    user_id: '',
+    fuelling_date: '',
+    fuel_cost: '',
+    fuel_amount:'',
+    fuel_description: '',
+    gas_station_name:''
 
-  // Function to handle task selection
-  const handleTaskSelection = (task) => {
-    setSelectedTask(task);
+    
+  });
+  const [errors, setErrors] = useState({});
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/tasks/assigned/${localStorage.getItem("fuelId")}`);
+        setAssignedTasks(response.data.taskDetails);
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
+  const fetchVehicleData = async (task) => {
+console.log("task = ",task)
+console.log("assignedTasks = ",assignedTasks)
+console.log("selectedTask = ",selectedTask)
+console.log("vehicleData = ",vehicleData)
+    if (task && task.vehicle_id) {
+      try {
+        const response = await axios.get(`http://localhost:3001/vehicles/${task.vehicle_id}`);
+        setVehicleData(response.data);
+      } catch (error) {
+        console.error('Error fetching vehicle data:', error);
+      }
+    }
   };
 
-  // Function to handle assigning the fueling task
-  const handleAssignFuelingTask = () => {
-    // Implement your logic for assigning the fueling task
-    console.log('Fueling Task assigned:', selectedTask);
-    console.log('Cost:', cost);
-    console.log('Fueling Date:', fuelingDate);
-    console.log('Fueling Amount:', fuelingAmount);
-    console.log('Fueling Cost:', fuelingCost);
-    console.log('Gas Station Name:', gasStation);
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const validateForm = () => {
+    const newErrors = {};
+
+    const requiredFields = ['fuel_cost', 'fuelling_date', 'gas_station_name', 'fuel_amount', 'fuel_description'];
+    requiredFields.forEach((field) => {
+      if (!formData[field]) {
+        newErrors[field] = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
+      }
+    });
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+  
+    if (validateForm()) {
+      const apiUrl = `http://localhost:3001/tasks/fuelling/${selectedTask.task_id}`;
+      console.log(
+        'Submitting maintenance task with the following data:',
+        formData
+      )
+      try {
+        await fetchVehicleData(selectedTask); // Wait for fetchVehicleData to complete
+  
+        const response = await axios.put(apiUrl, formData);
+        console.log('Finished successfully:', response.data);
+        
+        setFormData({
+          task_id: selectedTask.task_id,
+          vehicle_id: selectedTask.vehicle_id,
+          user_id: selectedTask.assignee_id,
+          fuelling_date: '',
+          fuel_cost: '',
+          fuel_amount:'',
+          gas_station_name:'',
+          fuel_description: ''
+        });
+      } catch (error) {
+        console.error('Error during fueling task submission:', error);
+      }
+    }
+  };
+  
+
+  const handleTaskSelection = (task) => {
+    setSelectedTask(task);
+    fetchVehicleData(task);
+
+    setFormData({
+      task_id: task.task_id,
+      vehicle_id: task.vehicle_id,
+      user_id: task.assignee_id,
+      fuelling_date: '',
+      fuel_cost: '',
+      fuel_amount:'',
+      gas_station_name:'',
+      fuel_description: ''
+
+    });
   };
 
   return (
     <div className="driver-home-page">
       <div className="task-list">
         <ul>
-          {fuelingTasks.map((task) => (
+          {assignedTasks.map((task) => (
             <li key={task.id} onClick={() => handleTaskSelection(task)}>
+              <div className='body-20-bold'>Fueling Task {task.task_id}</div>
               <div>
-                <div className='body-20-bold'>{task.title}</div>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Date: </span>
+                <span className='label-11'>{task.date.split('T')[0]}</span>
               </div>
               <div>
-                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Date: </span> <span className='label-11'>{task.date}</span>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>License Plate: </span>
+                <span className='label-11'>{task.vehicle_id}</span>
               </div>
               <div>
-                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Licence Plate: </span> <span className='label-11'>{task.vehicleId}</span>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Status: </span>
+                <span className='label-11'>{task.status}</span>
               </div>
             </li>
           ))}
         </ul>
       </div>
 
-      {/* Right Section - Detailed Information */}
       <div className="task-details">
         {selectedTask ? (
           <>
+            <div className='body-24-bold'>{selectedTask.title}</div>
             <div>
-              <div className='body-24-bold'>{selectedTask.title}</div>
-            </div>
-            <div>
-              <span className='body-14-bold'>Date: </span> <span className='body-14'>{selectedTask.date}</span>
-            </div>
-            <div>
-              <span className='body-14-bold'>Time: </span> <span className='body-14'>{selectedTask.time}</span>
+              <span className='body-14-bold'>Date: </span>
+              <span className='body-14'>{selectedTask.date.split('T')[0]}</span>
             </div>
             <div>
-              <span className='body-14-bold'>Licence Plate: </span> <span className='body-14'>{selectedTask.vehicleId}</span>
-            </div>
-            {/* Input Boxes */}
-            
-            <div>
-              <label htmlFor="fuelingDate">Fueling Date:</label>
-              <input type="date" id="fuelingDate" value={fuelingDate} onChange={(e) => setFuelingDate(e.target.value)} />
+              <span className='body-14-bold'>Time: </span>
+              <span className='body-14'>{selectedTask.date.split('T')[1].split('.')[0]}</span>
             </div>
             <div>
-              <label htmlFor="fuelingAmount">Fueling Amount:</label>
-              <input type="number" id="fuelingAmount" value={fuelingAmount} onChange={(e) => setFuelingAmount(e.target.value)} />
+              <span className='body-14-bold'>License Plate: </span>
+              <span className='body-14'>{selectedTask.vehicle_id}</span>
             </div>
-            <div>
-              <label htmlFor="fuelingCost">Fueling Cost:</label>
-              <input type="number" id="fuelingCost" value={fuelingCost} onChange={(e) => setFuelingCost(e.target.value)} />
-            </div>
-            <div>
-              <label htmlFor="gasStation">Gas Station Name:</label>
-              <input type="text" id="gasStation" value={gasStation} onChange={(e) => setGasStation(e.target.value)} />
-            </div>
-            <div className="button-container">
-              <button onClick={handleAssignFuelingTask}>Upload</button>
-            </div>
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="fuel_cost">Fueling Cost:</label>
+              <input
+                type="int"
+                id="fuel_cost"
+                name="fuel_cost"
+                value={formData.fuel_cost}
+                onChange={handleChange}
+                required
+              />
+
+              <label htmlFor="fuelling_date">Fueling Date:</label>
+              <input
+                type="date"
+                id="fuelling_date"
+                name="fuelling_date"
+                value={formData.fuelling_date.split('T')[0]}
+                onChange={handleChange}
+                required
+              />
+
+              <label htmlFor="fuel_amount">Fueling Amount:</label>
+              <input
+                type="int"
+                id="fuel_amount"
+                name="fuel_amount"
+                value={formData.fuel_amount}
+                onChange={handleChange}
+                required
+              />
+               <label htmlFor="gas_station_name">Gas Station name:</label>
+              <input
+                type="text"
+                id="gas_station_name"
+                name="gas_station_name"
+                value={formData.gas_station_name}
+                onChange={handleChange}
+                required
+              />
+
+              <label htmlFor="fuel_description">Fueling description:</label>
+              <input
+                type="text-local"
+                id="fuel_description"
+                name="fuel_description"
+                value={formData.fuel_description}
+                onChange={handleChange}
+                required
+              />
+              
+
+              <button type="submit" className="button-124">Finish Task</button>
+            </form>
           </>
         ) : (
-          <div className='body-24'>Select a fueling task to view details.</div>
+          <div className='body-24'>Select fueling record to view details.</div>
         )}
       </div>
     </div>
