@@ -1,3 +1,5 @@
+// AdminVehicleFuelingHistory.js
+
 import React, { useState, useEffect } from 'react';
 import '../../components/cells/car/car_cell.css';
 import axios from 'axios';
@@ -5,8 +7,8 @@ import CarCell from '../../components/cells/car/car_cell';
 import { Link } from 'react-router-dom';
 import { useParams } from 'react-router-dom'
 
-const AdminVehicles = () => {
-    const car = useParams()
+const AdminVehiclesFuelingHistory = () => {
+  const car = useParams()
   const [history, setHistory] = useState([]);
   // const cars = [{
   //   license_plate: '',
@@ -88,4 +90,4 @@ const AdminVehicles = () => {
   );
 };
 
-export default AdminVehicles;
+export default AdminVehiclesFuelingHistory;

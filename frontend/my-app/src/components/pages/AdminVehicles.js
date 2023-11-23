@@ -41,14 +41,15 @@ const AdminVehicles = () => {
         return (
           <React.Fragment key={index}>
             <CarCell car={car} isAuctioned={isInAuction} />
-              <>
+              <div key={index}>
                 <Link to={`/admin/vehicles/fueling/${car.license_plate}`}>
-                  <button className="button-124">Show fueling history</button>
+                  <button className="button-vehicle">Show fueling history</button>
                 </Link>
+                  <span className="button-gap"/>
                 <Link to={`/admin/vehicles/maintenance/${car.license_plate}`}>
-                  <button className="button-124">Show maintenance history</button>
+                  <button className="button-vehicle">Show maintenance history</button>
                 </Link>
-              </>
+              </div>
           </React.Fragment>
         );
       })}
