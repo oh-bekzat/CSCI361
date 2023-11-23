@@ -124,7 +124,7 @@ const RegistrationFormUser = () => {
 
         <label>
           Phone Number:
-          <div className='label-12 note'>Start with 8, ex: 87773378532</div>
+          <div className='label-12 note'>Start with 8, ex: 87773378532 (11 integers)</div>
           <input type="tel" name="phone_number" value={formData.phone_number} onChange={handleChange} />
         </label>
 
@@ -135,7 +135,7 @@ const RegistrationFormUser = () => {
         </label>
         <label>
           License Code: 
-          <div className='label-12 note'>*Only required if the selected role is "driver"</div>
+          <div className='label-12 note'>*Only required if the selected role is "driver", consists of 6 integers</div>
           <input type="text" name="license_code" value={formData.license_code} onChange={handleChange} />
         </label>
         {errors.user_role && <span className="error-text">{errors.user_role}</span>}
