@@ -30,6 +30,10 @@ const MaintenTasks = () => {
   }, []);
 
   const fetchVehicleData = async (task) => {
+console.log("task = ",task)
+console.log("assignedTasks = ",assignedTasks)
+console.log("selectedTask = ",selectedTask)
+console.log("vehicleData = ",vehicleData)
     if (task && task.vehicle_id) {
       try {
         const response = await axios.get(`http://localhost:3001/vehicles/${task.vehicle_id}`);
@@ -62,29 +66,32 @@ const MaintenTasks = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (validateForm()) {
       const apiUrl = `http://localhost:3001/tasks/maintenance/${selectedTask.vehicle_id}`;
-
-      axios.post(apiUrl, formData)
-        .then((response) => {
-          console.log('Finished successfully:', response.data);
-          setFormData({
-            task_id: selectedTask.task_id,
-            vehicle_id: selectedTask.vehicle_id,
-            user_id: selectedTask.assignee_id,
-            description: '',
-            maintenance_date: '',
-            maintenance_cost: '',
-          });
-        })
-        .catch((error) => {
-          console.error('Error during maintenance task submission:', error);
+  
+      try {
+        await fetchVehicleData(selectedTask); // Wait for fetchVehicleData to complete
+  
+        const response = await axios.post(apiUrl, formData);
+        console.log('Finished successfully:', response.data);
+        
+        setFormData({
+          task_id: selectedTask.task_id,
+          vehicle_id: selectedTask.vehicle_id,
+          user_id: selectedTask.assignee_id,
+          description: '',
+          maintenance_date: '',
+          maintenance_cost: '',
         });
+      } catch (error) {
+        console.error('Error during maintenance task submission:', error);
+      }
     }
   };
+  
 
   const handleTaskSelection = (task) => {
     setSelectedTask(task);
