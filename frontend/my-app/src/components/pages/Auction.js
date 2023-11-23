@@ -17,12 +17,13 @@ const AuctionPage = () => {
   
         // Fetch auctioned vehicles
         const auctionedResponse = await axios.get('http://localhost:3001/auction');
-        const auctionedCarIds = auctionedResponse.data.auctions.map((auction) => auction.vehicleId);
+        const auctionedCarIds = auctionedResponse.data.auctions.map((auction) => auction.auctioned_vehicle_id);
   
         // Filter vehicles to select only auctioned ones
-        const auctionedCars = allCars.filter((car) => auctionedCarIds.includes(car.id));
+        const auctionedCars = allCars.filter((car) => auctionedCarIds.includes(car.license_plate));
   
         setCars(auctionedCars);
+        console.log(auctionedCars)
       } catch (error) {
         console.error('Error fetching vehicles:', error);
       }
@@ -30,11 +31,11 @@ const AuctionPage = () => {
   
     fetchData();
   }, []);
-  
+
   return (
     <div className="auction-page">
       {cars.map((car, index) => (
-        <CarCell key={index} car={car} page={'auction'} />
+        <CarCell key={index} car={car} page={'auction'} isAuctioned={true} />
       ))}
     </div>
   );

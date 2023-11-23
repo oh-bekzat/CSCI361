@@ -21,7 +21,8 @@ auctionRouter.get('/:vehicleId', async (req, res) => {
             where: { auctioned_vehicle_id: vehicleId },
             attributes: ['photo_url'],
         })
-        res.status(200).json({ photos })
+        const auctions = await AuctionedVehicle.findOne({where: {auctioned_vehicle_id: vehicleId}})
+        res.status(200).json({ auctions, photos })
     } catch (error) {
         console.error('Error fetching auction photos:', error)
         res.status(500).json({ error: 'Internal server error' })

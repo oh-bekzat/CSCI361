@@ -1,106 +1,78 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { useParams } from 'react-router-dom'
 import './Login.css';
 
-const AddVehicleAuction = () => {
-  const navigate = useNavigate();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+const AddVehicleAuction = ({ match }) => {
+    const navigate = useNavigate();
+    const car = useParams()
+  
+    const [vehicleCost, setVehicleCost] = useState('');
+    const [description, setDescription] = useState('');
+    const [photoUrls, setPhotoUrls] = useState('');
+    const [photoUrlsArray, setPhotoUrlsArray] = useState([]);
+  
+    const handleAddToAuction = async () => {
+        try {
+          // Convert the comma-separated string of photo URLs to an array
+    
+          // Your API endpoint URL
+          const apiUrl = 'http://localhost:3001/auction';
+    
+          // Example data to send in the request body
+          const requestData = {
+            admin_id: 1, // Replace with the actual admin ID
+            vehicle_id: car.vehicleId,
+            vehicle_cost: parseInt(vehicleCost),
+            description,
+            photos: photoUrlsArray,
+          };
+    
+          // Make an Axios POST request
+          const response = await axios.post(apiUrl, requestData);
+          console.log(response);
+    
+          // Navigate to another page after successfully adding to auction
+          navigate('/admin/vehicles');
+    
+        } catch (error) {
+          console.error('Error adding to auction:', error);
+          // Handle error as needed
+        }
+      };
 
-  const handleLogin = () => 
-    {fetch('http://localhost:3001/users/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ username, password }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Invalid username or password');
-      }
-      return response.json();
-    })
-    .then((data) => {
-      setIsLoggedIn(true);
-      redirectBasedOnRole(data.user_role,data.userId);
-      console.log('User ID:', data.userId);
-      console.log('User Role:', data.user_role);
-      // You may store the received token in localStorage or a state management system
-    })
-    .catch((error) => {
-      alert(error.message || 'An error occurred during login');
-    });
-    };
-  const handleReport = () => 
-  {fetch('http://localhost:3001/reports/2', {
-    method: 'POST',
-    body: {
-      "start_time": "2022-08-02 09:30:00", 
-      "finish_time": "2024-08-02 09:30:00"
-    },
-    })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error('Invalid username or password');
-      }
-      return response.json();
-    })
-    .catch((error) => {
-      alert(error.message || 'An error occurred during login');
-    });
-    };
-
-
-const redirectBasedOnRole = (userRole, userId) => {
-  switch (userRole) {
-    case 'maintenance_person':
-      localStorage.setItem('maintenId', userId);
-      navigate('/mainten'); // Redirect to maintenance page
-      break;
-    case 'fuelling_person':
-      localStorage.setItem('fuelId', userId);
-      navigate('/fueling'); // Redirect to fueling page
-      break;
-    case 'driver':
-      localStorage.setItem('driverId', userId);
-      navigate('/driver');
-      // navigate('/driver'); // Redirect to driver page
-      break;
-    case 'client':
-        localStorage.setItem('clientId', userId);
-        navigate('/client'); // Redirect to fueling page
-        break;
-    default:
-      // Handle other roles or unknown roles
-      break;
-  }
-};
-
-  return (
-    <div className="login-container">
-      {isLoggedIn ? (
+      const handleAddPhoto = () => {
+        // Trim and check if the URL is not empty
+        const trimmedUrl = photoUrls.trim();
+        if (trimmedUrl) {
+          // Add the new photo URL to the array
+          setPhotoUrlsArray([...photoUrlsArray, trimmedUrl]);
+          // Clear the input for the next photo
+          setPhotoUrls('');
+        } else {
+          // Handle the case where the URL is empty or contains only whitespace
+          console.warn('Invalid URL. Please provide a non-empty URL.');
+        }
+      };
+    
+      return (
         <div>
-          <h2>Welcome, {username}!</h2>
-          <button onClick={() => setIsLoggedIn(false)}>Logout</button>
-        </div>
-      ) : (
+          <h2>Add Vehicle to Auction</h2>
+          <label>Cost of the Vehicle:</label>
+          <input type="number" value={vehicleCost} onChange={(e) => setVehicleCost(e.target.value)} />
+    
+          <label>Description:</label>
+          <textarea style={{ width:'30%', height:'100px'}} value={description} onChange={(e) => setDescription(e.target.value)} />
+    
         <div>
-          <h2>Login</h2>
-          <div>
-            <label>Username:</label>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-          </div>
-          <div>
-            <label>Password:</label>
-            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-          </div>
-          <button className="button-124" onClick={handleLogin}>Login</button>
+            <label>Photo URL:</label>
+            <input type="text" value={photoUrls} onChange={(e) => setPhotoUrls(e.target.value)} />
+            <button className='button-124' style={{marginLeft:'15pt'}} onClick={handleAddPhoto}>Add Photo</button>
         </div>
-      )}
-    </div>
-  );
+          <button className='button-264' onClick={handleAddToAuction}>Add to Auction</button>
+        </div>
+      );
 };
 
 export default AddVehicleAuction;
