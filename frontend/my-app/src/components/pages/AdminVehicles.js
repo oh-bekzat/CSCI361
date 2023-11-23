@@ -59,6 +59,7 @@ const AdminVehicles = () => {
       }
     };
     fetchVehicles();
+    console.log("cars = ",cars)
   }, []); 
 
   const [auctionCars, setAuctionCars] = useState(cars.slice(0, Math.max(cars.length, 0)));
@@ -70,7 +71,9 @@ const AdminVehicles = () => {
       </Link>
       {cars.map((car, index) => (
         <CarCell key={index} car={car} />
+
       ))}
+      {/* {cars.map((car)=> car)} */}
     </div>
   );
 };
