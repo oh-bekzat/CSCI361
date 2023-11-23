@@ -28,7 +28,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: auto%;
+    width: auto;
   }
     .car-container {
     display: flex;
