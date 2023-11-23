@@ -32,12 +32,13 @@ function Navbar() {
  
   return (
     <header className="header navbar">
-      
         <div className='logo-container'>
+          <div>
           <Link to='/driver'>
-          <span><img src={require('./assets/driver.png')} alt="Driver" /></span>
-            <span className="header-32-bold">VMS Project</span>
+          <span><img src={require('./assets/driver.png')} alt="Home" /></span>
           </Link>
+          </div>
+          <div className="header-32-bold">VMS Project</div>
         </div>
         <ul className='navbar'>
           <li>

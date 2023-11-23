@@ -29,12 +29,13 @@ function MainNavbar() {
  
   return (
     <header className="header navbar">
-      
         <div className='logo-container'>
+          <div>
           <Link to='/'>
           <span><img src={require('./assets/home-icon.png')} alt="Home" /></span>
-            <span className="header-32-bold">VMS Project</span>
           </Link>
+          </div>
+          <div className="header-32-bold">VMS Project</div>
         </div>
         <ul className='navbar'>
           <li>
