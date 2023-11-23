@@ -71,6 +71,7 @@ CREATE TABLE routes (
   	finish_time timestamp, -- total time is derivable
 	status route_status_type DEFAULT 'awaiting',
 	requested_time timestamp NOT NULL,
+	requested_date timestamp NOT NULL,
 	rate int
 )
 
