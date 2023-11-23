@@ -3,38 +3,107 @@ import React, { useState, useEffect } from 'react';
 import './MaintenTasks.css';
 import axios from 'axios';
 
-const MaintenTasks = ({ maintenId }) => {
-  // Sample data for assigned tasks
-  const [assignedTasks, setAssignedTasks] = useState([
-    { id: 1, title: 'Task 1', details: 'Details for Task 1', vehicle: 'Hyundai Sonata 2021 y.', date: '20.11.2023', time: '12:00', issue: 'Lorum Ipsum', departure: 'Point A', arrival: 'Point B', status: 'Active', description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.' },
-    { id: 2, title: 'Task 2', details: 'Details for Task 2', vehicle: 'Toyota Camry 2022 y.', date: '21.11.2023', time: '22:00', issue: 'Lorum Ipsum', departure: 'Point A', arrival: 'Point B', status: 'Active', description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.' },
-  ]);
-  // State to track the selected task
+const MaintenTasks = ({ }) => {
+  const [assignedTasks, setAssignedTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
-
-  // State for input values
-  const [cost, setCost] = useState('');
   const [image, setImage] = useState(null);
-  const [maintenanceDescription, setMaintenanceDescription] = useState('');
+  const [maintenanceDescription, setMaintenanceDescription] = useState(''); 
+  const user_id = localStorage.getItem("maintenId");
+  const [vehicleData, setVehicleData] = useState(null); 
+  const [dateTime, setDateTime] = useState('');
+  const [maintenanceCost, setMaintenanceCost] = useState('');
 
-  // Function to handle task selection
-  const handleTaskSelection = (task) => {
-    setSelectedTask(task);
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/tasks/assigned/${user_id}`);
+        setAssignedTasks(response.data.taskDetails);
+      } catch (error) {
+        console.error('Error fetching tasks:', error);
+      }
+    };
+
+    fetchTasks();
+  }, []);
+
+
+  const fetchVehicleData = async (task) => {
+    
+    console.log(task)
+    if (task && task.vehicle_id) {
+      try {
+        const response = await axios.get(`http://localhost:3001/vehicles/${task.vehicle_id}`);
+        setVehicleData(response.data); // Assuming the response has driver_name and driver_phone
+        console.log("VehicleData:", response.data)
+      } catch (error) {
+        console.error('Error fetching vehicle data:', error);
+      }
+    }
   };
 
-  // Function to handle assigning the task
-  const handleAssignTask = () => {
-    // Implement your logic for assigning the task
-    console.log('Task assigned:', selectedTask);
-    console.log('Cost:', cost);
-    console.log('Image:', image);
-    console.log('Maintenance Description:', maintenanceDescription);
+  
+  const handleSubmit = async () => {
+    try {
+      // Ensure that a task is selected
+      if (!selectedTask) {
+        console.error('No task selected for assignment.');
+        return;
+      }
+  
+      // Prepare data for the POST request
+      const assignmentData = {
+        task_id: selectedTask.task_id, // You may need to adjust this based on your task structure
+        vehicle_id: selectedTask.vehicle_id,
+        user_id: selectedTask.assignee_id,
+        description: maintenanceDescription,
+        vehicle_id: selectedTask.vehicle_id,
+        maintenance_date: dateTime,
+        maintenance_cost: maintenanceCost,
+      };
+  
+      // Create a FormData object for handling file uploads
+      // const formData = new FormData();
+      // formData.append('image', image);
+  
+      // // Append other assignment data to FormData
+      // Object.entries(assignmentData).forEach(([key, value]) => {
+      //   formData.append(key, value);
+      // });
+  
+      // Make a POST request to add assignment details
+      const response = await axios.post('http://localhost:3001/tasks/maintenance/${selectedTask.task_id}', assignmentData);
+  
+      // Check if the assignment was successful
+      if (response.status === 201) {
+        console.log('Task assigned successfully:', response.data);
+  
+        // Clear input fields and selected task after assignment
+        setMaintenanceCost('');
+        setImage(null);
+        setDateTime('');
+        setMaintenanceDescription('');
+        setSelectedTask(null);
+  
+        // Optionally, you can fetch updated assigned tasks from the server
+        // to reflect changes in the UI.
+        // Example: fetchTasks();
+      } else {
+        console.error('Error assigning task:', response.data);
+      }
+    } catch (error) {
+      console.error('Error assigning task:', error);
+    }
   };
+  
 
   // Function to handle file input change
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     setImage(file);
+  };
+  const handleTaskSelection = (task) => {
+    setSelectedTask(task);
+    fetchVehicleData(task);
   };
 
   return (
@@ -44,13 +113,16 @@ const MaintenTasks = ({ maintenId }) => {
           {assignedTasks.map((task) => (
             <li key={task.id} onClick={() => handleTaskSelection(task)}>
               <div>
-                <div className='body-20-bold'>{task.title}</div>
+                <div className='body-20-bold'>Maintenance Task {task.task_id}</div>
               </div>
               <div>
-                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Date: </span> <span className='label-11'>{task.date}</span>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Date: </span> <span className='label-11'>{task.date.split('T')[0]}</span>
               </div>
               <div>
-                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Title: </span> <span className='label-11'>{task.title}</span>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>License Plate: </span> <span className='label-11'>{task.vehicle_id}</span>
+              </div>
+              <div>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Status: </span> <span className='label-11'>{task.status}</span>
               </div>
             </li>
           ))}
@@ -65,25 +137,56 @@ const MaintenTasks = ({ maintenId }) => {
               <div className='body-24-bold'>{selectedTask.title}</div>
             </div>
             <div>
-              <span className='body-14-bold'>Date: </span> <span className='body-14'>{selectedTask.date}</span>
+              <span className='body-14-bold'>Date: </span> <span className='body-14'>{selectedTask.date.split('T')[0]}</span>
             </div>
             <div>
-              <span className='body-14-bold'>Time: </span> <span className='body-14'>{selectedTask.time}</span>
+              <span className='body-14-bold'>Time: </span> <span className='body-14'>{selectedTask.date.split('T')[1].split('.')[0]}</span>
             </div>
             <div>
-              <span className='body-14-bold'>Title: </span> <span className='body-14'>{selectedTask.issue}</span>
+              <span className='body-14-bold'>Title: </span> <span className='body-14'>{selectedTask.description}</span>
             </div>
             <div>
-              <span className='body-14-bold'>Vehicle: </span> <span className='body-14'>{selectedTask.vehicle}</span>
+              <span className='body-14-bold'>Vehicle Model: </span> <span className='body-14'>{vehicleData && `${vehicleData.make} ${vehicleData.model}`}</span>
             </div>
             <div>
-              <span className='body-14-bold'>Status: </span> <span className='body-14'>{selectedTask.status}</span>
+              <span className='body-14-bold'>Title: </span> <span className='body-14'>{selectedTask.description}</span>
             </div>
             <div>
-              <span className='body-14-bold'>Description: </span> <span className='body-14'>{selectedTask.description}</span>
+              <span className='body-14-bold'>License Plate: </span> <span className='body-14'>{selectedTask.vehicle_id}</span>
             </div>
-            {/* Input Boxes */}
-            <div>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="maintenanceCost">Maintenance Cost:</label>
+                <input
+                  type="int"
+                  id="maintenanceCost"
+                  name="maintenanceCost"
+                  value={maintenanceCost}
+                  onChange={(e) => setMaintenanceCost(e.target.value)}
+                  required
+                />
+                <label htmlFor="dateTime">Date and Time:</label>
+                  <input
+                    type="datetime-local"  // Use "datetime-local" type for date and time input
+                    id="dateTime"
+                    name="dateTime"
+                    value={dateTime}
+                    onChange={(e) => setDateTime(e.target.value)}
+                    required
+                  />
+                <label htmlFor="maintenanceDescription">Maintenance Description:</label>
+                  <input
+                    type="text"
+                    id="maintenanceDescription"
+                    name="maintenanceDescription"
+                    value={maintenanceDescription}
+                    onChange={(e) => setMaintenanceDescription(e.target.value)}
+                    required
+                  />
+
+                <button type="submit" className="button-124 ">Finish Task</button>
+            </form> 
+            
+            {/* <div>
               <label htmlFor="cost">Cost:</label>
               <input type="text" id="cost" value={cost} onChange={(e) => setCost(e.target.value)} />
             </div>
@@ -94,10 +197,8 @@ const MaintenTasks = ({ maintenId }) => {
             <div>
               <label htmlFor="maintenanceDescription">Maintenance Description:</label>
               <textarea id="maintenanceDescription" value={maintenanceDescription} onChange={(e) => setMaintenanceDescription(e.target.value)} />
-            </div>
-            <div className="button-container">
-              <button onClick={handleAssignTask}>Upload</button>
-            </div>
+            </div> */}
+            
           </>
         ) : (
           <div className='body-24'>Select a route to view details.</div>
