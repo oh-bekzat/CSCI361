@@ -23,6 +23,21 @@ tasksRouter.get('/maintenance/:vehicleId', async (req, res) => {
     }
 })
 
+tasksRouter.get('/assigned/:userId', async (req, res) => {
+  try {
+      const { userId } = req.params
+
+      const taskDetails = await Task.findAll({
+          where: { assignee_id: userId },
+      })
+
+      res.status(200).json({ taskDetails })
+  } catch (error) {
+      console.error('Error fetching maintenance details:', error)
+      res.status(500).json({ error: 'Internal server error' })
+  }
+})
+
 tasksRouter.get('/fuelling/:vehicleId', async (req, res) => {
     try {
         const { vehicleId } = req.params
