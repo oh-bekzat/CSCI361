@@ -82,7 +82,8 @@ const MaintenTasks = ({ }) => {
     e.preventDefault();
 
     if (validateForm()) {
-      const apiUrl = 'http://localhost:3001/tasks/maintenance/${selectedTask.vehicle_id}';
+      const apiUrl = `http://localhost:3001/tasks/maintenance/${selectedTask.vehicle_id}`;
+
 
       // Make a request to your server with formData
       fetch(apiUrl, {
