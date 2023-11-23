@@ -70,12 +70,12 @@ console.log("vehicleData = ",vehicleData)
     e.preventDefault();
   
     if (validateForm()) {
-      const apiUrl = `http://localhost:3001/tasks/maintenance/${selectedTask.vehicle_id}`;
+      const apiUrl = `http://localhost:3001/tasks/maintenance/${selectedTask.task_id}`;
   
       try {
         await fetchVehicleData(selectedTask); // Wait for fetchVehicleData to complete
   
-        const response = await axios.post(apiUrl, formData);
+        const response = await axios.put(apiUrl, formData);
         console.log('Finished successfully:', response.data);
         
         setFormData({
