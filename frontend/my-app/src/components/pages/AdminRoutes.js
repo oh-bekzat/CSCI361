@@ -82,6 +82,7 @@ const AdminManagesRoutes = () => {
   
       // Close the modal
       setAssignDriverModalOpen(false);
+      window.location.reload();
     } catch (error) {
       console.error('Error assigning driver:', error);
       // Handle error response or set an appropriate state to show an error message
