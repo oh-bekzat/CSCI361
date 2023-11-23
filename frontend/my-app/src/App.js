@@ -38,6 +38,7 @@ import AdminUpdateDrivers from './components/pages/AdminUpdateDrivers';
 import AdminUpdateFueling from './components/pages/AdminUpdateFueling';
 import AdminUpdateMaintenance from './components/pages/AdminUpdateMainten';
 import AdminAddTask from './components/pages/AdminAddTask';
+import MaintenProfile from './components/pages/MaintenProfile';
 
 function App() {
   return (
@@ -72,7 +73,7 @@ function App() {
         <Route path="/fueling/profile" element={<><FuelingNavbar /><FuelProfile /></>} />
         <Route path="/fueling/history" element={<><FuelingNavbar /><FuelingHistory /></>} />
         <Route path="/fueling/" element={<><FuelingNavbar /><FuelingTasks /></>} />
-        <Route path="/mainten/profile" element={<><MaintenNavbar /><Profile /></>} />
+        <Route path="/mainten/profile" element={<><MaintenNavbar /><MaintenProfile /></>} />
         <Route path="/mainten/history" element={<><MaintenNavbar /><MaintenHistory /></>} />
         <Route path="/mainten/" element={<><MaintenNavbar /><MaintenTasks /></>} />
         <Route path="/client/" element={<><ClientNavbar /><ClientHome /></>} />
