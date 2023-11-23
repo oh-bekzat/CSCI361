@@ -7,12 +7,13 @@ function FuelingNavbar() {
  
   return (
     <header className="header navbar">
-      
         <div className='logo-container'>
+          <div>
           <Link to='/fueling'>
-          <span><img src={require('./assets/fueling.png')} alt="Driver" /></span>
-            <span className="header-32-bold">VMS Project</span>
+          <span><img src={require('./assets/fueling.png')} alt="Home" /></span>
           </Link>
+          </div>
+          <div className="header-32-bold">VMS Project</div>
         </div>
         <ul className='navbar'>
           <li>
