@@ -87,7 +87,7 @@ function App() {
         <Route path="/admin/tasks/addmaintening" element={<><AdminNavbar /><AdminAddMainteningTask /></>}/>
         <Route path="/admin/tasks/addfueling" element={<><AdminNavbar /><AdminAddFuelingTask /></>}/>
         <Route path="/admin/vehicles/fueling/:vehicleId" element={<><AdminNavbar /><AdminVehicleFuelingHistory /></>}/>
-        <Route path="/admin/vehicles/maintenance" element={<><AdminNavbar /><AdminVehicleMaintenanceHistory /></>}/>
+        <Route path="/admin/vehicles/maintenance/:vehicleId" element={<><AdminNavbar /><AdminVehicleMaintenanceHistory /></>}/>
       </Routes>
    
     </BrowserRouter>
