@@ -70,7 +70,7 @@ const CarCell = ({ car, page, isAuctioned }) => {
             <img key={index} src={photo.photo_url} style={{width:'300px'}} alt={`Photo ${index + 1}`} />
           ))}
         </div>)}
-        {page != 'auction' && isAuctioned && carDetails.photos && (
+        {page != 'auction' && (
          <div className="car-image">
          <img src={car.vehicle_image} alt={`${car.make} ${car.model}`} />
        </div>)}
