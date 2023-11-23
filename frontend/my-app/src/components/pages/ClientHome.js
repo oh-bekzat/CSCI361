@@ -43,7 +43,6 @@ const fetchDriverData = async (task) => {
 };
 
 const fetchVehicleData = async (task) => {
-  setIsSubmitted(true);
   console.log(task)
   if (task && task.vehicle_id) {
     try {
@@ -88,8 +87,7 @@ const handleRatingSubmit = async () => {
     setAssignedTasks((prevTasks) =>
       prevTasks.map((task) => (task.route_id === updatedTask.route_id ? updatedTask : task))
     );
-
-    console.log('Task started:', updatedTask);
+    setIsSubmitted(true);
   } catch (error) {
     console.error('Error starting task:', error);
   }
@@ -100,7 +98,6 @@ const handleRatingSubmit = async () => {
 
 // Function to handle task selection
 const handleTaskSelection = async (task) => {
-  console.log("pressed");
   await setSelectedTask(task);
   fetchDriverData(task);
   fetchVehicleData(task);
@@ -126,6 +123,11 @@ return (
             <div>
               <div className='body-20-bold'>Route {task.route_id}</div>
             </div>
+            {task.status === 'completed' && task.rate === null &&(
+                <div>
+                <span className='body-14-bold' style={{ marginLeft: '20px', color:"Red" }}>Please Rate</span> 
+                </div>
+              )}
             <div>
               <span className='label-11-bold' style={{ marginLeft: '20px' }}>Requested date and time: </span> <span className='label-11'>{task.requested_date}, {task.requested_time}</span>
             </div>
@@ -135,9 +137,21 @@ return (
             <div>
             <span className='label-11-bold' style={{ marginLeft: '20px' }}>Point of arrival: </span> <span className='label-11'>{task.finish_point}</span>
             </div>
-            <div>
-            <span className='label-11-bold' style={{ marginLeft: '20px' }}>Status: </span> <span className='label-11'>{task.status}</span>
-            </div>
+              {(task.status === 'assigned' || task.status === 'started' || task.status === 'awaiting') && (
+                <div>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Status: </span> <span className='label-11'>{task.status}</span>
+                </div>
+              )}
+              {task.status === 'completed' && task.rate != null && (
+                <div>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Status: </span> <span className='label-11'>{task.status}</span>
+                </div>
+              )}
+              {task.status === 'completed' && task.rate === null &&(
+                <div>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Status: </span> <span className='label-11'>Pending rating</span>
+                </div>
+              )}
           </li>
         ))}
       </ul>
@@ -178,7 +192,7 @@ return (
             <div>
               <span className='body-14-bold'>Status: </span> <span className='body-14'>{selectedTask.status}</span>
           </div>
-          {selectedTask.status === 'completed' && selectedTask.rate === null &&(
+          {selectedTask.status === 'completed' && selectedTask.rate === null && isSubmitted &&(
                 <div className="rating-dropdown">
                   {/* Add your dropdown component here */}
                   {/* For example, you can use a select element with options for ratings */}
@@ -194,7 +208,7 @@ return (
                   <button className="button-124" onClick={handleRatingSubmit}>Submit</button>
                 </div>
               )}
-              {selectedTask.rate != null && (
+              {(selectedTask.rate != null || isSubmitted)&& (
                 <div className="submitted-rating">
                   <span className='body-14-bold'>Rating: </span>
                   <span className='body-14'>{selectedTask.rate}</span>

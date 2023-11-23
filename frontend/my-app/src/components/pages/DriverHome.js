@@ -14,7 +14,6 @@ const DriverHomePage = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(`http://localhost:3001/routes/assigned/${user_id}`);
-        console.log(response.data);
         setAssignedTasks(response.data.routes);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -48,16 +47,34 @@ const DriverHomePage = () => {
       setAssignedTasks((prevTasks) =>
         prevTasks.map((task) => (task.route_id === updatedTask.route_id ? updatedTask : task))
       );
-
-      console.log('Task started:', updatedTask);
     } catch (error) {
       console.error('Error starting task:', error);
     }
   };
 
-  const handleDeclineTask = () => {
-    // Logic to handle declining the task
-    console.log('Task declined:', selectedTask);
+  const handleDeclineTask = async () => {
+    if (!selectedTask) {
+      console.error('No task selected');
+      return;
+    }
+
+    try {
+      const { route_id, driver_id } = selectedTask;
+      const finish_time = new Date(); // Assuming you want to use the current time as the start time
+      console.log(finish_time);
+
+      const response = await axios.put(`http://localhost:3001/routes/cancel/${route_id}`, {
+        driver_id,
+      });
+      const updatedTask = response.data;
+
+      setAssignedTasks((prevTasks) =>
+        prevTasks.map((task) => (task.route_id === updatedTask.route_id ? updatedTask : task))
+      );
+      window.location.reload();
+    } catch (error) {
+      console.error('Error starting task:', error);
+    }
   };
 
   const handleFinishTask = async () => {
