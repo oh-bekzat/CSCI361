@@ -1,12 +1,15 @@
-
 import React, { useState, useEffect } from 'react';
 import './car_cell.js'
 import axios from 'axios';
+import AddToAuctionModal from '../../pages/AdminRoutesPopUp.js'; // Replace with the correct path
 
-const CarCell = ({ car }) => {
+const CarCell = ({ car, page }) => {
   const [isInAuction, setIsInAuction] = useState(false);
   const [startTime, setStartTime] = useState('');
-  const [finishTime, setFinishTime] = useState('')
+  const [finishTime, setFinishTime] = useState('');
+  const [isAddToAuctionModalOpen, setIsAddToAuctionModalOpen] = useState(false);
+  const [photoUrls, setPhotoUrls] = useState([]);
+  const [newPhotoUrl, setNewPhotoUrl] = useState('');
 
   useEffect(() => {
     // Fetch data from the database to check if the car is in the auction
@@ -20,26 +23,45 @@ const CarCell = ({ car }) => {
         console.error('Error fetching data:', error);
       }
     };
-
-    fetchData();
+    // fetchData();
   }, [car.vehicle_ID]);
 
   const handleAddToAuction = async () => {
-    try {
-      // Perform the action to add the car to the auction
-      // Replace this with your actual fetch logic
-      await fetch(`/addToAuction/${car.vehicle_ID}`, {
-        method: 'POST',
-      });
-
-      // Update the state to indicate that the car is now in the auction
-      setIsInAuction(true);
-    } catch (error) {
-      console.error('Error adding to auction:', error);
+    setIsAddToAuctionModalOpen(true);
+  };
+  const handleAddPhoto = () => {
+    if (newPhotoUrl.trim() !== '') {
+      setPhotoUrls([...photoUrls, newPhotoUrl.trim()]);
+      setNewPhotoUrl('');
     }
   };
 
+  const handleAddToAuctionSubmit = async (data) => {
+    // Perform the action to add the car to the auction
+    // try {
+    //   await fetch(`/addToAuction/${car.vehicle_ID}`, {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //     },
+    //     body: JSON.stringify(data),
+    //   });
+
+    //   // Update the state to indicate that the car is now in the auction
+    //   setIsInAuction(true);
+    //   // Close the modal
+    //   setIsAddToAuctionModalOpen(false);
+    // } catch (error) {
+    //   console.error('Error adding to auction:', error);
+    // }
+    console.log(data);
+  };
+  
+
   const generateReport = async (vehicleId) => {
+    if (page === 'auction'){
+      return
+    }
     try {
       // Your API endpoint URL
       const apiUrl = `http://localhost:3001/reports/${vehicleId}`
@@ -67,15 +89,13 @@ const CarCell = ({ car }) => {
   }
 
   return (
-    
-
     <div className="car-details">
       <div className="car-image">
         <img src={car.vehicle_image} alt={`${car.make} ${car.model}`} />
       </div>
       <div className="car-info-container">
         <div className='car-name'>
-          <div className="body-20-bold">{`${car.make} ${car.model} ${car.manufacture_year} y.`}</div>
+          <div className="body-20-bold">{`${car.make} ${car.model} ${car.manufacture_year}`}</div>
         </div>
         <div className='car-container'>
           <div className="car-info">
@@ -127,14 +147,12 @@ const CarCell = ({ car }) => {
                 <span className="label-14-bold">Last maintained date:</span>{' '}
                 <span className="label-14">{car.last_maintained_date}</span>
               </div>
-              {/* Add more properties as needed */}
             </div>
          </div>
-          <div className="button-container-car">
-            {isInAuction ? (
-              <div className="in-auction-label">In Auction</div>
-            ) : (
-              <div>
+         {page === 'auction' ? (
+          <div></div>
+         ) : (
+          <div>
                 <button className="button-124" onClick={handleAddToAuction}>
                   Add to Auction
                 </button>
@@ -145,9 +163,13 @@ const CarCell = ({ car }) => {
                 <button className="button-124" onClick={() => generateReport(car.license_plate)}>
                   Generate report
                 </button>
-              </div>
-            )}
-          </div>
+              </div>   
+         )}
+         {/* <AddToAuctionModal
+                isOpen={isAddToAuctionModalOpen}
+                onRequestClose={() => setIsAddToAuctionModalOpen(false)}
+                onAddToAuction={handleAddToAuctionSubmit}
+          /> */}
         </div>
       </div>
     </div>
