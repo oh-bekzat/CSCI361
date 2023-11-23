@@ -37,7 +37,7 @@ import ClientProfile from './components/pages/ClientProfile';
 import AdminUpdateDrivers from './components/pages/AdminUpdateDrivers';
 import AdminUpdateFueling from './components/pages/AdminUpdateFueling';
 import AdminUpdateMaintenance from './components/pages/AdminUpdateMainten';
-import AdminAddTask from './components/pages/AdminAddTask';
+import AdminAddMainteningTask from './components/pages/AdminAddMainteningTask';
 import AdminAddFuelingTask from './components/pages/AdminAddFuelingTask';
 import AdminVehicleFuelingHistory from './components/pages/AdminVehicleFuelingHistory';
 import AdminVehicleMaintenanceHistory from './components/pages/AdminVehicleMaintenanceHistory';
@@ -84,7 +84,7 @@ function App() {
         <Route path="/client/" element={<><ClientNavbar /><ClientHome /></>} />
         <Route path="/client/make-request" element={<><ClientNavbar /><ClientRequest /></>} />
         <Route path="/client/profile" element={<><ClientNavbar /><ClientProfile /></>}/>
-        <Route path="/admin/tasks/add" element={<><AdminNavbar /><AdminAddTask /></>}/>
+        <Route path="/admin/tasks/addmaintening" element={<><AdminNavbar /><AdminAddMainteningTask /></>}/>
         <Route path="/admin/tasks/addfueling" element={<><AdminNavbar /><AdminAddFuelingTask /></>}/>
         <Route path="/admin/vehicles/fueling/:vehicleId" element={<><AdminNavbar /><AdminVehicleFuelingHistory /></>}/>
         <Route path="/admin/vehicles/maintenance" element={<><AdminNavbar /><AdminVehicleMaintenanceHistory /></>}/>

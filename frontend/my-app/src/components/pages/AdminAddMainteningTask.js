@@ -3,7 +3,7 @@ import axios from 'axios';
 import Modal from 'react-modal';
 
 
-const AdminAddTask = () => {
+const AdminAddMainteningTask = () => {
   const [licensePlate, setLicencePlate] = useState('');
   const [dateTime, setDateTime] = useState('');
   const [maintainId, setMaintainId] = useState('');
@@ -99,4 +99,4 @@ const AdminAddTask = () => {
   );
 };
 
-export default AdminAddTask;
+export default AdminAddMainteningTask;

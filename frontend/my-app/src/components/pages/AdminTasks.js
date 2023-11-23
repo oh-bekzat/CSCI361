@@ -16,7 +16,7 @@ const AdminTasks = ({}) => {
         const fetchData = async () => {
         try {
             const response = await axios.get('http://localhost:3001/tasks');
-            setAssignedTasks(response.data);
+            setAssignedTasks(response.data.allTasks);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -38,7 +38,7 @@ const AdminTasks = ({}) => {
 
   return (
     <div className="driver-home-page-button">
-      <Link to="/admin/tasks/add">
+      <Link to="/admin/tasks/addmaintening">
         <button className="button-124" style={{margin: '20px', width: 'fit-content'}}>Add Maintenance Task</button>
       </Link>
       <Link to="/admin/tasks/addfueling">

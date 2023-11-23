@@ -8,6 +8,19 @@ const Photo = require('../models/Photo')
 
 const tasksRouter = express.Router()
 
+tasksRouter.get('/', async (req, res) => {
+  try {
+    // Assuming you have a Task model defined with Sequelize
+    const allTasks = await Task.findAll();
+
+    res.status(200).json({ allTasks });
+  } catch (error) {
+    console.error('Error fetching all tasks:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 tasksRouter.get('/maintenance/:vehicleId', async (req, res) => {
     try {
         const { vehicleId } = req.params
