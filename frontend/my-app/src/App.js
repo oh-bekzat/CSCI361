@@ -95,3 +95,10 @@ function App() {
 }
 
 export default App;
+
+
+//maintenance - "https://www.harrysautoservice.net/wp-content/uploads/2018/09/about-img-1-1024x576.jpg"
+//fueling - "https://upload.wikimedia.org/wikipedia/commons/d/d8/Digital_Fuel_Gauge.jpg"
+
+//toyota - "https://cdn0.riastatic.com/photosnew/auto/photo/toyota_camry__445984565f.jpg"
+//tesla - "https://autopapa.ge/system/car/photos/007/354/794/medium.jpg?1697634738"
