@@ -35,6 +35,25 @@ const AdminTasks = ({}) => {
     console.log('Task assigned:', selectedTask);
   };
 
+  const sortedTasks = [...assignedTasks].sort((a, b) => {
+    if (a.task_type === 'maintenance' && b.status !== 'fuelling') {
+      return -1;
+    } else if (b.status === 'fuelling' && a.status !== 'maintenance') {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+
+  const secondSortedTasks = [...sortedTasks].sort((a, b) => {
+    if (a.status === 'assigned' && b.status !== 'assigned') {
+      return -1;
+    } else if (b.status === 'assigned' && a.status !== 'assigned') {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
 
   return (
     <div className="driver-home-page-button">
@@ -47,7 +66,7 @@ const AdminTasks = ({}) => {
       <div className="driver-home-page">
       <div className="task-list">
         <ul>
-          {assignedTasks.map((task) => (
+          {secondSortedTasks.map((task) => (
             <li key={task.id} onClick={() => handleTaskSelection(task)}>
               <div>
                 <div className='body-11-bold'>{task.task_type} task {task.task_id}</div>
@@ -60,6 +79,9 @@ const AdminTasks = ({}) => {
               </div>
               <div>
                 <span className='label-11-bold' style={{ marginLeft: '20px' }}>Assigned Person ID: </span> <span className='label-11'>{task.assignee_id}</span>
+            </div>
+            <div>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Status: </span> <span className='label-11'>{task.status}</span>
             </div>
             </li>
           ))}

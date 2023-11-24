@@ -207,7 +207,7 @@ console.log("vehicleData = ",vehicleData)
                 required
               />
 
-              {/* <label htmlFor="fuel_description">Fueling description:</label>
+              <label htmlFor="fuel_description">Fueling description:</label>
               <input
                 type="text-local"
                 id="fuel_description"
@@ -215,7 +215,7 @@ console.log("vehicleData = ",vehicleData)
                 value={formData.fuel_description}
                 onChange={handleChange}
                 required
-              /> */}
+              />
               
 
               <button type="submit" className="button-124">Finish Task</button>
