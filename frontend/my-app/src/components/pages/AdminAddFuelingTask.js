@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 
 const AdminAddMainteningTask = () => {
   const [licensePlate, setLicencePlate] = useState('');
-  const [olddate, setDate] = useState('');
+  const [date, setDate] = useState('');
   const [maintainId, setMaintainId] = useState('');
   const [maintainers, setMaintainers] = useState([]);
   const [vehicles, setVehicles] = useState([]);
@@ -33,7 +33,7 @@ const AdminAddMainteningTask = () => {
     e.preventDefault();
     try {
       // Retrieve user_id from localStorage
-      const date =  olddate.split('T')[0];
+     // const date =  olddate.split('T')[0];
 
       // Create request data
       const requestData = {
@@ -92,10 +92,10 @@ const AdminAddMainteningTask = () => {
 
         <label htmlFor="date">Date  :</label>
         <input
-          type="date"
+          type="datetime-local"
           id="date"
           name="date"
-          value={olddate}
+          value={date}
           onChange={(e) => setDate(e.target.value)}
           required
         /> 

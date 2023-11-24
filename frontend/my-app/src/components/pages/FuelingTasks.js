@@ -180,10 +180,10 @@ console.log("vehicleData = ",vehicleData)
 
               <label htmlFor="fuelling_date">Fueling Date:</label>
               <input
-                type="date"
+                type="datetime-local"
                 id="fuelling_date"
                 name="fuelling_date"
-                value={formData.fuelling_date.split('T')[0]}
+                value={formData.fuelling_date}
                 onChange={handleChange}
                 required
               />
