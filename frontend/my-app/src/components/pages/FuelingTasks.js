@@ -6,6 +6,7 @@ const FuelingTasks = () => {
   const [assignedTasks, setAssignedTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [vehicleData, setVehicleData] = useState(null);
+  const [photoUrls, setPhotoUrls] = useState('');
   const [formData, setFormData] = useState({
     task_id: '',
     vehicle_id: '',
@@ -14,9 +15,8 @@ const FuelingTasks = () => {
     fuel_cost: '',
     fuel_amount:'',
     fuel_description: '',
-    gas_station_name:''
-
-    
+    gas_station_name:'',
+    images:''
   });
   const [errors, setErrors] = useState({});
 
@@ -34,10 +34,10 @@ const FuelingTasks = () => {
   }, []);
 
   const fetchVehicleData = async (task) => {
-console.log("task = ",task)
-console.log("assignedTasks = ",assignedTasks)
-console.log("selectedTask = ",selectedTask)
-console.log("vehicleData = ",vehicleData)
+    console.log("task = ",task)
+    console.log("assignedTasks = ",assignedTasks)
+    console.log("selectedTask = ",selectedTask)
+    console.log("vehicleData = ",vehicleData)
     if (task && task.vehicle_id) {
       try {
         const response = await axios.get(`http://localhost:3001/vehicles/${task.vehicle_id}`);
@@ -70,11 +70,11 @@ console.log("vehicleData = ",vehicleData)
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
+  const handleTaskSubmit = async () => {
     if (validateForm()) {
+      console.log(formData.images);
       const apiUrl = `http://localhost:3001/tasks/fuelling/${selectedTask.task_id}`;
+      console.log(formData)
       console.log(
         'Submitting fueling task with the following data:',
         formData
@@ -93,11 +93,30 @@ console.log("vehicleData = ",vehicleData)
           fuel_cost: '',
           fuel_amount:'',
           gas_station_name:'',
-          fuel_description: ''
+          fuel_description: '',
+          images:''
         });
       } catch (error) {
         console.error('Error during fueling task submission:', error);
       }
+    }
+  };
+
+  const handleAddPhoto = () => {
+    // Trim and check if the URL is not empty
+    const trimmedUrl = photoUrls.trim();
+    if (trimmedUrl) {
+      // Add the new photo URL to the array
+      setFormData((prevData) => ({
+        ...prevData,
+        images: [...formData.images, trimmedUrl],
+      }));
+      // Clear the input for the next photo
+      setPhotoUrls('');
+      console.log(trimmedUrl)
+    } else {
+      // Handle the case where the URL is empty or contains only whitespace
+      console.warn('Invalid URL. Please provide a non-empty URL.');
     }
   };
   
@@ -114,8 +133,8 @@ console.log("vehicleData = ",vehicleData)
       fuel_cost: '',
       fuel_amount:'',
       gas_station_name:'',
-      fuel_description: ''
-
+      fuel_description: '',
+      images:''
     });
   };
   const filteredTasks = assignedTasks.filter((task) => task.status !== 'completed');
@@ -167,7 +186,7 @@ console.log("vehicleData = ",vehicleData)
               <span className='body-14-bold'>Description: </span>
               <span className='body-14'>{selectedTask.description}</span>
             </div>
-            <form onSubmit={handleSubmit}>
+            <div>
               <label htmlFor="fuel_cost">Fueling Cost:</label>
               <input
                 type="int"
@@ -216,10 +235,16 @@ console.log("vehicleData = ",vehicleData)
                 onChange={handleChange}
                 required
               />
+              <div>
+                  <label>Photo URL:</label>
+                  <div className='label-12'>Paste URL links to photos, you can send multiple</div>
+                  <input type="text" value={photoUrls} onChange={(e) => setPhotoUrls(e.target.value)} />
+                  <button className='button-124' style={{marginLeft:'15pt'}} onClick={handleAddPhoto}>Add Photo</button>
+              </div>
               
 
-              <button type="submit" className="button-124">Finish Task</button>
-            </form>
+              <button type="submit" className="button-124" onClick={handleTaskSubmit}>Finish Task</button>
+            </div>
           </>
         ) : (
           <div className='body-24'>Select fueling record to view details.</div>

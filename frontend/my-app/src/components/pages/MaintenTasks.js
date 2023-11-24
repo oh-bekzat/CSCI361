@@ -8,7 +8,6 @@ const MaintenTasks = () => {
   const [vehicleData, setVehicleData] = useState(null);
   const [selectedStatus, setSelectedStatus] = useState('');
   const [photoUrls, setPhotoUrls] = useState('');
-  const [photoUrlsArray, setPhotoUrlsArray] = useState([]);
   const [formData, setFormData] = useState({
     task_id: '',
     vehicle_id: '',
