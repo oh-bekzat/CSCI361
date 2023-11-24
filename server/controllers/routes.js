@@ -71,24 +71,24 @@ routesRouter.put('/assign/:routeId', async (req, res) => {
         const { admin_id, driver_id, license_plate } = req.body
         const { routeId } = req.params
 
-        if (!admin_id) {
-            return res.status(400).json({ error: 'Admin ID is required' })
-        }
+        // if (!admin_id) {
+        //     return res.status(400).json({ error: 'Admin ID is required' })
+        // }
 
-        const admin = await Admin.findByPk(admin_id)
-        if (!admin) {
-            return res.status(400).json({ error: 'Invalid admin ID' })
-        }
+        // const admin = await Admin.findByPk(admin_id)
+        // if (!admin) {
+        //     return res.status(400).json({ error: 'Invalid admin ID' })
+        // }
 
         const existingRoute = await Route.findByPk(routeId)
         if (!existingRoute) {
             return res.status(404).json({ error: 'Route not found' })
         }
 
-        const driver = await Driver.findByPk(driver_id);
-        if (!driver) {
-            return res.status(400).json({ error: 'Driver not found' })
-        }
+        // const driver = await Driver.findByPk(driver_id);
+        // if (!driver) {
+        //     return res.status(400).json({ error: 'Driver not found' })
+        // }
 
         const updatedRoute = await existingRoute.update({
             driver_id: driver_id,
