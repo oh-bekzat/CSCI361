@@ -10,7 +10,7 @@ const AdminAddMainteningTask = () => {
   const [vehicles, setVehicles] = useState([]);
   const admin_id = "1";
 
-  const [description, setDescription] = useState('ewfegergrggrfr');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     // Fetch maintenance persons from the database
@@ -111,6 +111,17 @@ const AdminAddMainteningTask = () => {
             </option>
           ))}
         </select>
+
+        <label htmlFor="description">Description :</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        /> 
+        
         <button type="submit" onClick={handleAssign}>Assign</button>
       </form>
     </div>

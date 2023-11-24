@@ -50,14 +50,17 @@ const AdminTasks = ({}) => {
           {assignedTasks.map((task) => (
             <li key={task.id} onClick={() => handleTaskSelection(task)}>
               <div>
-                <div className='body-20-bold'>{task.title}</div>
+                <div className='body-11-bold'>{task.task_type} task {task.task_id}</div>
               </div>
               <div>
-                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Type </span> <span className='label-11'>{task.type}</span>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Type </span> <span className='label-11'>{task.task_type}</span>
               </div>
               <div>
-                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Date: </span> <span className='label-11'>{task.date}</span>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Date: </span> <span className='label-11'>{task.date.split('T')[0]}</span>
               </div>
+              <div>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Assigned Person ID: </span> <span className='label-11'>{task.assignee_id}</span>
+            </div>
             </li>
           ))}
         </ul>
@@ -68,23 +71,23 @@ const AdminTasks = ({}) => {
         {selectedTask ? (
             <>
           <div>
-            <div className='body-24-bold'>{selectedTask.title}</div>
+            <div className='body-24-bold'>{selectedTask.task_type} task {selectedTask.task_id}</div>
           </div>
             <div>
-                <span className='body-14-bold'>Date: </span> <span className='body-14'>{selectedTask.date}</span>
+                <span className='body-14-bold'>Date: </span> <span className='body-14'>{selectedTask.date.split('T')[0]}</span>
             </div>
             <div>
-                <span className='body-14-bold'>Time: </span> <span className='body-14'>{selectedTask.time}</span>
+                <span className='body-14-bold'>Time: </span> <span className='body-14'>{selectedTask.date.split('T')[1].split('.')[0]}</span>
             </div>
             <div>
-                <span className='body-14-bold'>Vehicle: </span> <span className='body-14'>{selectedTask.vehicleId}</span>
+                <span className='body-14-bold'>Vehicle: </span> <span className='body-14'>{selectedTask.vehicle_id}</span>
             </div>
             
             <div>
                 <span className='body-14-bold'>Status: </span> <span className='body-14'>{selectedTask.status}</span>
             </div>
             <div>
-                <span className='body-14-bold'>Assigned Person: </span> <span className='body-14'>{selectedTask.assignedPerson}</span>
+                <span className='body-14-bold'>Assigned Person: </span> <span className='body-14'>{selectedTask.assignee_id}</span>
             </div>
             <div>
                 <span className='body-14-bold'>Description: </span> <span className='body-14'>{selectedTask.description}</span>

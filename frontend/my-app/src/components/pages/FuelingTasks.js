@@ -148,7 +148,9 @@ console.log("vehicleData = ",vehicleData)
       <div className="task-details">
         {selectedTask ? (
           <>
-            <div className='body-24-bold'>{selectedTask.title}</div>
+            <div>
+            <div className='body-24-bold'>Fueling Task {selectedTask.task_id}</div>
+          </div>
             <div>
               <span className='body-14-bold'>Date: </span>
               <span className='body-14'>{selectedTask.date.split('T')[0]}</span>
@@ -160,6 +162,10 @@ console.log("vehicleData = ",vehicleData)
             <div>
               <span className='body-14-bold'>License Plate: </span>
               <span className='body-14'>{selectedTask.vehicle_id}</span>
+            </div>
+            <div>
+              <span className='body-14-bold'>Description: </span>
+              <span className='body-14'>{selectedTask.description}</span>
             </div>
             <form onSubmit={handleSubmit}>
               <label htmlFor="fuel_cost">Fueling Cost:</label>
