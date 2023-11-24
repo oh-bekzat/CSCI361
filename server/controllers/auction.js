@@ -38,10 +38,10 @@ auctionRouter.post('/', async (req, res) => {
         return res.status(400).json({ error: 'Vehicle not found' })
       }
   
-      const admin = await Admin.findByPk(admin_id);
-      if (!admin) {
-        return res.status(401).json({ error: 'Unauthorized' })
-      }
+      // const admin = await Admin.findByPk(admin_id);
+      // if (!admin) {
+      //   return res.status(401).json({ error: 'Unauthorized' })
+      // }
   
       const auctionedVehicle = await AuctionedVehicle.create({
         auctioned_vehicle_id: vehicle_id,

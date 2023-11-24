@@ -79,10 +79,10 @@ tasksRouter.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Assignee not found' })
     }
 
-    const admin = await Admin.findByPk(admin_id)
-    if (!admin) {
-      return res.status(401).json({ error: 'Unauthorized' })
-    }
+    // const admin = await Admin.findByPk(admin_id)
+    // if (!admin) {
+    //   return res.status(401).json({ error: 'Unauthorized' })
+    // }
 
     const newTask = await Task.create({
       description: description,
