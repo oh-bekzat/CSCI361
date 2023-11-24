@@ -6,6 +6,9 @@ const MaintenTasks = () => {
   const [assignedTasks, setAssignedTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
   const [vehicleData, setVehicleData] = useState(null);
+  const [selectedStatus, setSelectedStatus] = useState('');
+  const [photoUrls, setPhotoUrls] = useState('');
+  const [photoUrlsArray, setPhotoUrlsArray] = useState([]);
   const [formData, setFormData] = useState({
     task_id: '',
     vehicle_id: '',
@@ -31,10 +34,10 @@ const MaintenTasks = () => {
   }, []);
 
   const fetchVehicleData = async (task) => {
-console.log("task = ",task)
-console.log("assignedTasks = ",assignedTasks)
-console.log("selectedTask = ",selectedTask)
-console.log("vehicleData = ",vehicleData)
+    console.log("task = ",task)
+    console.log("assignedTasks = ",assignedTasks)
+    console.log("selectedTask = ",selectedTask)
+    console.log("vehicleData = ",vehicleData)
     if (task && task.vehicle_id) {
       try {
         const response = await axios.get(`http://localhost:3001/vehicles/${task.vehicle_id}`);
@@ -67,10 +70,10 @@ console.log("vehicleData = ",vehicleData)
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-  
+  const handleTaskSubmit = async () => {
     if (validateForm()) {
+      console.log(formData.images);
+
       const apiUrl = `http://localhost:3001/tasks/maintenance/${selectedTask.task_id}`;
       console.log(
         'Submitting maintenance task with the following data:',
@@ -96,7 +99,24 @@ console.log("vehicleData = ",vehicleData)
       }
     }
   };
-  
+
+  const handleAddPhoto = () => {
+    // Trim and check if the URL is not empty
+    const trimmedUrl = photoUrls.trim();
+    if (trimmedUrl) {
+      // Add the new photo URL to the array
+      setFormData((prevData) => ({
+        ...prevData,
+        images: [...formData.images, trimmedUrl],
+      }));
+      // Clear the input for the next photo
+      setPhotoUrls('');
+      console.log(trimmedUrl)
+    } else {
+      // Handle the case where the URL is empty or contains only whitespace
+      console.warn('Invalid URL. Please provide a non-empty URL.');
+    }
+  };
 
   const handleTaskSelection = (task) => {
     setSelectedTask(task);
@@ -165,7 +185,7 @@ console.log("vehicleData = ",vehicleData)
               <span className='body-14-bold'>License Plate: </span>
               <span className='body-14'>{selectedTask.vehicle_id}</span>
             </div>
-            <form onSubmit={handleSubmit}>
+            <div>
               <label htmlFor="maintenance_cost">Maintenance Cost:</label>
               <input
                 type="text"
@@ -186,6 +206,19 @@ console.log("vehicleData = ",vehicleData)
                 required
               />
 
+              <label htmlFor="maintenance_cost">Vehicle Status:</label>
+              <select
+              id="maintenance_cost"
+              name="maintenance_cost"
+              required
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+              >
+              <option value="default">Choose status</option>
+              <option value="active">Active</option>
+              <option value="non-active">Non-Active</option>
+              </select>
+
               <label htmlFor="maintenance_description">Description:</label>
               <input
                 type="text"
@@ -195,12 +228,18 @@ console.log("vehicleData = ",vehicleData)
                 onChange={handleChange}
                 required
               />
+              <div>
+                  <label>Photo URL:</label>
+                  <div className='label-12'>Paste URL links to photos, you can send multiple</div>
+                  <input type="text" value={photoUrls} onChange={(e) => setPhotoUrls(e.target.value)} />
+                  <button className='button-124' style={{marginLeft:'15pt'}} onClick={handleAddPhoto}>Add Photo</button>
+              </div>
 
-              <button type="submit" className="button-124">Finish Task</button>
-            </form>
+              <button onClick={handleTaskSubmit} className="button-124">Finish Task</button>
+            </div>
           </>
         ) : (
-          <div className='body-24'>Select a route to view details.</div>
+          <div className='body-24'>Select a task to view details.</div>
         )}
       </div>
     </div>

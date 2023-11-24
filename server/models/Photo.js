@@ -9,7 +9,7 @@ const Photo = sequelize.define('Photo', {
     autoIncrement: true,
   },
   photo_data: {
-    type: DataTypes.BLOB('long'),
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   task_id: {

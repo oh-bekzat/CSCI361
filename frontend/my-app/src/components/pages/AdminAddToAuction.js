@@ -67,6 +67,7 @@ const AddVehicleAuction = ({ match }) => {
     
         <div>
             <label>Photo URL:</label>
+            <div className='label-12'>Paste URL links to photos, you can send multiple</div>
             <input type="text" value={photoUrls} onChange={(e) => setPhotoUrls(e.target.value)} />
             <button className='button-124' style={{marginLeft:'15pt'}} onClick={handleAddPhoto}>Add Photo</button>
         </div>

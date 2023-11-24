@@ -15,8 +15,16 @@ const AdminVehicles = () => {
         const response = await axios.get('http://localhost:3001/vehicles');
         const auctionedResponse = await axios.get('http://localhost:3001/auction');
         console.log(auctionedResponse.data.auctions);
-        setCars(response.data);
         setAuctionedCars(auctionedResponse.data.auctions);
+
+        const sortedCars = response.data.sort((a, b) => {
+          const aIsAuctioned = auctionedResponse.data.auctions.some((auction) => auction.auctioned_vehicle_id === a.license_plate);
+          const bIsAuctioned = auctionedResponse.data.auctions.some((auction) => auction.auctioned_vehicle_id === b.license_plate);
+          return aIsAuctioned - bIsAuctioned;
+        });
+
+        setCars(sortedCars);
+
       } catch (error) {
         console.error('Error fetching vehicles:', error);
       }
