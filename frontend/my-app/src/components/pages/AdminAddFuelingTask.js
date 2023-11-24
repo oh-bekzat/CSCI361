@@ -4,13 +4,13 @@ import Modal from 'react-modal';
 
 const AdminAddMainteningTask = () => {
   const [licensePlate, setLicencePlate] = useState('');
-  const [olddate, setDate] = useState('');
+  const [date, setDate] = useState('');
   const [maintainId, setMaintainId] = useState('');
   const [maintainers, setMaintainers] = useState([]);
   const [vehicles, setVehicles] = useState([]);
   const admin_id = "1";
 
-  const [description, setDescription] = useState('ewfegergrggrfr');
+  const [description, setDescription] = useState('');
 
   useEffect(() => {
     // Fetch maintenance persons from the database
@@ -33,7 +33,7 @@ const AdminAddMainteningTask = () => {
     e.preventDefault();
     try {
       // Retrieve user_id from localStorage
-      const date =  olddate.split('T')[0];
+     // const date =  olddate.split('T')[0];
 
       // Create request data
       const requestData = {
@@ -92,10 +92,10 @@ const AdminAddMainteningTask = () => {
 
         <label htmlFor="date">Date  :</label>
         <input
-          type="date"
+          type="datetime-local"
           id="date"
           name="date"
-          value={olddate}
+          value={date}
           onChange={(e) => setDate(e.target.value)}
           required
         /> 
@@ -111,6 +111,17 @@ const AdminAddMainteningTask = () => {
             </option>
           ))}
         </select>
+
+        <label htmlFor="description">Description :</label>
+        <input
+          type="text"
+          id="description"
+          name="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          required
+        /> 
+        
         <button type="submit" onClick={handleAssign}>Assign</button>
       </form>
     </div>
