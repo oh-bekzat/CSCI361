@@ -20,6 +20,18 @@ tasksRouter.get('/', async (req, res) => {
   }
 });
 
+tasksRouter.get('/photos/:taskId', async (req, res) => {
+  try {
+    // Assuming you have a Task model defined with Sequelize
+    const allTasks = await Photo.findAll({where: {task_id: req.params.taskId}});
+
+    res.status(200).json({ allTasks });
+  } catch (error) {
+    console.error('Error fetching all tasks:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
 
 tasksRouter.get('/maintenance/:vehicleId', async (req, res) => {
     try {
