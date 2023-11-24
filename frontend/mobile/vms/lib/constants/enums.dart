@@ -12,7 +12,6 @@ enum Services {
 enum ProfileTypeInfo {
   role,
   email,
-  address,
   phone,
   iin,
 }

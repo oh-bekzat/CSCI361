@@ -88,7 +88,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 List<String> profileList = [
                   profile.userRole,
                   profile.email,
-                  profile.address,
                   profile.phoneNumber,
                   profile.iin,
                 ];
@@ -126,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     const SizedBox(height: 30),
                     Column(
                       mainAxisSize: MainAxisSize.min,
-                      children: List.generate(5, (index) {
+                      children: List.generate(4, (index) {
                         return ProfileInfo(
                           info: profileList[index],
                           profileTypeInfo:

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:intl/intl.dart';
 import 'package:vms/constants/color_constants.dart';
 
 class RouteContainer extends StatelessWidget {
@@ -17,6 +18,10 @@ class RouteContainer extends StatelessWidget {
   final void Function()? onPressed;
   @override
   Widget build(BuildContext context) {
+    DateTime start = DateTime.parse(time);
+    var formatter = DateFormat('hh:mm - dd MMM, yyyy');
+    String requestedTime = formatter.format(start);
+
     return ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
@@ -60,7 +65,7 @@ class RouteContainer extends StatelessWidget {
             ),
           ),
           Text(
-            time,
+            requestedTime,
             style: TextStyle(
               color: ColorConstants.grey,
               fontWeight: FontWeight.w500,

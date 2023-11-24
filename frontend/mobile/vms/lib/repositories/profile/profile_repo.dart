@@ -12,6 +12,8 @@ class ProfileRepo {
 
       final response = await http.get(uri, headers: headers);
 
+      print(response.toString());
+
       return Profile.fromJson(json.decode(response.body));
 
     } catch (e) {

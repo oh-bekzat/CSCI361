@@ -9,7 +9,6 @@ class Profile with _$Profile {
     required String email,
     required String firstname,
     required String lastname,
-    required String address,
     @JsonKey(name: 'phone_number')
     required String phoneNumber,
 

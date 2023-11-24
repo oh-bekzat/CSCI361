@@ -23,7 +23,6 @@ mixin _$Profile {
   String get email => throw _privateConstructorUsedError;
   String get firstname => throw _privateConstructorUsedError;
   String get lastname => throw _privateConstructorUsedError;
-  String get address => throw _privateConstructorUsedError;
   @JsonKey(name: 'phone_number')
   String get phoneNumber => throw _privateConstructorUsedError;
   String get iin => throw _privateConstructorUsedError;
@@ -44,7 +43,6 @@ abstract class $ProfileCopyWith<$Res> {
       {String email,
       String firstname,
       String lastname,
-      String address,
       @JsonKey(name: 'phone_number') String phoneNumber,
       String iin,
       @JsonKey(name: 'user_role') String userRole});
@@ -66,7 +64,6 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
     Object? email = null,
     Object? firstname = null,
     Object? lastname = null,
-    Object? address = null,
     Object? phoneNumber = null,
     Object? iin = null,
     Object? userRole = null,
@@ -83,10 +80,6 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
       lastname: null == lastname
           ? _value.lastname
           : lastname // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
               as String,
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
@@ -115,7 +108,6 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
       {String email,
       String firstname,
       String lastname,
-      String address,
       @JsonKey(name: 'phone_number') String phoneNumber,
       String iin,
       @JsonKey(name: 'user_role') String userRole});
@@ -135,7 +127,6 @@ class __$$ProfileImplCopyWithImpl<$Res>
     Object? email = null,
     Object? firstname = null,
     Object? lastname = null,
-    Object? address = null,
     Object? phoneNumber = null,
     Object? iin = null,
     Object? userRole = null,
@@ -152,10 +143,6 @@ class __$$ProfileImplCopyWithImpl<$Res>
       lastname: null == lastname
           ? _value.lastname
           : lastname // ignore: cast_nullable_to_non_nullable
-              as String,
-      address: null == address
-          ? _value.address
-          : address // ignore: cast_nullable_to_non_nullable
               as String,
       phoneNumber: null == phoneNumber
           ? _value.phoneNumber
@@ -180,7 +167,6 @@ class _$ProfileImpl implements _Profile {
       {required this.email,
       required this.firstname,
       required this.lastname,
-      required this.address,
       @JsonKey(name: 'phone_number') required this.phoneNumber,
       required this.iin,
       @JsonKey(name: 'user_role') required this.userRole});
@@ -195,8 +181,6 @@ class _$ProfileImpl implements _Profile {
   @override
   final String lastname;
   @override
-  final String address;
-  @override
   @JsonKey(name: 'phone_number')
   final String phoneNumber;
   @override
@@ -207,7 +191,7 @@ class _$ProfileImpl implements _Profile {
 
   @override
   String toString() {
-    return 'Profile(email: $email, firstname: $firstname, lastname: $lastname, address: $address, phoneNumber: $phoneNumber, iin: $iin, userRole: $userRole)';
+    return 'Profile(email: $email, firstname: $firstname, lastname: $lastname, phoneNumber: $phoneNumber, iin: $iin, userRole: $userRole)';
   }
 
   @override
@@ -220,7 +204,6 @@ class _$ProfileImpl implements _Profile {
                 other.firstname == firstname) &&
             (identical(other.lastname, lastname) ||
                 other.lastname == lastname) &&
-            (identical(other.address, address) || other.address == address) &&
             (identical(other.phoneNumber, phoneNumber) ||
                 other.phoneNumber == phoneNumber) &&
             (identical(other.iin, iin) || other.iin == iin) &&
@@ -230,8 +213,8 @@ class _$ProfileImpl implements _Profile {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, email, firstname, lastname,
-      address, phoneNumber, iin, userRole);
+  int get hashCode => Object.hash(
+      runtimeType, email, firstname, lastname, phoneNumber, iin, userRole);
 
   @JsonKey(ignore: true)
   @override
@@ -252,7 +235,6 @@ abstract class _Profile implements Profile {
           {required final String email,
           required final String firstname,
           required final String lastname,
-          required final String address,
           @JsonKey(name: 'phone_number') required final String phoneNumber,
           required final String iin,
           @JsonKey(name: 'user_role') required final String userRole}) =
@@ -266,8 +248,6 @@ abstract class _Profile implements Profile {
   String get firstname;
   @override
   String get lastname;
-  @override
-  String get address;
   @override
   @JsonKey(name: 'phone_number')
   String get phoneNumber;

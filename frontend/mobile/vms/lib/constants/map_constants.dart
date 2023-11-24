@@ -42,7 +42,6 @@ Map<Services, String> serviceDescription = {
 Map<ProfileTypeInfo, String> profileTypeTitle = {
   ProfileTypeInfo.role: 'Role',
   ProfileTypeInfo.email: 'E-mail',
-  ProfileTypeInfo.address: 'Address',
   ProfileTypeInfo.phone: 'Phone number',
   ProfileTypeInfo.iin: 'IIN',
 };
@@ -50,7 +49,6 @@ Map<ProfileTypeInfo, String> profileTypeTitle = {
 Map<ProfileTypeInfo, String> profileTypeIcon = {
   ProfileTypeInfo.role: 'assets/images/car.svg',
   ProfileTypeInfo.email: 'assets/images/email.svg',
-  ProfileTypeInfo.address: 'assets/images/address.svg',
   ProfileTypeInfo.phone: 'assets/images/phone.svg',
   ProfileTypeInfo.iin: 'assets/images/iin.svg',
 };
