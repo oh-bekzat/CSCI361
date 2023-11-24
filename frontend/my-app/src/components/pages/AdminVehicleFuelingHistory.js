@@ -10,46 +10,7 @@ import { useParams } from 'react-router-dom'
 const AdminVehiclesFuelingHistory = () => {
   const car = useParams()
   const [history, setHistory] = useState([]);
-  // const cars = [{
-  //   license_plate: '',
-  //   make: '',
-  //   model: '',
-  //   manufacture_year: '',
-  //   capacity: '',
-  //   fuel_volume: '',
-  //   tank_volume: '',
-  //   vehicle_image: '',
-  //   mileage: 0,
-  //   last_fueled_date: new Date().toISOString().split('T')[0],
-  //   last_maintained_date: new Date().toISOString().split('T')[0],
-  // },
-  // {
-  //   license_plate: '',
-  //   make: '',
-  //   model: '',
-  //   manufacture_year: '',
-  //   capacity: '',
-  //   fuel_volume: '',
-  //   tank_volume: '',
-  //   vehicle_image: '',
-  //   mileage: 0,
-  //   last_fueled_date: new Date().toISOString().split('T')[0],
-  //   last_maintained_date: new Date().toISOString().split('T')[0],
-  // },
-  // {
-  //   license_plate: '',
-  //   make: '',
-  //   model: '',
-  //   manufacture_year: '',
-  //   capacity: '',
-  //   fuel_volume: '',
-  //   tank_volume: '',
-  //   vehicle_image: '',
-  //   mileage: 0,
-  //   last_fueled_date: new Date().toISOString().split('T')[0],
-  //   last_maintained_date: new Date().toISOString().split('T')[0],
-  // },
-  // ];
+  const [photos, setPhotos] = useState([]);
   const FuelingHistory = ({ fuelingData }) => {
     return (
       <div className="fueling-card">
@@ -59,6 +20,16 @@ const AdminVehiclesFuelingHistory = () => {
           <p>Cost: {fuelingData.fuel_cost}</p>
           <p>Fueling Date: {new Date(fuelingData.fuelling_date).toLocaleString()}</p>
           <p>Vehicle ID: {fuelingData.vehicle_id}</p>
+          {photos.length > 0 && (
+              <div>
+                <label>Photos:</label>
+                <div>
+                  {photos.map((photo_data, index) => (
+                    <img key={index} src={photo_data.photo_data} alt={`Photo ${index + 1}`} style={{ maxWidth: '100%' }} />
+                  ))}
+                </div>
+              </div>
+            )}
         </div>
       </div>
     );
@@ -74,7 +45,16 @@ const AdminVehiclesFuelingHistory = () => {
             console.error('Error fetching user data:', error);
           }
     };
+    const fetchPhotos = async(taskId) =>{
+      try {
+        const response = await axios.get(`http://localhost:3001/tasks/photos/${taskId}`);
+        setPhotos(response.data.allTasks);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      }
+    }
     fetchVehicleFueling();
+    fetchPhotos(2)
     console.log(history)
   }, []); 
 
