@@ -76,7 +76,7 @@ console.log("vehicleData = ",vehicleData)
     if (validateForm()) {
       const apiUrl = `http://localhost:3001/tasks/fuelling/${selectedTask.task_id}`;
       console.log(
-        'Submitting maintenance task with the following data:',
+        'Submitting fueling task with the following data:',
         formData
       )
       try {
@@ -118,12 +118,14 @@ console.log("vehicleData = ",vehicleData)
 
     });
   };
+  const filteredTasks = assignedTasks.filter((task) => task.status !== 'completed');
+
 
   return (
     <div className="driver-home-page">
       <div className="task-list">
         <ul>
-          {assignedTasks.map((task) => (
+          {filteredTasks.map((task) => (
             <li key={task.id} onClick={() => handleTaskSelection(task)}>
               <div className='body-20-bold'>Fueling Task {task.task_id}</div>
               <div>
@@ -199,7 +201,7 @@ console.log("vehicleData = ",vehicleData)
                 required
               />
 
-              <label htmlFor="fuel_description">Fueling description:</label>
+              {/* <label htmlFor="fuel_description">Fueling description:</label>
               <input
                 type="text-local"
                 id="fuel_description"
@@ -207,7 +209,7 @@ console.log("vehicleData = ",vehicleData)
                 value={formData.fuel_description}
                 onChange={handleChange}
                 required
-              />
+              /> */}
               
 
               <button type="submit" className="button-124">Finish Task</button>

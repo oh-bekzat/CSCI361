@@ -113,11 +113,13 @@ console.log("vehicleData = ",vehicleData)
     });
   };
 
+  const filteredTasks = assignedTasks.filter((task) => task.status !== 'completed');
+
   return (
     <div className="driver-home-page">
       <div className="task-list">
         <ul>
-          {assignedTasks.map((task) => (
+          {filteredTasks.map((task) => (
             <li key={task.id} onClick={() => handleTaskSelection(task)}>
               <div className='body-20-bold'>Maintenance Task {task.task_id}</div>
               <div>

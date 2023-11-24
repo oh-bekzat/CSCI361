@@ -31,7 +31,7 @@ const FuelingHistory = ({}) => {
     if (task && task.vehicle_id) {
       try {
         const response = await axios.get(`http://localhost:3001/tasks/fueling/${task.vehicle_id}`);
-        const matchingFuelingDetail = response.data.FuellingDetail.find(
+        const matchingFuelingDetail = response.data.fuellingDetails.find(
           (detail) => detail.task_id === task.task_id
         );
   
@@ -104,9 +104,9 @@ const FuelingHistory = ({}) => {
             <div>
                 <span className='body-14-bold'>Status:  </span> <span className='body-14'>{selectedTask.status}</span>
             </div>
-            <div>
+            {/* <div>
                 <span className='body-14-bold'>Description: </span> <span className='body-14'>{fuelingDetail ? fuelingDetail.description : 'N/A'}</span>
-            </div>
+            </div> */}
           </>
         ) : (
           <div className='body-24'>Select a fueling task to view details.</div>
