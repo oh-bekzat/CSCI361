@@ -89,7 +89,7 @@ const redirectBasedOnRole = (userRole, userId) => {
         <div>
           <h2>Login</h2>
           <div>
-            <label>Username:</label>
+            <label>Email:</label>
             <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
           </div>
           <div>

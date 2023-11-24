@@ -5,6 +5,7 @@ const ClientRequest = () => {
   const [startPoint, setStartPoint] = useState('');
   const [finishPoint, setFinishPoint] = useState('');
   const [dateTime, setDateTime] = useState('');
+  const [successMessage, setSuccessMessage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -28,12 +29,16 @@ const ClientRequest = () => {
       const response = await axios.post('http://localhost:3001/routes', requestData);
 
       console.log('Route request successful:', response.data);
+      setSuccessMessage('Route requested successfully');
       // Handle the response data as needed
 
       // Clear the form inputs after submission
       setStartPoint('');
       setFinishPoint('');
       setDateTime('');
+      setTimeout(() => {
+        setSuccessMessage(null);
+      }, 2000);
       console.log(dateTime);
     } catch (error) {
       console.error('Error submitting route request:', error);
@@ -74,6 +79,7 @@ const ClientRequest = () => {
           onChange={(e) => setDateTime(e.target.value)}
           required
         />
+        {successMessage && <div className="">{successMessage}</div>}
 
       <button type="submit" className="button-124 request-button">Submit Route Request</button>
     </form>

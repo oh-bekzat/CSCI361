@@ -55,8 +55,9 @@
   }
   
   .task-details input,
-  .task-details textarea {
-    width: 100%;
+  .task-details textarea,
+  .task-details select {
+    width: 300px;
     padding: 8px;
     margin-top: 8px;
     border: 2px solid #EDC53F;

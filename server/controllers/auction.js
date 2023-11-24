@@ -21,7 +21,8 @@ auctionRouter.get('/:vehicleId', async (req, res) => {
             where: { auctioned_vehicle_id: vehicleId },
             attributes: ['photo_url'],
         })
-        res.status(200).json({ photos })
+        const auctions = await AuctionedVehicle.findOne({where: {auctioned_vehicle_id: vehicleId}})
+        res.status(200).json({ auctions, photos })
     } catch (error) {
         console.error('Error fetching auction photos:', error)
         res.status(500).json({ error: 'Internal server error' })
@@ -37,10 +38,10 @@ auctionRouter.post('/', async (req, res) => {
         return res.status(400).json({ error: 'Vehicle not found' })
       }
   
-      const admin = await Admin.findByPk(admin_id);
-      if (!admin) {
-        return res.status(401).json({ error: 'Unauthorized' })
-      }
+      // const admin = await Admin.findByPk(admin_id);
+      // if (!admin) {
+      //   return res.status(401).json({ error: 'Unauthorized' })
+      // }
   
       const auctionedVehicle = await AuctionedVehicle.create({
         auctioned_vehicle_id: vehicle_id,

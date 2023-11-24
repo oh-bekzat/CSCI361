@@ -104,7 +104,7 @@ CREATE TABLE auctioned_vehicles (
 
 CREATE TABLE photos (
     photo_id serial PRIMARY KEY,
-    photo_data bytea NOT NULL,
+    photo_data Text NOT NULL,
 	task_id INT REFERENCES tasks(task_id)
 )
 

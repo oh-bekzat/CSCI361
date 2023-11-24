@@ -14,7 +14,7 @@ const AdminAddMainteningTask = () => {
 
   useEffect(() => {
     // Fetch maintenance persons from the database
-    axios.get('http://localhost:3001/users/fueling')
+    axios.get('http://localhost:3001/users/maintenance')
       .then(response => setMaintainers(response.data))
       .catch(error => console.error('Error fetching maintainers:', error));
 
@@ -41,7 +41,7 @@ const AdminAddMainteningTask = () => {
         assignee_id: maintainId,
         vehicle_id: licensePlate,
         date: date,
-        task_type: 'fuelling',
+        task_type: 'maintenance',
         description: description
       };
 
@@ -100,10 +100,10 @@ const AdminAddMainteningTask = () => {
           required
         /> 
 
-        <label>Choose a fueling person:</label>
+        <label>Choose a maintenance person:</label>
         <select onChange={(e) => handleMaintenSelect(e.target.value)}>
           <option key="default" value="">
-            Select a Fueling person
+            Select a Maintenance person
           </option>
           {maintainers.map((maintainer) => (
             <option key={maintainer.user_id} value={maintainer.user_id}>
@@ -121,7 +121,7 @@ const AdminAddMainteningTask = () => {
           onChange={(e) => setDescription(e.target.value)}
           required
         /> 
-        
+
         <button type="submit" onClick={handleAssign}>Assign</button>
       </form>
     </div>

@@ -2,57 +2,77 @@ import React, { useState, useEffect } from 'react';
 import './FuelingHistory.css';
 import axios from 'axios';
 
-const MaintenHistory = ({maintenance_id}) => {
+const MaintenHistory = ({}) => {
   // const [assignedTasks, setAssignedTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
-  const maintenanceId = localStorage.getItem("maintenance_id");
+  const [maintenanceDetail, setMaintenanceDetail] = useState(null);
+  const maintenId = localStorage.getItem("maintenId");
 
 
-  const [assignedTasks, setAssignedTasks] = useState([
-    { id: 1, title: 'Maintenance Task 1', details: 'Details for Task 1', vehicleId: "A125FH", maintenance_date : '11.02.2023', maintenance_cost:"12000 kzt", maintenance_point:'СТО PRO' },
-    { id: 2, title: 'Maintenance Task 2', details: 'Details for Task 2', vehicleId: "S776JKN", maintenance_date : '21.11.2023', maintenance_cost:"7500 kzt", maintenance_point:'CTO 777'}
-  ]);
+  const [assignedTasks, setAssignedTasks] = useState([]);
 
-  // useEffect(() => {
-  //   // Fetch data from the localhost:3001/get-routes endpoint
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`http://localhost:3001/fuelling/${fuelingId}`);
-  //       console.log(response.data);
-  //       setAssignedTasks(response.data.routes);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    // Fetch data from the localhost:3001/get-routes endpoint
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/tasks/assigned/${maintenId}`);
+        console.log(response.data);
+        setAssignedTasks(response.data.taskDetails);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+
+  const fetchMaintenanceDetail = async (task) => {
+    console.log(task);
+    if (task && task.vehicle_id) {
+      try {
+        const response = await axios.get(`http://localhost:3001/tasks/maintenance/${task.vehicle_id}`);
+        const matchingMaintenanceDetail = response.data.maintenanceDetails.find(
+          (detail) => detail.task_id === task.task_id
+        );
+  
+        setMaintenanceDetail(matchingMaintenanceDetail);
+        console.log("MaintenanceDetail:", matchingMaintenanceDetail);
+      } catch (error) {
+        console.error('Error fetching Maintenance Detail data:', error);
+      }
+    }
+  };
+  
 
   // Function to handle task selection
   const handleTaskSelection = (task) => {
-    setSelectedTask(task);
+    console.log("Task selected:", task);
+     setSelectedTask(task);
+     fetchMaintenanceDetail(task);
+    console.log("maint = ",maintenanceDetail)
   };
+
+  const filteredTasks = Array.isArray(assignedTasks) ? assignedTasks.filter((task) => task.status === 'completed') : [];
+
+  const sortedTasks = filteredTasks.sort((a, b) => a.route_id - b.route_id);
 
   return (
     <div className="fueling-history">
       <div className="task-list">
         <ul>
-          {Array.isArray(assignedTasks) && assignedTasks.map((task) => (
-            <li key={task.id} onClick={() => handleTaskSelection(task)}>
+          {Array.isArray(sortedTasks) && sortedTasks.map((task) => (
+            <li key={task.task_id} onClick={() => handleTaskSelection(task)}>
               <div>
-                <div className='body-20-bold'>Maintenance Task {task.fuelingId}</div>
+                <div className='body-20-bold'>Maintenance Task {task.task_id}</div>
               </div>
               <div>
-                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Licence Plate: </span> <span className='label-11'>{task.vehicleId}</span>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Licence Plate: </span> <span className='label-11'>{task.vehicle_id}</span>
               </div>
               <div>
-              <span className='label-11-bold' style={{ marginLeft: '20px' }}>Maintenance Date: </span> <span className='label-11'>{task.maintenance_date}</span>
+              <span className='label-11-bold' style={{ marginLeft: '20px' }}>Maintenance Date: </span> <span className='label-11'>{task.date.split("T")[0]}</span>
               </div>
-              <div>
-              <span className='label-11-bold' style={{ marginLeft: '20px' }}>Maintenance Cost: </span> <span className='label-11'>{task.maintenance_cost}</span>
-              </div>
-              <div>
-              <span className='label-11-bold' style={{ marginLeft: '20px' }}>Maintenance Point: </span> <span className='label-11'>{task.maintenance_point}</span>
-              </div>
+              
+              
             </li>
           ))}
         </ul>
@@ -63,19 +83,22 @@ const MaintenHistory = ({maintenance_id}) => {
         {selectedTask ? (
             <>
           <div>
-            <div className='body-24-bold'>Maintenance Task {selectedTask.fuelingId}</div>
+            <div className='body-24-bold'>Maintenance Task {selectedTask.task_id}</div>
           </div>
             <div>
-                <span className='body-14-bold'>Licence Plate: </span> <span className='body-14'>{selectedTask.vehicleId}</span>
+                <span className='body-14-bold'>Licence Plate: </span> <span className='body-14'>{selectedTask.vehicle_id}</span>
             </div>
             <div>
-                <span className='body-14-bold'>Maintenance Date:  </span> <span className='body-14'>{selectedTask.maintenance_date}</span>
+                <span className='body-14-bold'>Maintenance Date:  </span> <span className='body-14'>{selectedTask.date.split("T")[0]}</span>
             </div>
             <div>
-                <span className='body-14-bold'>Maintenance Cost: </span> <span className='body-14'>{selectedTask.maintenance_cost}</span>
+                <span className='body-14-bold'>Maintenance Cost: </span> <span className='body-14'>{maintenanceDetail ? maintenanceDetail.maintenance_cost : 'N/A'}</span>
             </div>
             <div>
-                <span className='body-14-bold'>Maintenance Point: </span> <span className='body-14'>{selectedTask.maintenance_point}</span>
+                <span className='body-14-bold'>Status:  </span> <span className='body-14'>{selectedTask.status}</span>
+            </div>
+            <div>
+                <span className='body-14-bold'>Description: </span> <span className='body-14'>{maintenanceDetail ? maintenanceDetail.description : 'N/A'}</span>
             </div>
           </>
         ) : (

@@ -192,7 +192,7 @@ return (
             <div>
               <span className='body-14-bold'>Status: </span> <span className='body-14'>{selectedTask.status}</span>
           </div>
-          {selectedTask.status === 'completed' && selectedTask.rate === null && isSubmitted &&(
+          {((selectedTask.status === 'completed' && selectedTask.rate === null) && !isSubmitted) &&(
                 <div className="rating-dropdown">
                   {/* Add your dropdown component here */}
                   {/* For example, you can use a select element with options for ratings */}
@@ -208,7 +208,13 @@ return (
                   <button className="button-124" onClick={handleRatingSubmit}>Submit</button>
                 </div>
               )}
-              {(selectedTask.rate != null || isSubmitted)&& (
+              {(selectedTask.rate != null && isSubmitted)&& (
+                <div className="submitted-rating">
+                  <span className='body-14-bold'>Rating: </span>
+                  <span className='body-14'>{rating}</span>
+                </div>
+                )}
+                {(selectedTask.rate != null || isSubmitted)&& (
                 <div className="submitted-rating">
                   <span className='body-14-bold'>Rating: </span>
                   <span className='body-14'>{selectedTask.rate}</span>

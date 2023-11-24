@@ -8,6 +8,19 @@ const Photo = require('../models/Photo')
 
 const tasksRouter = express.Router()
 
+tasksRouter.get('/', async (req, res) => {
+  try {
+    // Assuming you have a Task model defined with Sequelize
+    const allTasks = await Task.findAll();
+
+    res.status(200).json({ allTasks });
+  } catch (error) {
+    console.error('Error fetching all tasks:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 tasksRouter.get('/maintenance/:vehicleId', async (req, res) => {
     try {
         const { vehicleId } = req.params
@@ -38,7 +51,7 @@ tasksRouter.get('/assigned/:userId', async (req, res) => {
   }
 })
 
-tasksRouter.get('/fuelling/:vehicleId', async (req, res) => {
+tasksRouter.get('/fueling/:vehicleId', async (req, res) => {
     try {
         const { vehicleId } = req.params
 
@@ -66,10 +79,10 @@ tasksRouter.post('/', async (req, res) => {
       return res.status(400).json({ error: 'Assignee not found' })
     }
 
-    const admin = await Admin.findByPk(admin_id)
-    if (!admin) {
-      return res.status(401).json({ error: 'Unauthorized' })
-    }
+    // const admin = await Admin.findByPk(admin_id)
+    // if (!admin) {
+    //   return res.status(401).json({ error: 'Unauthorized' })
+    // }
 
     const newTask = await Task.create({
       description: description,

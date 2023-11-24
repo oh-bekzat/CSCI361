@@ -1,45 +1,41 @@
 
 import React, { useState, useEffect } from 'react';
 import './car_cell.js'
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 
-const CarCell = ({ car }) => {
-  const [isInAuction, setIsInAuction] = useState(false);
+const CarCell = ({ car, page, isAuctioned }) => {
+  const [carDetails, setCarDetails] = useState([]);
   const [startTime, setStartTime] = useState('');
-  const [finishTime, setFinishTime] = useState('')
+  const [finishTime, setFinishTime] = useState('');
 
   useEffect(() => {
     // Fetch data from the database to check if the car is in the auction
     const fetchData = async () => {
       try {
         // Replace this with your actual fetch logic
-        const response = await fetch(`/checkAuctionStatus/${car.vehicle_ID}`);
-        const data = await response.json();
-        setIsInAuction(data.isInAuction);
+        const response = await axios.get(`http://localhost:3001/auction/${car.license_plate}`);
+        setCarDetails(response.data);
+        console.log(response.data)
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-
-    fetchData();
-  }, [car.vehicle_ID]);
+    if (isAuctioned) {
+      console.log('I am auctioned')
+      fetchData()
+    }
+  }, [car.license_plate]);
 
   const handleAddToAuction = async () => {
-    try {
-      // Perform the action to add the car to the auction
-      // Replace this with your actual fetch logic
-      await fetch(`/addToAuction/${car.vehicle_ID}`, {
-        method: 'POST',
-      });
-
-      // Update the state to indicate that the car is now in the auction
-      setIsInAuction(true);
-    } catch (error) {
-      console.error('Error adding to auction:', error);
-    }
+    console.log(car)
   };
+  
 
   const generateReport = async (vehicleId) => {
+    if (page === 'auction'){
+      return
+    }
     try {
       // Your API endpoint URL
       const apiUrl = `http://localhost:3001/reports/${vehicleId}`
@@ -67,15 +63,20 @@ const CarCell = ({ car }) => {
   }
 
   return (
-    
-
     <div className="car-details">
-      <div className="car-image">
-        <img src={car.vehicle_image} alt={`${car.make} ${car.model}`} />
-      </div>
+      {page === 'auction' && isAuctioned && carDetails.photos && (
+        <div style={{width:'300px'}}>
+          {carDetails.photos.map((photo, index) => (
+            <img key={index} src={photo.photo_url} style={{width:'300px'}} alt={`Photo ${index + 1}`} />
+          ))}
+        </div>)}
+        {page != 'auction' && (
+         <div className="car-image">
+         <img src={car.vehicle_image} alt={`${car.make} ${car.model}`} />
+       </div>)}
       <div className="car-info-container">
         <div className='car-name'>
-          <div className="body-20-bold">{`${car.make} ${car.model} ${car.manufacture_year} y.`}</div>
+          <div className="body-20-bold">{`${car.make} ${car.model} ${car.manufacture_year}`}</div>
         </div>
         <div className='car-container'>
           <div className="car-info">
@@ -127,17 +128,32 @@ const CarCell = ({ car }) => {
                 <span className="label-14-bold">Last maintained date:</span>{' '}
                 <span className="label-14">{car.last_maintained_date}</span>
               </div>
-              {/* Add more properties as needed */}
             </div>
          </div>
-          <div className="button-container-car">
-            {isInAuction ? (
-              <div className="in-auction-label">In Auction</div>
-            ) : (
-              <div>
-                <button className="button-124" onClick={handleAddToAuction}>
-                  Add to Auction
-                </button>
+         {page === 'auction' && isAuctioned && carDetails.auctions &&(
+          <div className='car-info'><div className="car-property">
+          {/* Display additional car properties here */}
+          <div>
+            <span className="label-14-bold">Vehicle cost:</span>{' '}
+            <span className="label-14">{carDetails.auctions.vehicle_cost}</span>
+          </div>
+          <div>
+            <span className="label-14-bold">Description:</span>{' '}
+            <span className="label-14">{carDetails.auctions.description}</span>
+          </div>
+          <div>
+            <span className="label-14-bold">Contact:</span>{' '}
+            <span className="label-14">+7 718 256 74 83</span>
+          </div>
+        </div></div>
+         )}
+         {page != 'auction' && (
+          <div>
+            {!isAuctioned ? (
+              <>
+                <Link to={`/admin/vehicles/auction/${car.license_plate}`}>
+                  <button className="button-124">Add to Auction</button>
+                </Link>
                 <label>Start time:</label>
                 <input type="datetime-local" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
                 <label>Finish time:</label>
@@ -145,9 +161,21 @@ const CarCell = ({ car }) => {
                 <button className="button-124" onClick={() => generateReport(car.license_plate)}>
                   Generate report
                 </button>
-              </div>
+              </>
+            ) : (
+              <>
+                <div className='body-20-bold' style={{paddingBottom:'15px'}}>Vehicle is in auction</div>
+                <label>Start time:</label>
+                <input type="datetime-local" value={startTime} onChange={(e) => setStartTime(e.target.value)} />
+                <label>Finish time:</label>
+                <input type="datetime-local" value={finishTime} onChange={(e) => setFinishTime(e.target.value)} />
+                <button className="button-124" onClick={() => generateReport(car.license_plate)}>
+                  Generate report
+                </button>
+              </>
             )}
           </div>
+         )}
         </div>
       </div>
     </div>

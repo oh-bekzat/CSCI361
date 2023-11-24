@@ -2,57 +2,78 @@ import React, { useState, useEffect } from 'react';
 import './FuelingHistory.css';
 import axios from 'axios';
 
-const FuelingHistory = ({fuelling_id}) => {
+const FuelingHistory = ({}) => {
   // const [assignedTasks, setAssignedTasks] = useState([]);
   const [selectedTask, setSelectedTask] = useState(null);
-  const fuelingId = localStorage.getItem("fuelling_id");
+  const [fuelingDetail, setFuelingDetail] = useState(null);
+  const fuelId = localStorage.getItem("fuelId");
 
 
-  const [assignedTasks, setAssignedTasks] = useState([
-    { id: 1, title: 'Fueling Task 1', details: 'Details for Task 1', vehicleId: "A125FH",fuelling_date : '11.02.2023', fuel_cost:"12000 kzt", gas_station_name:'Sinoil' },
-    { id: 2, title: 'Fueling Task 2', details: 'Details for Task 2', vehicleId: "S776JKN",fuelling_date : '21.11.2023', fuel_cost:"7500 kzt", gas_station_name:'Gelios'}
-  ]);
+  const [assignedTasks, setAssignedTasks] = useState([]);
 
-  // useEffect(() => {
-  //   // Fetch data from the localhost:3001/get-routes endpoint
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await axios.get(`http://localhost:3001/fuelling/${fuelingId}`);
-  //       console.log(response.data);
-  //       setAssignedTasks(response.data.routes);
-  //     } catch (error) {
-  //       console.error('Error fetching data:', error);
-  //     }
-  //   };
-  //   fetchData();
-  // }, []);
+  useEffect(() => {
+    // Fetch data from the localhost:3001/get-routes endpoint
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:3001/tasks/assigned/${fuelId}`);
+        console.log(response.data);
+        setAssignedTasks(response.data.taskDetails);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []);
+
+
+  const fetchFueilngDetail = async (task) => {
+    console.log(task);
+    if (task && task.vehicle_id) {
+      try {
+        const response = await axios.get(`http://localhost:3001/tasks/fueling/${task.vehicle_id}`);
+        const matchingFuelingDetail = response.data.fuellingDetails.find(
+          (detail) => detail.task_id === task.task_id
+        );
+  
+        setFuelingDetail
+    (matchingFuelingDetail);
+        console.log("fuelingDetail:", matchingFuelingDetail);
+      } catch (error) {
+        console.error('Error fetching fueling Detail data:', error);
+      }
+    }
+  };
+  
 
   // Function to handle task selection
   const handleTaskSelection = (task) => {
-    setSelectedTask(task);
+    console.log("Task selected:", task);
+     setSelectedTask(task);
+     fetchFueilngDetail(task);
+    console.log("maint = ",fuelingDetail)
   };
+
+  const filteredTasks = Array.isArray(assignedTasks) ? assignedTasks.filter((task) => task.status === 'completed') : [];
+
+  const sortedTasks = filteredTasks.sort((a, b) => a.task_id - b.task_id);
 
   return (
     <div className="fueling-history">
       <div className="task-list">
         <ul>
-          {Array.isArray(assignedTasks) && assignedTasks.map((task) => (
-            <li key={task.id} onClick={() => handleTaskSelection(task)}>
+          {Array.isArray(sortedTasks) && sortedTasks.map((task) => (
+            <li key={task.task_id} onClick={() => handleTaskSelection(task)}>
               <div>
-                <div className='body-20-bold'>Fueling Task {task.fuelingId}</div>
+                <div className='body-20-bold'>fueling Task {task.task_id}</div>
               </div>
               <div>
-                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Licence Plate: </span> <span className='label-11'>{task.vehicleId}</span>
+                <span className='label-11-bold' style={{ marginLeft: '20px' }}>Licence Plate: </span> <span className='label-11'>{task.vehicle_id}</span>
               </div>
               <div>
-              <span className='label-11-bold' style={{ marginLeft: '20px' }}>Fueling Date: </span> <span className='label-11'>{task.fuelling_date}</span>
+              <span className='label-11-bold' style={{ marginLeft: '20px' }}>fueling Date: </span> <span className='label-11'>{task.date.split("T")[0]}</span>
               </div>
-              <div>
-              <span className='label-11-bold' style={{ marginLeft: '20px' }}>Fueling Cost: </span> <span className='label-11'>{task.fuel_cost}</span>
-              </div>
-              <div>
-              <span className='label-11-bold' style={{ marginLeft: '20px' }}>Gas Station Name: </span> <span className='label-11'>{task.gas_station_name}</span>
-              </div>
+              
+              
             </li>
           ))}
         </ul>
@@ -63,20 +84,29 @@ const FuelingHistory = ({fuelling_id}) => {
         {selectedTask ? (
             <>
           <div>
-            <div className='body-24-bold'>Fueling Task {selectedTask.fuelingId}</div>
+            <div className='body-24-bold'>fueling Task {selectedTask.task_id}</div>
           </div>
             <div>
-                <span className='body-14-bold'>Licence Plate: </span> <span className='body-14'>{selectedTask.vehicleId}</span>
+                <span className='body-14-bold'>Licence Plate: </span> <span className='body-14'>{selectedTask.vehicle_id}</span>
             </div>
             <div>
-                <span className='body-14-bold'>Fueling Date:  </span> <span className='body-14'>{selectedTask.fuelling_date}</span>
+                <span className='body-14-bold'>Fueling Date:  </span> <span className='body-14'>{selectedTask.date.split("T")[0]}</span>
             </div>
             <div>
-                <span className='body-14-bold'>Fueling Cost: </span> <span className='body-14'>{selectedTask.fuel_cost}</span>
+                <span className='body-14-bold'>Fueling Cost: </span> <span className='body-14'>{fuelingDetail ? fuelingDetail.fuel_cost : 'N/A'}</span>
             </div>
             <div>
-                <span className='body-14-bold'>Gas Station Name: </span> <span className='body-14'>{selectedTask.gas_station_name}</span>
+                <span className='body-14-bold'>Fueling Amount: </span> <span className='body-14'>{fuelingDetail ? fuelingDetail.fuel_amount : 'N/A'}</span>
             </div>
+            <div>
+                <span className='body-14-bold'>Gas Station Name: </span> <span className='body-14'>{fuelingDetail ? fuelingDetail.gas_station_name : 'N/A'}</span>
+            </div>
+            <div>
+                <span className='body-14-bold'>Status:  </span> <span className='body-14'>{selectedTask.status}</span>
+            </div>
+            {/* <div>
+                <span className='body-14-bold'>Description: </span> <span className='body-14'>{fuelingDetail ? fuelingDetail.description : 'N/A'}</span>
+            </div> */}
           </>
         ) : (
           <div className='body-24'>Select a fueling task to view details.</div>
