@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vms/constants/color_constants.dart';
 import 'package:vms/routes/router_constants.dart';
 
@@ -32,19 +33,18 @@ class _PreloaderScreenState extends State<PreloaderScreen> {
       });
     }
 
-      Timer(const Duration(milliseconds: 1250), () {
-        Navigator.of(context).pushReplacementNamed(RouterName.loginRoute);
-      });
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final bool? isLoggined = prefs.getBool('loginned');
 
-    // if (Boxes.userBox().isNotEmpty) {
-    //   Timer(const Duration(milliseconds: 1250), () {
-    //     Navigator.of(context).pushReplacementNamed(RouterName.mainRoute);
-    //   });
-    // } else {
-    //   Timer(const Duration(milliseconds: 1250), () {
-    //     Navigator.of(context).pushReplacementNamed(RouterName.welcomeRoute);
-    //   });
-    // }
+      Timer(const Duration(milliseconds: 1250), () {
+        if (isLoggined == null || isLoggined == false) {
+          Navigator.of(context).pushReplacementNamed(RouterName.loginRoute);
+        } else {
+          Navigator.of(context).pushReplacementNamed(RouterName.baseRoute);
+        }
+      });
+    });
   }
 
   @override

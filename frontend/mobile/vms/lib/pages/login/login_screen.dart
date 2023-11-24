@@ -1,12 +1,11 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vms/constants/color_constants.dart';
 import 'package:vms/models/user/user.dart';
 import 'package:vms/models/user_role/user_role.dart';
 import 'package:vms/repositories/login/login_repo.dart';
-import 'package:http/http.dart' as http;
 import 'package:vms/routes/router_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -193,6 +192,9 @@ class _LoginScreenState extends State<LoginScreen> {
               const SizedBox(height: 50),
               ElevatedButton(
                 onPressed: () async {
+                  final SharedPreferences prefs =
+                      await SharedPreferences.getInstance();
+
                   if (email != null &&
                       email != '' &&
                       password != null &&
@@ -201,13 +203,20 @@ class _LoginScreenState extends State<LoginScreen> {
 
                     UserRole userRole = await LoginRepo().login(user);
 
+                    await prefs.setBool('loginned', true);
+
+                    await prefs.setInt('user_id', userRole.userId);
+
                     setState(() {
                       if (userRole.userId == 404) {
                         isIncorrectUser = true;
                       } else {
-                        Navigator.pushReplacementNamed(context, RouterName.baseRoute);
+                        Navigator.pushReplacementNamed(
+                            context, RouterName.baseRoute);
                       }
                     });
+                  } else {
+                    await prefs.setBool('loginned', false);
                   }
                 },
                 style: ElevatedButton.styleFrom(

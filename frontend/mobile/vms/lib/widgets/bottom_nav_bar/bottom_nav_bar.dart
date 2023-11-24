@@ -25,9 +25,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ),
       padding: const EdgeInsets.only(left: 10,right: 10,top: 12,bottom: 40),
       child: Row(
-        children: List.generate(4, (index) {
+        children: List.generate(3, (index) {
           return Expanded(
             child: GestureDetector(
+              behavior: HitTestBehavior.translucent,
               onTap: () {
                 providerRead.changePage(Pages.values.toList()[index]);
               },
@@ -44,7 +45,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   ),
                   const SizedBox(height: 2),
                   Text(
-                    pageTitle[Pages.values.toList()[index]]!,
+                    bottomTitle[Pages.values.toList()[index]]!,
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 12,

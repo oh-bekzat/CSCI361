@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:vms/constants/color_constants.dart';
 import 'package:vms/providers/bottom_provider/bottom_provider.dart';
 import 'package:vms/routes/app_router.dart';
 import 'package:vms/routes/router_constants.dart';
@@ -29,7 +30,7 @@ class MyApp extends StatelessWidget {
 
   final lightTheme = ThemeData(
     fontFamily: 'Montserrat',
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: ColorConstants.bg,
   );
 
   @override
